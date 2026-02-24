@@ -1,0 +1,25 @@
+# Entornos virtuales
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Datos (opcional, habilitar si los archivos son muy grandes)
+# *.csv
+# *.json
+
+# Archivos de sistema
+Thumbs.db
+Desktop.ini
+.DS_Store
