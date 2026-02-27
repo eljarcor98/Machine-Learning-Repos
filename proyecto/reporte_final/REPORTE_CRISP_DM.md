@@ -5,7 +5,7 @@ Este reporte sigue el estándar CRISP-DM (Cross-Industry Standard Process for Da
 
 ---
 
-## 1. Business Understanding (Comprensión del Negocio)
+## Fase 1: Business Understanding (Comprensión del Negocio)
 
 **Pregunta de investigación:** ¿Es posible identificar automáticamente zonas sísmicas diferenciadas en Colombia utilizando únicamente las características instrumentales de los sismos?
 
@@ -39,154 +39,75 @@ Dada la complejidad del terreno, se estima que el algoritmo debería identificar
 
 ---
 
-## 2. Data Understanding (Comprensión de los Datos)
-
-Esta es la fase de **Análisis Exploratorio de Datos (EDA)**. El objetivo es conocer profundamente el dataset antes de proceder con el modelado de clustering.
-
-### Preguntas guía y Hallazgos:
-
-1.  **¿Cuántos registros tienes? ¿Cuántos corresponden a Colombia específicamente?**
-    *   **Total:** 2,792 registros (Periodo 2010-2026).
-    *   **Filtrado:** El dataset está delimitado geográficamente a la región de Colombia y áreas marítimas circundantes (Lat: [-4.5, 13.5], Lon: [-82.0, -66.5]).
-2.  **¿Cuáles variables tienen valores nulos? ¿En qué porcentaje?**
-    *   Las variables principales (`mag`, `latitude`, `longitude`, `time`) están al **100% completas**.
-    *   Existen valores nulos significativos en variables técnicas de precisión instrumental:
-
-| Variable | Valores Nulos | Porcentaje |
-| :--- | :---: | :---: |
-| `nst` | 1,686 | 60.39% |
-| `horizontalError` | 524 | 18.77% |
-| `magError` | 458 | 16.40% |
-| `dmin` | 392 | 14.04% |
-| `magNst` | 221 | 7.92% |
-| `depthError` | 109 | 3.90% |
-| `gap` | 54 | 1.93% |
-![Porcentaje de Nulos por Variable](../documentacion/visualizaciones/porcentaje_nulos.png)
-
-#### 2.1 Justificación de Variables Descartadas
-Aunque las variables técnicas de precisión instrumental están presentes en el dataset original, se ha decidido **no utilizarlas** en el análisis posterior por las siguientes razones:
-
-*   **Columnas Afectadas:** `nst`, `horizontalError`, `magError`, `dmin`, `magNst`, `depthError`, `gap` y `rms`.
-*   **Baja Completitud:** Variables como `nst` presentan hasta un **60.39% de valores nulos**, lo que las hace poco fiables para un análisis estadístico robusto.
-*   **Irrelevancia Temática:** Estas variables describen la calidad de la medición (ej. número de estaciones, error horizontal) y no el fenómeno sísmico en sí. Para el clustering de riesgo, la ubicación (`lat`, `lon`), magnitud y profundidad son los descriptores fundamentales.
-*   **Preservación de Registros:** Al identificar estas variables como "prescindibles" en esta fase, podemos eliminarlas en la Fase 3 manteniendo el **100% de los sismos registrados**, evitando la pérdida masiva de datos que ocurriría si intentáramos filtrar por filas con nulos.
 ## Fase 2: Data Understanding (Comprensión de los Datos)
-Esta es la fase de Análisis Exploratorio de Datos (EDA). Aquí conocemos profundamente el dataset antes de modelar.
+Esta es la fase de **Análisis Exploratorio de Datos (EDA)**. El objetivo es conocer profundamente el dataset antes de proceder con el modelado.
 
-### 1. Preguntas Guía de Análisis:
+### 2.1 Preguntas Guía y Hallazgos:
 
 *   **¿Cuántos registros tienes? ¿Cuántos corresponden a Colombia específicamente?**
-    *   **Total de registros:** 2,792 eventos sísmicos.
-    *   **Registros en Colombia:** 1,412 eventos (50.6% del dataset), filtrados por ubicación geográfica y etiquetas de lugar.
+    *   **Total:** 2,792 registros (Periodo 2010-2026).
+    *   **Registros en Colombia:** 1,412 eventos (50.6% del dataset), filtrados por ubicación geográfica (Lat: [-4.5, 13.5], Lon: [-82.0, -66.5]) y etiquetas de lugar.
 *   **¿Cuáles variables tienen valores nulos? ¿En qué porcentaje?**
     *   Las variables críticas (`mag`, `latitude`, `longitude`, `time`) están al **100% completas**.
-    *   Variables de error instrumental presentan altos porcentajes de nulos:
+    *   Variables de error instrumental presentan altos porcentajes de nulos (se justifica su descarte en la Fase 3):
         *   `nst` (Número de estaciones): **60.4%**
         *   `horizontalError`: **18.8%**
         *   `magError`: **16.4%**
-        *   *Nota: Estos nulos se deben a la falta de reporte de estaciones secundarias en sismos menores.*
+    *   ![Porcentaje de Nulos por Variable](../documentacion/visualizaciones/porcentaje_nulos.png)
 *   **¿Cómo se distribuyen las magnitudes? ¿Y las profundidades?**
-    *   **Magnitudes:** El promedio es de **4.47**, con un rango de 2.0 a 6.8. La mayoría se concentra entre 4.0 y 5.0.
-    *   **Profundidades:** El promedio es de **74.47 km**. Sin embargo, existe una distribución bimodal clara: sismos muy superficiales (< 30 km) y sismos de profundidad intermedia (~150 km, típicos del Nido de Bucaramanga).
+    *   **Magnitudes:** El promedio es de **4.47**, concentrándose la mayoría entre 4.0 y 5.0.
+    *   **Profundidades:** El promedio es de **74.47 km**. Presenta una distribución bimodal: sismos superficiales (< 30 km) e intermedios (~150 km).
 *   **¿Hay correlaciones interesantes entre variables?**
-    *   La correlación entre **Magnitud y Profundidad** es casi nula (**-0.06**), lo que indica que no hay una relación lineal: sismos fuertes pueden ocurrir tanto a nivel superficial como profundo.
+    *   La correlación entre **Magnitud y Profundidad** es casi nula (**-0.06**). Sin embargo, existe una correlación de **0.63** entre Latitud y Longitud, reflejando la orientación NE-SW de las estructuras tectónicas colombianas.
 
-### 2. Mapas de Dispersión Geográficos (Scatter Maps):
+### 2.2 Mapas de Dispersión Geográficos (Scatter Maps):
 
-Para visualizar la distribución espacial de la sismicidad bajo una perspectiva de alerta, generamos mapas con la silueta geográfica y paletas de colores intensos (rojos/naranjas):
+Para visualizar la distribución espacial bajo una perspectiva de alerta, generamos mapas con la silueta geográfica y paletas "alarmistas":
 
-#### 2.1 Mapa de Riesgo por Profundidad
-Este mapa resalta la profundidad de los eventos. Los tonos rojos intensos y puntos más grandes indican sismos a profundidades críticas que podrían afectar estructuras subterráneas o ser indicativos de subducción profunda.
-
+#### 2.2.1 Mapa de Riesgo por Profundidad
 ![Mapa de Riesgo por Profundidad](../documentacion/visualizaciones/scatter_map_depth_red.png)
 
-#### 2.2 Mapa de Alerta por Magnitud
-Visualización "alarmista" que enfatiza la energía liberada. La concentración de puntos rojos en el Pacífico y el centro de Colombia advierte sobre las zonas de mayor peligrosidad sísmica.
-
+#### 2.2.2 Mapa de Alerta por Magnitud
 ![Mapa de Alerta por Magnitud](../documentacion/visualizaciones/scatter_map_mag_red.png)
 
-### 3. Relación Magnitud vs Profundidad (Visualización Inicial):
-
-Como se mencionó en el análisis de correlación (-0.06), la relación visual confirma la independencia de estas variables. Los sismos de alta magnitud (mag > 6.0) pueden ocurrir a cualquier profundidad, lo que aumenta la incertidumbre y el riesgo.
-
+#### 2.2.3 Relación Magnitud vs Profundidad (Visualización Detallada)
 ![Relación Magnitud vs Profundidad](../documentacion/visualizaciones/scatter_mag_depth_refined.png)
 
-### 4. Análisis de Frecuencia por Región:
+### 2.3 Análisis de Frecuencia por Región:
 Para entender el impacto territorial, se analizó la frecuencia de sismos por municipio:
 
 ![Frecuencia por Región](../documentacion/visualizaciones/frecuencia_municipios.png)
 
 *   **Hallazgo Principal:** Los municipios de **Cepitá** y **Jordán** en Santander lideran la actividad debido al **Nido Sísmico de Bucaramanga**.
 
-### 5. Visualizaciones Complementarias:
-*(Consulte el [Reporte Interactivo](../reporte_final/REPORTE_FINAL_INTERACTIVO.html) para visualizaciones dinámicas)*
+### 2.4 Métricas Descriptivas:
+*(Consulte el [Reporte Interactivo](../documentacion/visualizaciones/dashboard_interactivo.html) para visualizaciones dinámicas)*
 
 | Métrica | Magnitud (mag) | Profundidad (depth) |
 | :--- | :---: | :---: |
 | **Media** | 4.47 | 74.47 km |
 | **Mínimo** | 2.00 | 0.00 km |
 | **Máximo** | 6.80 | 661.10 km |
-| **Sesgo (Skewness)** | 0.46 | 0.65 (Asimetría positiva) |
-
-### 6. Enriquecimiento y Transformación de Datos
-Para robustecer el análisis, se ha pasado de un dataset plano a uno enriquecido mediante ingeniería de variables (Feature Engineering). A continuación se detallan las transformaciones realizadas:
-
-#### 6.1 Lógica de las Nuevas Variables:
-1.  **Municipio/Región (`municipio_region`):** Se aplicó una limpieza de texto sobre la columna `place` para extraer el nombre de la localidad. Esto permite agrupar los hallazgos por términos geográficos comunes (ej. "Bucaramanga", "Mesa de los Santos").
-2.  **Relación Magnitud/Profundidad (`mag_depth_ratio`):** Calculada como $mag / \log(1 + depth)$. Esta métrica resalta sismos que son potentes en relación a su cercanía a la superficie, los cuales suelen ser los más destructivos.
-3.  **Densidad Sísmica (`sismos_por_zona`):** Se implementó un algoritmo de vecindad que cuenta sismos en un radio de ~50km. Esto identifica "hotspots" de actividad recurrente sin necesidad de un modelo complejo.
-4.  **Vinculación Tectónica (`proximidad_falla`):** Se cruzaron las coordenadas de cada evento con la ubicación de las 5 fallas geológicas más importantes de Colombia (Romeral, Bucaramanga-Santa Marta, etc.) usando la fórmula de Haversine para determinar cercanía (umbral de 100km).
-
-#### 6.2 Vista Previa del Dataset Enriquecido:
-
-| Lugar (Place)                     | Municipio/Región   | Mag/Depth Ratio | Sismos por Zona | Proximidad a Falla                        |
-|:----------------------------------|:-------------------|:---------------:|:---------------:|:------------------------------------------|
-| 3 km W of Jordán, Colombia        | Jordán             |     0.9632      |       25        | Cerca de Falla de Bucaramanga-Santa Marta |
-| 42 km E of Mene Grande, Venezuela | Mene Grande        |     1.7932      |        2        | Sin falla principal cercana               |
-| 5 km ENE of Cepitá, Colombia      | Cepitá             |     0.8262      |       27        | Cerca de Falla de Bucaramanga-Santa Marta |
-| 4 km WSW of Cepitá, Colombia      | Cepitá             |     0.9454      |       77        | Cerca de Falla de Bucaramanga-Santa Marta |
-| 11 km SSW of El Carmen, Colombia  | El Carmen          |     0.8643      |       12        | Cerca de Falla de Bucaramanga-Santa Marta |
-
-#### 6.3 Análisis de Escalas y Distribución:
-Para comprender la escala de nuestras variables principales y justificar el preprocesamiento, utilizamos **Boxplots** y densidades:
-
-![Distribución de Magnitudes y Profundidades](../documentacion/visualizaciones/boxplots_escalas.png)
-
-*   **Magnitud:** Observamos que la mayoría de los eventos son moderadamente bajos (4.2 - 4.8), con pocos eventos de gran energía.
-*   **Profundidad:** La dispersión es masiva (0 a 240 km), lo que confirma la complejidad tectónica.
-
-**¿Por qué escalar?**
-Al superponer ambas variables estandarizadas, es evidente que la profundidad tiene una varianza que dominaría cualquier cálculo de distancia euclidiana:
-
-![Comparación de Escalas Estandarizadas](../documentacion/visualizaciones/comparativa_escalas_kde.png)
 
 ---
 
 ## Fase 3: Data Preparation (Preparación de los Datos)
-En esta fase se deciden qué variables (features) usar y cómo transformarlas para que el modelo de clustering sea efectivo.
+En esta fase se deciden qué variables (features) usar y cómo transformarlas.
 
 ### 3.1 Selección de features:
-Seleccionamos las variables numéricas que mejor describen el fenómeno para el algoritmo de clustering:
-
-*   **¿Qué variables describen la ubicación del sismo?**
-    *   `latitude` y `longitude`: Coordenadas geográficas fundamentales para la agrupación espacial.
-    *   `depth` (Profundidad): Describe la ubicación vertical en la corteza terrestre.
-*   **¿Qué variables describen la naturaleza del sismo?**
-    *   `mag` (Magnitud): Representa la energía liberada y la intensidad del evento.
-*   **¿Hay variables con demasiados nulos que debas excluir?**
-    *   **Sí.** Como se analizó en la Fase 2, las variables de error instrumental (`nst`, `horizontalError`, `magError`) presentan hasta un **60% de nulos**. Estas han sido excluidas para mantener la integridad del dataset sin perder registros valiosos.
+*   **Ubicación:** `latitude`, `longitude` y `depth`.
+*   **Naturaleza:** `mag`.
+*   **Exclusión por Nulos:** Se descartan `nst`, `horizontalError` y `magError` (60% nulos) para preservar el 100% de los registros útiles.
 
 ### 3.2 Manejo de datos faltantes:
-Para garantizar un modelo robusto sin sesgar los resultados:
-*   **Decisión:** Se optó por **seleccionar solo features sin nulos significativos** y eliminar las columnas técnicas de error.
-*   **Justificación:** Esto nos permite conservar el **100% de las filas (2,792 registros)**, lo cual es crítico para identificar patrones en zonas de baja sismicidad pero alto riesgo potencial. No fue necesario imputar datos ya que las variables clave (`mag`, `coordinates`) estaban completas.
+Se optó por **seleccionar solo features completas** y eliminar las columnas técnicas. Esto permite conservar los **2,792 registros íntegros**, evitando la pérdida de datos y sesgos en el clustering.
 
 ### 3.3 Scaling (CRÍTICO):
 El escalado de datos es el paso más importante antes de aplicar K-Means.
 
 #### Experimento: K-Means con y sin Escalado
-*   **Sin Escalar:** Los clusters se agrupan casi exclusivamente por "capas horizontales".
-*   **Con StandardScaler:** Los clusters forman grupos geográficos coherentes que integran tanto ubicación como profundidad y magnitud.
+*   **Sin Escalar:** Los clusters se agrupan casi exclusivamente por "capas horizontales" de profundidad.
+*   **Con StandardScaler:** Los clusters forman grupos geográficos coherentes que integran ubicación, profundidad y magnitud.
 
 #### Preguntas Obligatorias:
 *   **¿Cambian los clusters al escalar? ¿Por qué?**
@@ -194,64 +115,38 @@ El escalado de datos es el paso más importante antes de aplicar K-Means.
 *   **¿Cuál es la escala de `latitude` vs `depth`? ¿Qué feature domina si no escalas?**
     *   La `latitude` varía en un rango de **~20 unidades** (-5 a 15).
     *   La `depth` varía en un rango de **~660 unidades** (0 a 661 km).
-    *   **Dominancia:** La **profundidad (depth) domina totalmente** si no se escala. El algoritmo vería un cambio de 1 grado en latitud como algo insignificante frente a un cambio de 1 km en profundidad, aunque geográficamente 1 grado son ~111 km.
+    *   **Dominancia:** La **profundidad (depth) domina totalmente** si no se escala. El algoritmo vería un cambio de 1 grado en latitud (~111 km) como insignificante frente a un cambio de 1 km en profundidad.
 *   **¿Cuál versión produce clusters más interpretables para el SGC?**
     *   La versión con **StandardScaler**. Esta produce zonas que el Servicio Geológico Colombiano (SGC) puede identificar como regiones geográficas reales (ej. "Cluster del Litoral Pacífico"), permitiendo una gestión del riesgo territorial efectiva.
 
----
+### 3.4 Enriquecimiento de Datos:
+Se añadieron variables para robustecer el modelo:
+1.  **`municipio_region`**: Extraído del campo `place`.
+2.  **`mag_depth_ratio`**: Resalta sismos superficiales de alta energía.
+3.  **`sismos_por_zona`**: Densidad histórica en un radio de 50km.
+4.  **`proximidad_falla`**: Basado en las 5 fallas principales de Colombia.
 
-## 4. Modeling (Modelado)
-Tras evaluar DBSCAN, se determinó que **K-Means Clustering** es más efectivo para realizar una partición geográfica equilibrada y clasificar las zonas de forma gradual.
-- **Algoritmo:** K-Means.
-- **Parámetros:** 15 clusters ($k=15$) basados en coordenadas geográficas.
-- **Resultado:** Identificación de 15 zonas de riesgo con una distribución gradual desde "Muy alto riesgo" hasta "Riesgo bajo".
-
-### Clasificación de Riesgo:
-Se definieron umbrales basados en la frecuencia sísmica por zona para categorizar la peligrosidad.
-
-### Clasificación de Riesgo (Seguridad):
-Se creó una columna `es_zona_segura` basada en la densidad de eventos:
-- **Peligrosa:** Zonas con >15 sismos en el radio definido.
-- **Segura:** Eventos aislados o zonas con baja frecuencia histórica.
+#### Vista Previa del Dataset Enriquecido:
+| Lugar (Place)                     | Municipio/Región   | Mag/Depth Ratio | Sismos por Zona | Proximidad a Falla |
+|:----------------------------------|:-------------------|:---------------:|:---------------:|:-------------------|
+| 3 km W of Jordán, Colombia        | Jordán             |     0.9632      |       25        | Cerca de Falla ... |
+| 5 km ENE of Cepitá, Colombia      | Cepitá             |     0.8262      |       27        | Cerca de Falla ... |
 
 ---
 
-## 5. Evaluation (Evaluación)
-
-Esta fase es crucial para interpretar los resultados del clustering y evaluar su relevancia para la gestión del riesgo sísmico.
-
-### 5.1 Perfil de cada cluster
-Para cada una de las zonas identificadas, se reportará:
-*   **Volumen:** Número total de sismos capturados.
-*   **Estadísticas:** Rango de latitud, longitud, profundidad y magnitud (media y desviación estándar).
-*   **Interpretación Geográfica:** Identificación del área representativa en el mapa de Colombia (ej. Costa Pacífica, Cordillera Central, Pie de Monte Amazónico).
-
-### 5.2 Visualización Geográfica
-Se genera un mapa scatter de los clusters (latitud vs longitud) coloreado por el ID de cada grupo para verificar su coherencia espacial y contigüidad.
-
-### 5.3 Hallazgos y Análisis
-A partir de la evaluación de los clusters, se responden las siguientes preguntas clave:
-
-1.  **Sismicidad Profunda:** ¿Hay algún cluster de sismicidad profunda concentrada en una zona específica? (Ej. La zona subducida del interior del país).
-2.  **Zona de Subducción:** ¿Los clusters logran capturar adecuadamente la línea de subducción del Pacífico?
-3.  **Magnitud Máxima:** ¿Cuál cluster captura los sismos de mayor intensidad histórica?
-4.  **Priorización de Alertas:** ¿Qué cluster debería ser priorizado para sistemas de alerta temprana basándose en la combinación de frecuencia y potencial de magnitud?
+## Fase 4: Modeling (Modelado)
+Se utilizó **K-Means Clustering** con $k=15$ para segmentar el riesgo territorial.
+- **Resultado:** 15 zonas de riesgo con clasificación gradual.
 
 ---
 
-## 6. Deployment (Despliegue / Comunicación de Resultados)
-
-Esta fase final trasciende los hallazgos técnicos para traducirlos en una narrativa comprensible y útil para la toma de decisiones.
-
-### 6.1 Narrativa de Datos (Storytelling)
-El objetivo es contar una "historia" con los datos sísmicos:
-*   **De lo general a lo particular:** Comenzar con el mapa panorámico de sismos y descender hacia los clusters específicos de mayor riesgo.
-*   **Visualizaciones Accionables:** Uso de mapas interactivos que permitan a los stakeholders filtrar y explorar las zonas por sí mismos.
-
-### 6.2 Conclusiones y Recomendaciones
-*   **Resumen Técnico:** Breve explicación del porqué se eligió el modelo final y su precisión.
-*   **Impacto Social:** Traducir los clusters en términos de prevención (ej. "La Zona 5 requiere mayor instrumentación debido a su alta frecuencia a profundidades intermedias").
-*   **Siguientes Pasos:** Sugerir mejoras, como la inclusión de variables de población o infraestructura para un análisis de vulnerabilidad.
+## Fase 5: Evaluation (Evaluación)
+Evaluación de la coherencia espacial y perfilado de cada cluster (volumen, estadísticas y ubicación representativa).
 
 ---
-*Este documento se actualizará conforme avancemos en las fases de Evaluación y Conclusiones.*
+
+## Fase 6: Deployment (Despliegue)
+Visualización de resultados mediante narrativa de datos y el **Reporte Interactivo Premium**.
+
+---
+*Este documento se actualizará conforme avancemos en las fases finales.*
