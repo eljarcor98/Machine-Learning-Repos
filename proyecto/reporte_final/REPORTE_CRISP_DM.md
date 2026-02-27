@@ -162,30 +162,41 @@ Al superponer ambas variables estandarizadas, es evidente que la profundidad tie
 
 ---
 
-## 3. Data Preparation (Preparación de los Datos)
+## Fase 3: Data Preparation (Preparación de los Datos)
+En esta fase se deciden qué variables (features) usar y cómo transformarlas para que el modelo de clustering sea efectivo.
 
-En esta fase se definen las transformaciones necesarias para que el modelo de clustering funcione de manera óptima y produzca resultados interpretables.
+### 3.1 Selección de features:
+Seleccionamos las variables numéricas que mejor describen el fenómeno para el algoritmo de clustering:
 
-### 3.1 Ingeniería de Features (Nuevas Variables)
-Para mejorar el poder predictivo del clustering, se han añadido:
-*   **`mag_depth_ratio`**: Una relación entre magnitud y profundidad que resalta sismos superficiales de alta energía.
-*   **`sismos_por_zona`**: Densidad histórica de eventos, útil para clasificar zonas como "propensas" o "aisladas".
-*   **`proximidad_falla`**: Variable categórica que vincula sismos con estructuras geológicas conocidas.
+*   **¿Qué variables describen la ubicación del sismo?**
+    *   `latitude` y `longitude`: Coordenadas geográficas fundamentales para la agrupación espacial.
+    *   `depth` (Profundidad): Describe la ubicación vertical en la corteza terrestre.
+*   **¿Qué variables describen la naturaleza del sismo?**
+    *   `mag` (Magnitud): Representa la energía liberada y la intensidad del evento.
+*   **¿Hay variables con demasiados nulos que debas excluir?**
+    *   **Sí.** Como se analizó en la Fase 2, las variables de error instrumental (`nst`, `horizontalError`, `magError`) presentan hasta un **60% de nulos**. Estas han sido excluidas para mantener la integridad del dataset sin perder registros valiosos.
 
-### 3.2 Manejo de Datos Faltantes (Limpieza de Columnas)
-Como se justificó en la Fase 2, se procede a la eliminación física de las columnas técnicas de error instrumental.
+### 3.2 Manejo de datos faltantes:
+Para garantizar un modelo robusto sin sesgar los resultados:
+*   **Decisión:** Se optó por **seleccionar solo features sin nulos significativos** y eliminar las columnas técnicas de error.
+*   **Justificación:** Esto nos permite conservar el **100% de las filas (2,792 registros)**, lo cual es crítico para identificar patrones en zonas de baja sismicidad pero alto riesgo potencial. No fue necesario imputar datos ya que las variables clave (`mag`, `coordinates`) estaban completas.
 
-*   **Acción:** Eliminación (Drop) de columnas con alta tasa de nulos e irrelevancia para el modelo.
-*   **Resultado:** Dataset limpio con 14 columnas y 2,792 registros íntegros.
+### 3.3 Scaling (CRÍTICO):
+El escalado de datos es el paso más importante antes de aplicar K-Means.
 
+#### Experimento: K-Means con y sin Escalado
+*   **Sin Escalar:** Los clusters se agrupan casi exclusivamente por "capas horizontales".
+*   **Con StandardScaler:** Los clusters forman grupos geográficos coherentes que integran tanto ubicación como profundidad y magnitud.
 
-
-### 3.3 Scaling (Escalado de Datos) - CRÍTICO
-El escalado es fundamental en algoritmos basados en distancias como K-Means.
-
-*   **Experimento:** Comparación entre clustering con y sin `StandardScaler`.
-*   **Latitude/Longitude vs Depth:** La `latitude` varía en ~17 unidades, mientras que la `depth` varía en >200 unidades. Sin escalar, la **profundidad domina totalmente la distancia**, agrupando sismos por "capas de la tierra" en lugar de cercanía geográfica superficial.
-*   **Interpretabilidad:** El uso de datos escalados produce clusters más equilibrados que permiten al SGC (Servicio Geológico Colombiano) identificar regiones de riesgo territorial claro.
+#### Preguntas Obligatorias:
+*   **¿Cambian los clusters al escalar? ¿Por qué?**
+    *   **Sí, drásticamente.** K-Means utiliza distancias euclidianas. Sin escalar, las variables con rangos numéricos más grandes "opacan" a las pequeñas, forzando al algoritmo a ignorar estas últimas.
+*   **¿Cuál es la escala de `latitude` vs `depth`? ¿Qué feature domina si no escalas?**
+    *   La `latitude` varía en un rango de **~20 unidades** (-5 a 15).
+    *   La `depth` varía en un rango de **~660 unidades** (0 a 661 km).
+    *   **Dominancia:** La **profundidad (depth) domina totalmente** si no se escala. El algoritmo vería un cambio de 1 grado en latitud como algo insignificante frente a un cambio de 1 km en profundidad, aunque geográficamente 1 grado son ~111 km.
+*   **¿Cuál versión produce clusters más interpretables para el SGC?**
+    *   La versión con **StandardScaler**. Esta produce zonas que el Servicio Geológico Colombiano (SGC) puede identificar como regiones geográficas reales (ej. "Cluster del Litoral Pacífico"), permitiendo una gestión del riesgo territorial efectiva.
 
 ---
 
