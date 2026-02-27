@@ -1,24 +1,36 @@
 # Proyecto de Análisis de Terremotos (USGS)
 
-Este proyecto tiene como objetivo analizar los datos sísmicos obtenidos de la USGS para un área geográfica específica (Colombia y alrededores).
+Este proyecto tiene como objetivo analizar los datos sísmicos obtenidos de la USGS para un área geográfica específica (Colombia y alrededores), siguiendo la metodología CRISP-DM.
 
 ## Estructura del Proyecto
 
-- `data/`: Contiene los archivos de datos crudos y procesados.
-- `documentacion/`: Archivos Markdown con la descripción detallada del proyecto y análisis. Incluye el mapa interactivo `mapa_sismos.html` y el `registro_cambios.md`.
-- `reporte_final/`: Informe consolidado siguiendo la metodología CRISP-DM.
-- `scripts/`: Scripts de Python para la descarga, limpieza y análisis de datos.
-- `.venv/`: Entorno virtual de Python.
+- `data/`: Datos crudos (`earthquakes_raw.csv`) y enriquecidos (`earthquakes_enriched.csv`).
+- `documentacion/`: 
+    - `visualizaciones/`: Gráficos de nulos, correlación, frecuencia regional y mapas.
+    - `reporte_interactivo.html`: Versión premium e interactiva del informe final.
+- `reporte_final/`: Informe consolidado `REPORTE_CRISP_DM.md`.
+- `scripts/`: 
+    - `load_data.py`: Descarga de datos.
+    - `enrich_dataset.py`: Limpieza y extracción de municipios/región.
+    - `phase2_analysis.py`: Análisis de nulos y correlación.
+    - `region_analysis.py`: Análisis de frecuencia geográfica.
+    - `generate_html_report.py`: Generador del reporte interactivo.
+- `.venv/`: Entorno virtual.
 
-## Progresos
+## Hitos del Proyecto (CRISP-DM)
 
-### [2026-02-24] - Inicialización
-- Se creó la estructura básica del proyecto.
-- Se configuró el entorno virtual.
-- Se creó el script `scripts/load_data.py` para automatizar la descarga de datos desde la API de USGS.
-- Se creó la carpeta `documentacion/` con el diccionario de datos y el análisis inicial.
-- Se implementó un **mapa interactivo animado** (`scripts/create_map.py`) que muestra la evolución de los sismos en una línea de tiempo.
-- Configuración inicial de la URL de consulta con filtros de tiempo (2010-2026), área geográfica y magnitud mínima (1.5).
+### Fase 1: Entendimiento del Negocio
+- Definición de objetivos: Identificar patrones sísmicos y zonas de alto riesgo.
+- Contextualización geológica (Mapas de fallas).
+
+### Fase 2: Entendimiento de los Datos
+- **Calidad de Datos:** Identificación de valores nulos ( NST y errores instrumentales).
+- **Correlación:** Análisis de la relación Magnitud vs Profundidad (Pearson: -0.06).
+- **Frecuencia Regional:** Identificación de Cepitá y Jordán como puntos calientes (Nido de Bucaramanga).
+
+### Fase 3: Preparación de Datos
+- Enriquecimiento del dataset con etiquetas geográficas claras.
+- Limpieza de datos no representativos.
 
 ## Cómo empezar
 
@@ -26,11 +38,11 @@ Este proyecto tiene como objetivo analizar los datos sísmicos obtenidos de la U
    ```powershell
    .\.venv\Scripts\activate
    ```
-2. Instala las dependencias necesarias:
+2. Instala las dependencias:
    ```powershell
-   pip install pandas
+   pip install pandas seaborn matplotlib folium jinja2
    ```
-3. Ejecuta el script de carga de datos:
+3. Genera el reporte interactivo:
    ```powershell
-   python scripts/load_data.py
+   python scripts/generate_html_report.py
    ```

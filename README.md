@@ -12,6 +12,7 @@ Este repositorio contiene una colección de proyectos y estudios realizados sobr
 | **[Naive Bayes/](./Naive%20Bayes/)** | Clasificación de SPAM y análisis de probabilidad. | Naive Bayes, Scikit-learn, Seaborn |
 | **[K-Means/](./K-Means/)** | Estudios de agrupamiento y segmentación de datos. | K-Means, Matplotlib |
 | **[KNN/](./KNN/)** | Implementación de K-Nearest Neighbors para clasificación. | KNN, Iris Dataset |
+| **[Random Forest/](./Random%20Forest/)** | Predicción de accidentes cerebrovasculares (Strokes) y comparativa de modelos base. | Random Forest, KNN, Naive Bayes, K-Means |
 | **[Estudio IRIS/](./Estudio%20IRIS/)** | Análisis exploratorio y métricas del dataset Iris. | EDA, Matplotlib |
 
 ---
@@ -47,7 +48,7 @@ pip install -r requirements.txt
 - **Análisis de Datos**: `pandas`, `numpy`, `scipy`
 - **Machine Learning**: `scikit-learn`
 - **Visualización**: `matplotlib`, `seaborn`, `plotly`
-- **Utilidades**: `requests` (para APIs), `nbformat`, `jinja2`
+- **Utilidades**: `requests` (para APIs), `nbformat`, `kaleido`, `jinja2`
 
 ---
 
