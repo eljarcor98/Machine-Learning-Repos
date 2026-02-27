@@ -91,21 +91,27 @@ Esta es la fase de Análisis Exploratorio de Datos (EDA). Aquí conocemos profun
 *   **¿Hay correlaciones interesantes entre variables?**
     *   La correlación entre **Magnitud y Profundidad** es casi nula (**-0.06**), lo que indica que no hay una relación lineal: sismos fuertes pueden ocurrir tanto a nivel superficial como profundo.
 
-### 2. Mapas de Dispersión (Scatter Maps):
+### 2. Mapas de Dispersión Geográficos (Scatter Maps):
 
-Para visualizar la distribución espacial de la sismicidad, generamos mapas de latitud vs longitud:
+Para visualizar la distribución espacial de la sismicidad bajo una perspectiva de alerta, generamos mapas con la silueta geográfica y paletas de colores intensos (rojos/naranjas):
 
-#### 2.1 Mapa por Profundidad
-Muestra la ubicación de los sismos coloreados por su profundidad (km). Los puntos amarillos/verdes representan sismos superficiales, mientras que los morados/azules son profundos.
+#### 2.1 Mapa de Riesgo por Profundidad
+Este mapa resalta la profundidad de los eventos. Los tonos rojos intensos y puntos más grandes indican sismos a profundidades críticas que podrían afectar estructuras subterráneas o ser indicativos de subducción profunda.
 
-![Mapa de Dispersión por Profundidad](../documentacion/visualizaciones/scatter_map_depth.png)
+![Mapa de Riesgo por Profundidad](../documentacion/visualizaciones/scatter_map_depth_red.png)
 
-#### 2.2 Mapa por Magnitud
-Muestra la fuerza de los sismos. Los colores cálidos y puntos más grandes indican magnitudes superiores.
+#### 2.2 Mapa de Alerta por Magnitud
+Visualización "alarmista" que enfatiza la energía liberada. La concentración de puntos rojos en el Pacífico y el centro de Colombia advierte sobre las zonas de mayor peligrosidad sísmica.
 
-![Mapa de Dispersión por Magnitud](../documentacion/visualizaciones/scatter_map_mag.png)
+![Mapa de Alerta por Magnitud](../documentacion/visualizaciones/scatter_map_mag_red.png)
 
-### 3. Análisis de Frecuencia por Región:
+### 3. Relación Magnitud vs Profundidad (Visualización Inicial):
+
+Como se mencionó en el análisis de correlación (-0.06), la relación visual confirma la independencia de estas variables. Los sismos de alta magnitud (mag > 6.0) pueden ocurrir a cualquier profundidad, lo que aumenta la incertidumbre y el riesgo.
+
+![Relación Magnitud vs Profundidad](../documentacion/visualizaciones/scatter_mag_depth_refined.png)
+
+### 4. Análisis de Frecuencia por Región:
 Para entender el impacto territorial, se analizó la frecuencia de sismos por municipio:
 
 ![Frecuencia por Región](../documentacion/visualizaciones/frecuencia_municipios.png)
