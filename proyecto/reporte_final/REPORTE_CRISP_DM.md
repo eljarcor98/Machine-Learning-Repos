@@ -70,48 +70,56 @@ Aunque las variables técnicas de precisión instrumental están presentes en el
 *   **Baja Completitud:** Variables como `nst` presentan hasta un **60.39% de valores nulos**, lo que las hace poco fiables para un análisis estadístico robusto.
 *   **Irrelevancia Temática:** Estas variables describen la calidad de la medición (ej. número de estaciones, error horizontal) y no el fenómeno sísmico en sí. Para el clustering de riesgo, la ubicación (`lat`, `lon`), magnitud y profundidad son los descriptores fundamentales.
 *   **Preservación de Registros:** Al identificar estas variables como "prescindibles" en esta fase, podemos eliminarlas en la Fase 3 manteniendo el **100% de los sismos registrados**, evitando la pérdida masiva de datos que ocurriría si intentáramos filtrar por filas con nulos.
+## Fase 2: Data Understanding (Comprensión de los Datos)
+Esta es la fase de Análisis Exploratorio de Datos (EDA). Aquí conocemos profundamente el dataset antes de modelar.
 
-3.  **¿Cómo se distribuyen las magnitudes? ¿Y las profundidades?**
+### 1. Preguntas Guía de Análisis:
 
+*   **¿Cuántos registros tienes? ¿Cuántos corresponden a Colombia específicamente?**
+    *   **Total de registros:** 2,792 eventos sísmicos.
+    *   **Registros en Colombia:** 1,412 eventos (50.6% del dataset), filtrados por ubicación geográfica y etiquetas de lugar.
+*   **¿Cuáles variables tienen valores nulos? ¿En qué porcentaje?**
+    *   Las variables críticas (`mag`, `latitude`, `longitude`, `time`) están al **100% completas**.
+    *   Variables de error instrumental presentan altos porcentajes de nulos:
+        *   `nst` (Número de estaciones): **60.4%**
+        *   `horizontalError`: **18.8%**
+        *   `magError`: **16.4%**
+        *   *Nota: Estos nulos se deben a la falta de reporte de estaciones secundarias en sismos menores.*
+*   **¿Cómo se distribuyen las magnitudes? ¿Y las profundidades?**
+    *   **Magnitudes:** El promedio es de **4.47**, con un rango de 2.0 a 6.8. La mayoría se concentra entre 4.0 y 5.0.
+    *   **Profundidades:** El promedio es de **74.47 km**. Sin embargo, existe una distribución bimodal clara: sismos muy superficiales (< 30 km) y sismos de profundidad intermedia (~150 km, típicos del Nido de Bucaramanga).
+*   **¿Hay correlaciones interesantes entre variables?**
+    *   La correlación entre **Magnitud y Profundidad** es casi nula (**-0.06**), lo que indica que no hay una relación lineal: sismos fuertes pueden ocurrir tanto a nivel superficial como profundo.
 
+### 2. Mapas de Dispersión (Scatter Maps):
 
-    *   **Magnitudes:** Promedio de 4.48, con un máximo de 7.8. La mayoría se concentra en el rango 4.0 - 5.0.
-    *   **Profundidades:** Promedio de 74.47 km. Existe una alta concentración en profundidades intermedias (>150 km) debido a la subducción en la región.
-### 4. ¿Hay correlaciones interesantes entre variables?
-A continuación se presenta la matriz de correlación para entender la relación lineal entre las variables numéricas del dataset:
+Para visualizar la distribución espacial de la sismicidad, generamos mapas de latitud vs longitud:
 
-![Matriz de Correlación](../documentacion/visualizaciones/matriz_correlacion.png)
+#### 2.1 Mapa por Profundidad
+Muestra la ubicación de los sismos coloreados por su profundidad (km). Los puntos amarillos/verdes representan sismos superficiales, mientras que los morados/azules son profundos.
 
-*   **Magnitud vs Profundidad:** Se observa una correlación de **-0.06 (Pearson)**. Esto indica una relación negativa extremadamente débil; los sismos de mayor magnitud no necesariamente ocurren a profundidades específicas en este dataset.
-*   **Latitud vs Longitud:** Correlación de **0.63**, reflejando la orientación NE-SW de las estructuras tectónicas principales en Colombia.
-*   **Profundidad vs Longitud:** Correlación de **0.38**, lo que sugiere que la profundidad aumenta hacia el este, consistente con el ángulo de subducción de la placa de Nazca.
-*   **Variables de Error:** Se observa una alta correlación entre `horizontalError`, `depthError` y `magError`, lo que es esperado ya que la precisión instrumental suele degradarse uniformemente.
+![Mapa de Dispersión por Profundidad](../documentacion/visualizaciones/scatter_map_depth.png)
 
+#### 2.2 Mapa por Magnitud
+Muestra la fuerza de los sismos. Los colores cálidos y puntos más grandes indican magnitudes superiores.
 
-#### 2.2 Distribución Combinada (Correlación Visual)
-Para complementar el análisis numérico de la correlación de Pearson (-0.06), visualizamos la dispersión de los datos para confirmar la falta de una relación lineal fuerte:
+![Mapa de Dispersión por Magnitud](../documentacion/visualizaciones/scatter_map_mag.png)
 
-![Relación Magnitud vs Profundidad](../documentacion/visualizaciones/scatter_mag_depth.png)
-
-*   **Observación:** Se confirma que los sismos de todas las magnitudes ocurren en un amplio rango de profundidades, aunque hay una mayor densidad de eventos de baja magnitud en profundidades someras (< 50 km).
-
-#### 2.3 Análisis de Frecuencia por Región
-Para entender el impacto territorial, se analizó la frecuencia de sismos agrupándolos por municipio o región (columna `municipio_region` extraída del campo `place` original):
+### 3. Análisis de Frecuencia por Región:
+Para entender el impacto territorial, se analizó la frecuencia de sismos por municipio:
 
 ![Frecuencia por Región](../documentacion/visualizaciones/frecuencia_municipios.png)
 
-*   **Hallazgo Principal:** El municipio de **Cepitá (Santander)** lidera ampliamente con más de **260 eventos**, seguido de **Jordán (140)**. Esto es consistente con la ubicación del **Nido Sísmico de Bucaramanga**, una de las zonas de mayor actividad sísmica intermedia en el mundo.
-*   **Concentración en Ecuador:** Aparecen regiones como **Palora** y **Bahía de Caráquez**, reflejando la actividad sísmica en la zona fronteriza y de subducción del Pacífico sur.
+*   **Hallazgo Principal:** Los municipios de **Cepitá** y **Jordán** en Santander lideran la actividad debido al **Nido Sísmico de Bucaramanga**.
 
-### 5. Visualizaciones y Métricas:
-
-
+### 5. Visualizaciones Complementarias:
+*(Consulte el [Reporte Interactivo](../reporte_final/REPORTE_FINAL_INTERACTIVO.html) para visualizaciones dinámicas)*
 
 | Métrica | Magnitud (mag) | Profundidad (depth) |
 | :--- | :---: | :---: |
 | **Media** | 4.47 | 74.47 km |
-| **Desviación Estándar** | 0.44 | 63.25 km |
-| **Máximo** | 7.80 | 239.40 km |
+| **Mínimo** | 2.00 | 0.00 km |
+| **Máximo** | 6.80 | 661.10 km |
 | **Sesgo (Skewness)** | 0.46 | 0.65 (Asimetría positiva) |
 
 ### 6. Enriquecimiento y Transformación de Datos
