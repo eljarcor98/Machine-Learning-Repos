@@ -132,15 +132,29 @@ def create_dashboard():
     </div>
 
     <div class="sidebar">
-        <div class="k-selector">
-            <span>Zonas Geográficas (K):</span>
-            <span class="k-value" id="k-val-display">7</span>
-            <input type="range" id="k-slider" min="2" max="10" value="7" oninput="updateK(this.value)">
-            <p style="font-size:0.7rem; margin:10px 0 0 0; opacity:0.9">Desliza para ver la evolución de los clusters</p>
+        <!-- Timeline -->
+        <div class="k-selector" style="background: var(--text)">
+            <span>Línea de Tiempo:</span>
+            <span class="k-value" id="year-display">TODOS</span>
+            <input type="range" id="year-slider" min="{min(years)}" max="{max(years)}" value="{max(years)}" oninput="updateTime(this.value)">
+            <p style="font-size:0.7rem; margin:10px 0 0 0; opacity:0.8">Filtre sismos por evolución temporal</p>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="card" id="detail-panel" style="background: var(--primary); color: white; display: none; transition: 0.3s;">
+            <h2 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 10px;">Detalle de Selección</h2>
+            <div id="detail-content" style="font-size: 0.85rem;"></div>
         </div>
 
         <div class="card">
-            <h2>Estado de la Cobertura</h2>
+            <h2>Zonas Geográficas (K)</h2>
+            <span class="k-value" id="k-val-display" style="color: var(--primary); font-size: 1.2rem; font-weight:800">7</span>
+            <input type="range" id="k-slider" min="2" max="10" value="7" oninput="updateK(this.value)">
+            <p style="font-size:0.7rem; margin-top:5px; opacity:0.6">Variación de segmentación sismotectónica</p>
+        </div>
+
+        <div class="card">
+            <h2>Estado y Filtro</h2>
             <div class="stat-grid">
                 <div class="stat-item">
                     <span class="stat-num" id="total-count">1412</span>
@@ -154,10 +168,10 @@ def create_dashboard():
         </div>
 
         <div class="card">
-            <h2>Leyenda de Clusters</h2>
+            <h2>Leyenda Interactiva</h2>
             <div id="legend-grid" class="legend-grid"></div>
+            <p style="font-size:0.65rem; margin-top:8px; opacity:0.5; text-align:center">Haga clic en una zona para filtrar</p>
         </div>
-
         <div class="card" style="flex-grow:1">
             <h2 id="chart-title">Tendencia Anual</h2>
             <div style="height: 120px;"><canvas id="yearChart"></canvas></div>
@@ -172,16 +186,17 @@ def create_dashboard():
     const faultsGeoJSON = {faults_json};
     const colors = {json.dumps(colors)};
     let currentK = 7;
+    let currentYear = {max(years)};
+    let currentClusterFilter = null;
 
-    // Configuración del Mapa (Mapa Plano Minimalista)
+    // Configuración del Mapa
     const map = L.map('map').setView([4.57, -74.3], 6);
     L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        attribution: '&copy; OpenStreetMap &copy; CARTO'
     }}).addTo(map);
 
-    // Capa de Fallas (Sutil)
     L.geoJSON(faultsGeoJSON, {{
-        style: {{ color: "#ff7675", weight: 1, opacity: 0.25 }},
+        style: {{ color: "#ff7675", weight: 1, opacity: 0.15 }},
         onEachFeature: (f, l) => {{ if(f.properties.NombreFall) l.bindPopup(`<b>FALLA:</b> ${{f.properties.NombreFall}}`); }}
     }}).addTo(map);
 
@@ -195,12 +210,29 @@ def create_dashboard():
         updateLegend();
     }}
 
+    function updateTime(val) {{
+        currentYear = parseInt(val);
+        document.getElementById('year-display').innerText = currentYear;
+        renderMarkers();
+    }}
+
+    function toggleClusterFilter(idx) {{
+        currentClusterFilter = (currentClusterFilter === idx) ? null : idx;
+        renderMarkers();
+        updateLegend();
+    }}
+
     function updateLegend() {{
         const grid = document.getElementById('legend-grid');
         grid.innerHTML = '';
         for(let i=0; i < currentK; i++) {{
+            const isSelected = (currentClusterFilter === i);
+            const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
+            const border = isSelected ? 'border: 2.5px solid var(--primary);' : 'border: 1px solid #eee;';
+            
             grid.innerHTML += `
-                <div class="legend-item">
+                <div class="legend-item" onclick="toggleClusterFilter(${{i}})" 
+                     style="cursor:pointer; transition:0.2s; ${{opacity}} ${{border}}">
                     <span class="dot" style="background-color: ${{colors[i]}}"></span>
                     <span>Zona ${{i+1}}</span>
                 </div>
@@ -208,35 +240,57 @@ def create_dashboard():
         }}
     }}
 
+    function showDetails(p) {{
+        const panel = document.getElementById('detail-panel');
+        const content = document.getElementById('detail-content');
+        panel.style.display = 'block';
+        const clusterIdx = p[`cluster_k${{currentK}}`];
+        
+        content.innerHTML = `
+            <b style="font-size:1.1rem; display:block; margin-bottom:5px">${{p.municipio_region}}</b>
+            <span style="opacity:0.9">${{p.departamento}}</span>
+            <hr style="border:0; border-top:1px solid rgba(255,255,255,0.2); margin:10px 0">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+                <div><b>Mag:</b> ${{p.mag}} ML</div>
+                <div><b>Prof:</b> ${{p.depth}} km</div>
+                <div><b>Año:</b> ${{p.year}}</div>
+                <div><b>Cluster:</b> ${{clusterIdx + 1}}</div>
+            </div>
+            <div style="margin-top:10px; padding:8px; background:rgba(255,255,255,0.1); border-radius:6px; font-size:0.75rem">
+                Ubicación vinculada a la <b>Macro-Zona ${{clusterIdx + 1}}</b> en la segmentación actual.
+            </div>
+        `;
+    }}
+
     function renderMarkers() {{
         markerLayer.clearLayers();
         const clusterKey = `cluster_k${{currentK}}`;
+        let count = 0;
         
         seismicPoints.forEach(p => {{
             const clusterIdx = p[clusterKey];
-            const marker = L.circleMarker([p.latitude, p.longitude], {{
-                radius: p.mag * 1.5,
-                fillColor: colors[clusterIdx],
-                color: "#fff",
-                weight: 0.5,
-                opacity: 0.8,
-                fillOpacity: 0.9
-            }});
-            
-            marker.bindPopup(`
-                <div class="popup-card">
-                    <b>${{p.municipio_region}}</b><br>
-                    ${{p.departamento}}<br>
-                    <hr style="border:0; border-top:1px solid #eee; margin:5px 0">
-                    Mag: ${{p.mag}} | Prof: ${{p.depth}} km<br>
-                    Zona: ${{clusterIdx + 1}} (en K=${{currentK}})
-                </div>
-            `);
-            markerLayer.addLayer(marker);
+            const yearMatch = p.year <= currentYear;
+            const clusterMatch = (currentClusterFilter === null) || (clusterIdx === currentClusterFilter);
+
+            if (yearMatch && clusterMatch) {{
+                const marker = L.circleMarker([p.latitude, p.longitude], {{
+                    radius: p.mag * 1.4,
+                    fillColor: colors[clusterIdx],
+                    color: "#fff",
+                    weight: 0.4,
+                    opacity: 0.8,
+                    fillOpacity: 0.9
+                }});
+                
+                marker.on('click', () => showDetails(p));
+                markerLayer.addLayer(marker);
+                count++;
+            }}
         }});
+        document.getElementById('total-count').innerText = count;
     }}
 
-    // Gráficos Estáticos (Solo contexto)
+    // Gráficos Estáticos (Contexto)
     const chartOpts = {{ responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ display: false }} }}, scales: {{ y: {{ display: false }}, x: {{ display: false }} }} }};
     new Chart(document.getElementById('yearChart'), {{
         type: 'line', data: {{ labels: {json.dumps(years)}, datasets: [{{ data: {json.dumps(years_counts)}, borderColor: '#6c5ce7', tension: 0.4 }}] }}, options: chartOpts
