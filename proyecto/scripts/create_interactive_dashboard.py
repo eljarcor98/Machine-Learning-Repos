@@ -97,9 +97,12 @@ def create_dashboard():
         .card {{ background: var(--card); padding: 1.2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }}
         h2 {{ margin: 0 0 0.8rem 0; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }}
         
-        .k-selector {{ background: var(--primary); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem; }}
-        input[type=range] {{ width: 100%; cursor: pointer; }}
-        .k-value {{ font-size: 1.5rem; font-weight: 800; float: right; }}
+        .k-selector {{ background: var(--primary); color: white; padding: 1rem; border-radius: 12px; }}
+        .dark-panel {{ background: var(--text); color: white; padding: 1rem; border-radius: 12px; }}
+        input[type=range] {{ width: 100%; cursor: pointer; accent-color: var(--primary); margin: 4px 0; }}
+        .k-value {{ font-size: 1.3rem; font-weight: 800; float: right; }}
+        .range-row {{ display: flex; justify-content: space-between; font-size: 0.75rem; opacity: 0.9; margin-bottom: 4px; }}
+        .year-labels {{ display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 2px; opacity: 0.7; }}
 
         .stat-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }}
         .stat-item {{ background: var(--bg); padding: 0.8rem; border-radius: 8px; text-align: center; }}
@@ -108,8 +111,10 @@ def create_dashboard():
         
         .legend-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem; }}
         .legend-item {{ display: flex; align-items: center; background: #fafafa; padding: 4px; border-radius: 4px; }}
-        .dot {{ height: 8px; width: 8px; border-radius: 50%; margin-right: 6px; }}
+        .dot {{ height: 8px; width: 8px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }}
         
+        .muni-list {{ max-height: 130px; overflow-y: auto; font-size: 0.78rem; }}
+        .muni-tag {{ display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin: 2px; }}
         .popup-card {{ min-width: 150px; font-size: 0.85rem; }}
         .popup-card b {{ color: var(--primary); }}
     </style>
@@ -132,12 +137,16 @@ def create_dashboard():
     </div>
 
     <div class="sidebar">
-        <!-- Timeline -->
-        <div class="k-selector" style="background: var(--text)">
-            <span>Línea de Tiempo:</span>
-            <span class="k-value" id="year-display">TODOS</span>
-            <input type="range" id="year-slider" min="{min(years)}" max="{max(years)}" value="{max(years)}" oninput="updateTime(this.value)">
-            <p style="font-size:0.7rem; margin:10px 0 0 0; opacity:0.8">Filtre sismos por evolución temporal</p>
+        <!-- Rango de Tiempo -->
+        <div class="dark-panel">
+            <div style="font-weight:700; margin-bottom:8px">📅 Rango de Tiempo</div>
+            <div class="range-row">
+                <span>Desde: <b id="year-from-label">{min(years)}</b></span>
+                <span>Hasta: <b id="year-to-label">{max(years)}</b></span>
+            </div>
+            <input type="range" id="year-from" min="{min(years)}" max="{max(years)}" value="{min(years)}" oninput="updateRange()">
+            <input type="range" id="year-to" min="{min(years)}" max="{max(years)}" value="{max(years)}" oninput="updateRange()">
+            <div class="year-labels"><span>{min(years)}</span><span>{max(years)}</span></div>
         </div>
 
         <!-- Detail Panel -->
@@ -170,7 +179,13 @@ def create_dashboard():
         <div class="card">
             <h2>Leyenda Interactiva</h2>
             <div id="legend-grid" class="legend-grid"></div>
-            <p style="font-size:0.65rem; margin-top:8px; opacity:0.5; text-align:center">Haga clic en una zona para filtrar</p>
+            <p style="font-size:0.65rem; margin-top:8px; opacity:0.5; text-align:center">Haga clic en una zona para aislarla</p>
+        </div>
+
+        <!-- Panel de Municipios por Cluster -->
+        <div class="card" id="muni-panel" style="display:none; border-left: 4px solid var(--primary);">
+            <h2 id="muni-panel-title">Municipios de la Zona</h2>
+            <div id="muni-list" class="muni-list"></div>
         </div>
         <div class="card" style="flex-grow:1">
             <h2 id="chart-title">Tendencia Anual</h2>
@@ -186,7 +201,8 @@ def create_dashboard():
     const faultsGeoJSON = {faults_json};
     const colors = {json.dumps(colors)};
     let currentK = 7;
-    let currentYear = {max(years)};
+    let yearFrom = {min(years)};
+    let yearTo = {max(years)};
     let currentClusterFilter = null;
 
     // Configuración del Mapa
@@ -212,9 +228,13 @@ def create_dashboard():
         updateLegend();
     }}
 
-    function updateTime(val) {{
-        currentYear = parseInt(val);
-        document.getElementById('year-display').innerText = currentYear;
+    function updateRange() {{
+        let from = parseInt(document.getElementById('year-from').value);
+        let to = parseInt(document.getElementById('year-to').value);
+        if (from > to) {{ let tmp = from; from = to; to = tmp; }}
+        yearFrom = from; yearTo = to;
+        document.getElementById('year-from-label').innerText = from;
+        document.getElementById('year-to-label').innerText = to;
         renderMarkers();
     }}
 
@@ -222,6 +242,7 @@ def create_dashboard():
         currentClusterFilter = (currentClusterFilter === idx) ? null : idx;
         renderMarkers();
         updateLegend();
+        updateMuniPanel();
     }}
 
     function updateLegend() {{
@@ -230,7 +251,7 @@ def create_dashboard():
         for(let i=0; i < currentK; i++) {{
             const isSelected = (currentClusterFilter === i);
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
-            const border = isSelected ? 'border: 2.5px solid var(--primary); background: #eee;' : 'border: 1px solid #eee;';
+            const border = isSelected ? `border: 2.5px solid ${{colors[i]}}; background: #f0f0f0;` : 'border: 1px solid #eee;';
             
             grid.innerHTML += `
                 <div class="legend-item" onclick="toggleClusterFilter(${{i}})" 
@@ -240,6 +261,33 @@ def create_dashboard():
                 </div>
             `;
         }}
+    }}
+
+    function updateMuniPanel() {{
+        const panel = document.getElementById('muni-panel');
+        const list = document.getElementById('muni-list');
+        const title = document.getElementById('muni-panel-title');
+
+        if (currentClusterFilter === null) {{
+            panel.style.display = 'none';
+            return;
+        }}
+
+        const clusterKey = `cluster_k${{currentK}}`;
+        const colorHex = colors[currentClusterFilter];
+
+        // Recolectar municipios únicos del cluster actual en el rango de tiempo
+        const munis = new Set();
+        seismicPoints.forEach(p => {{
+            if (p[clusterKey] === currentClusterFilter && p.year >= yearFrom && p.year <= yearTo) {{
+                munis.add(p.municipio_region);
+            }}
+        }});
+
+        title.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${{colorHex}};margin-right:6px"></span> Zona ${{currentClusterFilter + 1}} — ${{munis.size}} municipios`;
+        list.innerHTML = [...munis].sort().map(m => `<span class="muni-tag">${{m}}</span>`).join('');
+        panel.style.borderColor = colorHex;
+        panel.style.display = 'block';
     }}
 
     function showDetails(p) {{
@@ -273,7 +321,7 @@ def create_dashboard():
         
         seismicPoints.forEach(p => {{
             const clusterIdx = p[clusterKey];
-            const yearMatch = p.year <= currentYear;
+            const yearMatch = p.year >= yearFrom && p.year <= yearTo;
             const clusterMatch = (currentClusterFilter === null) || (clusterIdx === currentClusterFilter);
 
             if (yearMatch && clusterMatch) {{
