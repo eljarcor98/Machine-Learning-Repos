@@ -152,7 +152,9 @@ def create_dashboard():
     }});
 
     const map = L.map('map').setView([4.57, -74.3], 6);
-    L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_all/{{z}}/{{x}}/{{y}}{{r}}.png').addTo(map);
+    L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+        attribution: '&copy; OpenStreetMap contributors'
+    }}).addTo(map);
 
     // Fallas en Rojo Suave
     L.geoJSON(faultsGeoJSON, {{
