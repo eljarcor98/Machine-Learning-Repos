@@ -5,6 +5,10 @@ Este proyecto implementa un flujo de trabajo basado en la metodología **CRISP-D
 ## 🚀 Descripción General
 El sistema permite explorar la sismicidad en Colombia mediante un **Dashboard Interactivo Pro (v3.4)**. A diferencia de modelos estáticos, este sistema permite:
 - **Clustering Dinámico**: Variar el número de zonas (K) de 2 a 10 en tiempo real.
+- **Justificación de Agrupación (v3.6+)**: Perfiles dicientes que explican *por qué* un sismo pertenece a un grupo (ej. superficial, intermedio, profundo).
+- **Panel Lateral Unificado (v3.7+)**: Toda la información de zonas, municipios y detalles de sismos se concentra en un solo lugar permanente.
+- **Botón de Reinicio Maestro (v3.10)**: Restauración instantánea de todos los filtros, zoom y segmentación K.
+- **Layout Optimizada**: Interfaz adaptable que evita solapamientos y maximiza la legibilidad del texto de impacto.
 - **Perfiles Ciudadanos**: Clasificación automática de clusters en lenguaje sencillo (Riesgo Alto/Medio/Bajo e impacto esperado).
 - **Control Temporal**: Rango de años seleccionable (Desde/Hasta) para observar la evolución sísmica.
 - **Contexto Geológico**: Visualización de fallas geológicas oficiales (Atlas 2020) sobre un mapa minimalista.
