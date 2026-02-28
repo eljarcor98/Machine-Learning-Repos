@@ -179,21 +179,21 @@ def create_dashboard():
         .year-labels {{ display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 2px; opacity: 0.7; }}
 
         .stat-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }}
-        .stat-item {{ background: var(--bg); padding: 0.8rem; border-radius: 8px; text-align: center; }}
-        .stat-num {{ font-size: 1.2rem; font-weight: 800; color: var(--primary); display: block; }}
-        .stat-label {{ font-size: 0.7rem; opacity: 0.7; }}
+        .stats-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center; }}
+        .stat-item {{ background: #fafafa; padding: 0.6rem; border-radius: 8px; border: 1px solid #eee; }}
+        .stat-num {{ font-size: 1.1rem; font-weight: 800; color: var(--primary); display: block; }}
+        .stat-label {{ font-size: 0.65rem; opacity: 0.7; }}
         
-        .legend-grid {{ display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem; }}
-        .legend-item {{ display: flex; align-items: center; background: #fafafa; padding: 8px; border-radius: 6px; gap: 8px; }}
+        .legend-grid {{ display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.78rem; }}
+        .legend-item {{ display: flex; align-items: center; background: #fafafa; padding: 6px 10px; border-radius: 6px; gap: 8px; border: 1px solid transparent; }}
         .legend-item .meta {{ display: flex; flex-direction: column; flex: 1; }}
-        .legend-item .meta .name {{ font-weight: 700; font-size: 0.8rem; }}
-        .legend-item .meta .sub  {{ font-size: 0.68rem; opacity: 0.65; margin-top: 2px; }}
-        .dot {{ height: 12px; width: 12px; border-radius: 50%; flex-shrink: 0; }}
+        .legend-item .meta .name {{ font-weight: 700; font-size: 0.78rem; }}
+        .legend-item .meta .sub  {{ font-size: 0.65rem; opacity: 0.6; }}
+        .dot {{ height: 10px; width: 10px; border-radius: 50%; flex-shrink: 0; }}
         
-        .muni-list {{ max-height: 130px; overflow-y: auto; font-size: 0.78rem; }}
-        .muni-tag {{ display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin: 2px; }}
-        .popup-card {{ min-width: 150px; font-size: 0.85rem; }}
-        .popup-card b {{ color: var(--primary); }}
+        .profile-panel {{ border-left: 4px solid #dfe6e9; background: #fff; display: flex; flex-direction: column; min-height: 200px; }}
+        .muni-list {{ max-height: 120px; overflow-y: auto; font-size: 0.75rem; padding: 4px; }}
+        .muni-tag {{ display: inline-block; background: #f1f2f6; color: #2d3436; padding: 2px 8px; border-radius: 12px; margin: 2px; font-weight: 500; border: 1px solid #dfe6e9; }}
     </style>
 </head>
 <body>
@@ -257,10 +257,14 @@ def create_dashboard():
             <div id="legend-grid" class="legend-grid"></div>
         </div>
 
-        <!-- Panel de Municipios por Cluster -->
-        <div class="card" id="muni-panel" style="display:none; border-left: 4px solid var(--primary);">
-            <h2 id="muni-panel-title">Municipios de la Zona</h2>
-            <div id="muni-list" class="muni-list"></div>
+        <!-- Panel de Perfil de Zona (Ocupa el espacio en blanco) -->
+        <div class="card profile-panel" id="profile-panel">
+            <div id="profile-content">
+                <div style="text-align:center; padding: 40px 20px; opacity:0.5;">
+                    <span style="font-size:3rem; display:block; margin-bottom:15px">🔍</span>
+                    <p style="font-size:0.85rem">Selecciona una <b>zona en la leyenda</b> o un <b>punto en el mapa</b> para ver el criterio de riesgo y municipios afectados.</p>
+                </div>
+            </div>
         </div>
         <div class="card" style="flex-grow:1">
             <h2>Tendencia Anual</h2>
@@ -316,7 +320,7 @@ def create_dashboard():
         currentClusterFilter = (currentClusterFilter === idx) ? null : idx;
         renderMarkers();
         updateLegend();
-        updateMuniPanel();
+        updateProfilePanel();
     }}
 
     function updateLegend() {{
@@ -326,7 +330,7 @@ def create_dashboard():
         for(let i=0; i < currentK; i++) {{
             const isSelected = (currentClusterFilter === i);
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
-            const border = isSelected ? `border: 2px solid ${{colors[i]}}; background: #f4f4ff;` : 'border: 1px solid #eee;';
+            const border = isSelected ? `border: 2px solid ${{colors[i]}}; background: #fdfdff;` : 'border: 1px solid #eee;';
             const prof = profiles[i] || {{}};
             const gname = prof.group_name || `Zona ${{i+1}}`;
             const sub   = prof.top_depto ? `📍 ${{prof.top_depto}} · hasta ${{prof.max_mag}} ML` : '';
@@ -344,13 +348,18 @@ def create_dashboard():
         }}
     }}
 
-    function updateMuniPanel() {{
-        const panel = document.getElementById('muni-panel');
-        const list = document.getElementById('muni-list');
-        const title = document.getElementById('muni-panel-title');
+    function updateProfilePanel() {{
+        const content = document.getElementById('profile-content');
+        const panel = document.getElementById('profile-panel');
 
         if (currentClusterFilter === null) {{
-            panel.style.display = 'none';
+            panel.style.borderLeftColor = '#dfe6e9';
+            content.innerHTML = `
+                <div style="text-align:center; padding: 40px 20px; opacity:0.5;">
+                    <span style="font-size:3rem; display:block; margin-bottom:15px">🔍</span>
+                    <p style="font-size:0.85rem">Selecciona una <b>zona en la leyenda</b> o un <b>punto en el mapa</b> para ver el criterio de riesgo y municipios afectados.</p>
+                </div>
+            `;
             return;
         }}
 
@@ -358,70 +367,84 @@ def create_dashboard():
         const colorHex = colors[currentClusterFilter];
         const prof = (allProfiles[currentK] || {{}})[currentClusterFilter] || {{}};
 
-        // Recolectar municipios únicos
         const munis = new Set();
         seismicPoints.forEach(p => {{
-            if (p[clusterKey] === currentClusterFilter && p.year >= yearFrom && p.year <= yearTo) {{
-                munis.add(p.municipio_region);
-            }}
+            if (p[clusterKey] === currentClusterFilter && p.year >= yearFrom && p.year <= yearTo) munis.add(p.municipio_region);
         }});
 
-        title.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${{colorHex}};margin-right:6px"></span><b>Zona ${{currentClusterFilter + 1}}</b> — ${{munis.size}} municipios`;
-        
-        const impactText = prof.impact_text || '';
-        const groupCriteria = prof.grouping_criteria || '';
-        list.innerHTML = `
-            <div style="background:rgba(0,0,0,0.04); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.82rem">
-                <div style="font-weight:700; font-size:0.92rem; margin-bottom:4px">${{prof.group_name || 'Zona ' + (currentClusterFilter+1)}}</div>
-                <div style="font-size:0.7rem; opacity:0.7; margin-bottom:10px; font-style:italic">Criterio: ${{groupCriteria}}</div>
-                
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px">
-                    <div>📊 <b>${{prof.count || 0}}</b> sismos</div>
-                    <div>📍 <b>${{prof.top_depto || '—'}}</b></div>
-                    <div>📉 <b>${{prof.avg_depth || 0}} km</b> prof. media</div>
-                    <div>💥 hasta <b>${{prof.max_mag || 0}} ML</b></div>
+        panel.style.borderLeftColor = colorHex;
+        content.innerHTML = `
+            <div style="padding:15px">
+                <div style="display:flex; align-items:center; margin-bottom:10px">
+                    <span style="width:12px; height:12px; border-radius:50%; background:${{colorHex}}; margin-right:8px"></span>
+                    <h2 style="margin:0; font-size:1.1rem">Zona ${{currentClusterFilter + 1}}: ${{prof.group_name}}</h2>
                 </div>
-                <div style="background:rgba(0,0,0,0.06); border-radius:6px; padding:10px; font-size:0.78rem; line-height:1.6; color:#2f3640; border-left: 3px solid ${{colorHex}}">
-                    💡 ${{impactText}}
+                
+                <div style="font-size:0.75rem; color:#636e72; font-style:italic; margin-bottom:15px">
+                    <b>Criterio de Agrupación:</b> ${{prof.grouping_criteria}}
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:15px">
+                    <div class="stat-item"><span class="stat-num">${{prof.count}}</span><span class="stat-label">Sismos</span></div>
+                    <div class="stat-item"><span class="stat-num">${{prof.max_mag}}</span><span class="stat-label">Mag. Máx</span></div>
+                </div>
+
+                <div style="background:#f8f9fa; border-top: 3px solid ${{colorHex}}; padding:12px; border-radius:4px; font-size:0.82rem; line-height:1.5; color:#2d3436; margin-bottom:15px">
+                    💡 ${{prof.impact_text}}
+                </div>
+
+                <div style="font-size:0.75rem; font-weight:700; margin-bottom:8px; opacity:0.6; text-transform:uppercase; letter-spacing:0.5px">Municipios en esta Zona (${{munis.size}})</div>
+                <div class="muni-list">
+                    ${{[...munis].sort().map(m => `<span class="muni-tag">${{m}}</span>`).join('')}}
                 </div>
             </div>
-            <div style="font-size:0.7rem; font-weight:700; margin-bottom:5px; opacity:0.5; letter-spacing:0.5px">MUNICIPIOS EN ESTA CLASIFICACIÓN:</div>
-            ${{[...munis].sort().map(m => `<span class="muni-tag">${{m}}</span>`).join('')}}
         `;
-        panel.style.borderColor = colorHex;
-        panel.style.display = 'block';
     }}
 
     function showDetails(p) {{
-        const panel = document.getElementById('detail-panel');
-        const content = document.getElementById('detail-content');
-        panel.style.display = 'block';
         const clusterIdx = p[`cluster_k${{currentK}}`];
+        currentClusterFilter = clusterIdx; // Sincronizar filtro al tocar punto
+        renderMarkers();
+        updateLegend();
+        
+        const content = document.getElementById('profile-content');
+        const panel = document.getElementById('profile-panel');
         const prof = (allProfiles[currentK] || {{}})[clusterIdx] || {{}};
         const colorHex = colors[clusterIdx];
 
-        // Explicación sencilla sobre la profundidad e impacto
         let depthDesc = '';
-        if (p.depth < 30) depthDesc = `Este sismo fue **muy superficial** (${{p.depth}} km), lo que suele causar sacudidas más fuertes y ruidosas en la superficie.`;
-        else if (p.depth < 70) depthDesc = `Ocurrió a una profundidad **superficial** (${{p.depth}} km), donde la energía se siente directamente en los municipios cercanos.`;
-        else if (p.depth < 150) depthDesc = `Fue un sismo de **profundidad moderada** (${{p.depth}} km). La sacudida se dispersa un poco más antes de llegar arriba.`;
-        else depthDesc = `Ocurrió a **gran profundidad** (${{p.depth}} km), por lo que se siente como un balanceo suave pero largo en áreas muy extensas.`;
+        if (p.depth < 30) depthDesc = `Sismo **muy superficial** (${{p.depth}} km). Sacudida fuerte en superficie.`;
+        else if (p.depth < 70) depthDesc = `Sismo **superficial** (${{p.depth}} km). Impacto directo local.`;
+        else if (p.depth < 150) depthDesc = `Profundidad **moderada** (${{p.depth}} km). Energía dispersa.`;
+        else depthDesc = `**Gran profundidad** (${{p.depth}} km). Vibración suave y balanceo.`;
 
-        const groupReason = `Este sismo se agrupa con el **${{prof.group_name}}** porque su profundidad (${{p.depth}} km) y zona de origen coinciden con el patrón de riesgo histórico administrado para esta región.`;
-        
+        panel.style.borderLeftColor = colorHex;
         content.innerHTML = `
-            <b style="font-size:1.1rem; display:block; margin-bottom:5px">${{p.municipio_region}}</b>
-            <span style="opacity:0.9">${{p.departamento}}</span>
-            <hr style="border:0; border-top:1px solid rgba(255,255,255,0.2); margin:10px 0">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:0.83rem">
-                <div>💥 Mag: <b>${{p.mag}} ML</b></div>
-                <div>📉 Prof: <b>${{p.depth}} km</b></div>
-                <div>📅 Año: <b>${{p.year}}</b></div>
-                <div>${{prof.risk_icon || ''}} <b>${{prof.risk || ''}} Riesgo</b></div>
-            </div>
-            <div style="margin-top:10px; padding:10px; background:rgba(255,255,255,0.12); border-radius:8px; font-size:0.78rem; line-height:1.5">
-                <div style="margin-bottom:8px">${{depthDesc}}</div>
-                <div style="opacity:0.8; font-style:italic; font-size:0.72rem">${{groupReason}}</div>
+            <div style="padding:15px; background: #fdfdfd">
+                <div style="border-bottom: 1px solid #eee; padding-bottom:10px; margin-bottom:10px">
+                    <h2 style="margin:0; font-size:1.1rem; color:var(--primary)">${{p.municipio_region}}</h2>
+                    <span style="font-size:0.8rem; opacity:0.7">${{p.departamento}}</span>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; font-size:0.85rem; margin-bottom:12px">
+                    <div>💥 Mag: <b>${{p.mag}} ML</b></div>
+                    <div>📉 Prof: <b>${{p.depth}} km</b></div>
+                    <div>📅 Año: <b>${{p.year}}</b></div>
+                    <div>${{prof.risk_icon}} <b>Zona ${{clusterIdx + 1}}</b></div>
+                </div>
+
+                <div style="background:${{colorHex}}15; border-left: 3px solid ${{colorHex}}; padding:10px; border-radius:4px; font-size:0.8rem; line-height:1.4; margin-bottom:15px">
+                    ${{depthDesc}}
+                </div>
+
+                <div style="font-size:0.75rem; border-top: 1px dashed #ccc; padding-top:10px; margin-top:10px">
+                    <b style="color:${{colorHex}}">Agrupado en:</b> ${{prof.group_name}}<br>
+                    <span style="opacity:0.8">${{prof.grouping_criteria}}</span>
+                </div>
+                
+                <button onclick="updateProfilePanel()" style="width:100%; margin-top:15px; padding:8px; background:#eee; border:none; border-radius:6px; cursor:pointer; font-size:0.75rem">
+                    ← Ver todos los municipios de la Zona ${{clusterIdx + 1}}
+                </button>
             </div>
         `;
     }}
