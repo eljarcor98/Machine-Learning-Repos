@@ -108,7 +108,8 @@ def create_dashboard():
                     "depth_icon": depth_icon,
                     "risk": risk,
                     "risk_icon": risk_icon,
-                    "label": f"{risk_icon} {seis_type} · {risk} Riesgo"
+                    "label": f"{risk_icon} {seis_type} · {risk} Riesgo",
+                    "name": f"{risk_icon} {seis_type} — {risk} Riesgo"
                 }
             all_profiles[k] = profiles
 
@@ -156,9 +157,12 @@ def create_dashboard():
         .stat-num {{ font-size: 1.2rem; font-weight: 800; color: var(--primary); display: block; }}
         .stat-label {{ font-size: 0.7rem; opacity: 0.7; }}
         
-        .legend-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem; }}
-        .legend-item {{ display: flex; align-items: center; background: #fafafa; padding: 4px; border-radius: 4px; }}
-        .dot {{ height: 8px; width: 8px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }}
+        .legend-grid {{ display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.78rem; }}
+        .legend-item {{ display: flex; align-items: center; background: #fafafa; padding: 8px; border-radius: 6px; gap: 8px; }}
+        .legend-item .meta {{ display: flex; flex-direction: column; flex: 1; }}
+        .legend-item .meta .name {{ font-weight: 700; font-size: 0.8rem; }}
+        .legend-item .meta .sub  {{ font-size: 0.68rem; opacity: 0.65; margin-top: 2px; }}
+        .dot {{ height: 12px; width: 12px; border-radius: 50%; flex-shrink: 0; }}
         
         .muni-list {{ max-height: 130px; overflow-y: auto; font-size: 0.78rem; }}
         .muni-tag {{ display: inline-block; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; margin: 2px; }}
@@ -300,17 +304,17 @@ def create_dashboard():
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
             const border = isSelected ? `border: 2px solid ${{colors[i]}}; background: #f4f4ff;` : 'border: 1px solid #eee;';
             const prof = profiles[i] || {{}};
-            const riskIcon = prof.risk_icon || '⚪';
-            const seisType = prof.seis_type || '';
+            const name = prof.name || `Zona ${{i+1}}`;
+            const sub  = prof.top_depto ? `📍 ${{prof.top_depto}} · ${{prof.avg_depth}} km prof.` : '';
             
             grid.innerHTML += `
                 <div class="legend-item" onclick="toggleClusterFilter(${{i}})" 
-                     style="cursor:pointer; transition:0.2s; ${{opacity}} ${{border}} padding:6px; flex-direction:column; align-items:flex-start;">
-                    <div style="display:flex; align-items:center">
-                        <span class="dot" style="background-color: ${{colors[i]}};width:10px;height:10px;"></span>
-                        <b style="font-size:0.78rem">Zona ${{i+1}}</b>
+                     style="cursor:pointer; transition:0.2s; ${{opacity}} ${{border}}">
+                    <span class="dot" style="background-color:${{colors[i]}}"></span>
+                    <div class="meta">
+                        <span class="name">Zona ${{i+1}} — ${{name}}</span>
+                        <span class="sub">${{sub}}</span>
                     </div>
-                    <div style="font-size:0.68rem; margin-top:3px; opacity:0.75">${{riskIcon}} ${{seisType}}</div>
                 </div>
             `;
         }}
