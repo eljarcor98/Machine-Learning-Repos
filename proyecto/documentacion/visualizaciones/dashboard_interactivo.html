@@ -113,7 +113,6 @@
 
         <div class="card">
             <div id="legend-grid" class="legend-grid"></div>
-            <p style="font-size:0.62rem; margin-top:6px; opacity:0.45; text-align:center">↗ Toca una zona para ver su perfil</p>
         </div>
 
         <!-- Panel de Municipios por Cluster -->
@@ -256,11 +255,14 @@
         const prof = (allProfiles[currentK] || {})[clusterIdx] || {};
         const colorHex = colors[clusterIdx];
 
-        // Razón de asignación basada en profundidad
-        let reason = '';
-        if (p.depth < 70) reason = `Su profundidad de <b>${p.depth} km</b> indica foco cortical superficial.`;
-        else if (p.depth < 150) reason = `Su profundidad de <b>${p.depth} km</b> indica foco intermedio.`;
-        else reason = `Su profundidad de <b>${p.depth} km</b> lo ubica en zona profunda (posible nido sísmico).`;
+        // Explicación sencilla sobre la profundidad e impacto
+        let depthDesc = '';
+        if (p.depth < 30) depthDesc = `Este sismo fue **muy superficial** (${p.depth} km), lo que suele causar sacudidas más fuertes y ruidosas en la superficie.`;
+        else if (p.depth < 70) depthDesc = `Ocurrió a una profundidad **superficial** (${p.depth} km), donde la energía se siente directamente en los municipios cercanos.`;
+        else if (p.depth < 150) depthDesc = `Fue un sismo de **profundidad moderada** (${p.depth} km). La sacudida se dispersa un poco más antes de llegar arriba.`;
+        else depthDesc = `Ocurrió a **gran profundidad** (${p.depth} km), por lo que se siente como un balanceo suave pero largo en áreas muy extensas.`;
+
+        const groupReason = `Se agrupa en esta zona porque su comportamiento y ubicación coinciden con el patrón histórico de **${prof.top_depto}**.`;
         
         content.innerHTML = `
             <b style="font-size:1.1rem; display:block; margin-bottom:5px">${p.municipio_region}</b>
@@ -272,9 +274,9 @@
                 <div>📅 Año: <b>${p.year}</b></div>
                 <div>${prof.risk_icon || ''} <b>${prof.risk || ''} Riesgo</b></div>
             </div>
-            <div style="margin-top:10px; padding:8px; background:rgba(255,255,255,0.12); border-radius:6px; font-size:0.75rem; line-height:1.5">
-                <b>¿Por qué en Zona ${clusterIdx + 1}?</b><br>
-                ${reason} La zona tiene una profundidad media de <b>${prof.avg_depth} km</b>, tipo <b>${prof.seis_type}</b>, predominando en <b>${prof.top_depto}</b>.
+            <div style="margin-top:10px; padding:10px; background:rgba(255,255,255,0.12); border-radius:8px; font-size:0.78rem; line-height:1.5">
+                <div style="margin-bottom:8px">${depthDesc}</div>
+                <div style="opacity:0.8; font-style:italic; font-size:0.72rem">${groupReason}</div>
             </div>
         `;
     }
