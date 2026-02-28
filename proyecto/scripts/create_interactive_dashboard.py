@@ -98,6 +98,23 @@ def create_dashboard():
                     risk = "Bajo"
                     risk_icon = "🟢"
 
+                # Texto accesible para el ciudadano
+                if avg_depth < 70:
+                    citizen_name = f"🔴 Zona de Riesgo {risk} (Superficial)"
+                    impact_text = (f"Sismos a {avg_depth:.0f} km de profundidad se sienten con fuerza en superficie. "
+                                   f"Con magnitudes de hasta {max_mag} ML, son capaces de dañar edificaciones "
+                                   f"sin refuerzo sísmico, cortar agua y gas, y activar deslizamientos.")
+                elif avg_depth < 150:
+                    citizen_name = f"🟡 Zona Intermedia (Profundidad Moderada)"
+                    impact_text = (f"A {avg_depth:.0f} km de profundidad, la energía se amortigua parcialmente. "
+                                   f"Aun así, con magnitudes promedio de {avg_mag} ML pueden sentirse en "
+                                   f"grandes áreas y afectar estructuras antiguas o en mal estado.")
+                else:
+                    citizen_name = f"🟢 Zona Profunda (Bajo Impacto Superficial)"
+                    impact_text = (f"Con focos a {avg_depth:.0f} km, la energía se disipa antes de llegar a "
+                                   f"la superficie. Aunque se registran magnitudes de hasta {max_mag} ML, "
+                                   f"el impacto estructural es menor. Se perciben como vibraciones largas y suaves.")
+
                 profiles[cid] = {
                     "count": int(count),
                     "avg_depth": float(avg_depth),
@@ -108,8 +125,9 @@ def create_dashboard():
                     "depth_icon": depth_icon,
                     "risk": risk,
                     "risk_icon": risk_icon,
-                    "label": f"{risk_icon} {seis_type} · {risk} Riesgo",
-                    "name": f"{risk_icon} {seis_type} — {risk} Riesgo"
+                    "name": f"{risk_icon} {seis_type} — {risk} Riesgo",
+                    "citizen_name": citizen_name,
+                    "impact_text": impact_text
                 }
             all_profiles[k] = profiles
 
@@ -228,9 +246,8 @@ def create_dashboard():
         </div>
 
         <div class="card">
-            <h2>Leyenda Interactiva</h2>
             <div id="legend-grid" class="legend-grid"></div>
-            <p style="font-size:0.65rem; margin-top:8px; opacity:0.5; text-align:center">Haga clic en una zona para aislarla</p>
+            <p style="font-size:0.62rem; margin-top:6px; opacity:0.45; text-align:center">↗ Toca una zona para ver su perfil</p>
         </div>
 
         <!-- Panel de Municipios por Cluster -->
@@ -249,7 +266,7 @@ def create_dashboard():
     const seismicPoints = {json.dumps(seismic_data)};
     const faultsGeoJSON = {faults_json};
     const colors = {json.dumps(colors)};
-    const allProfiles = {json.dumps({int(k): {int(c): v for c, v in profiles.items()} for k, profiles in all_profiles.items()})};
+    const allProfiles = {json.dumps(all_profiles)};
     let currentK = 7;
     let yearFrom = {min(years)};
     let yearTo = {max(years)};
@@ -304,15 +321,15 @@ def create_dashboard():
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
             const border = isSelected ? `border: 2px solid ${{colors[i]}}; background: #f4f4ff;` : 'border: 1px solid #eee;';
             const prof = profiles[i] || {{}};
-            const name = prof.name || `Zona ${{i+1}}`;
-            const sub  = prof.top_depto ? `📍 ${{prof.top_depto}} · ${{prof.avg_depth}} km prof.` : '';
+            const cname = prof.citizen_name || `Zona ${{i+1}}`;
+            const sub   = prof.top_depto ? `📍 ${{prof.top_depto}} · hasta ${{prof.max_mag}} ML` : '';
             
             grid.innerHTML += `
                 <div class="legend-item" onclick="toggleClusterFilter(${{i}})" 
                      style="cursor:pointer; transition:0.2s; ${{opacity}} ${{border}}">
                     <span class="dot" style="background-color:${{colors[i]}}"></span>
                     <div class="meta">
-                        <span class="name">Zona ${{i+1}} — ${{name}}</span>
+                        <span class="name">Zona ${{i+1}} · ${{cname}}</span>
                         <span class="sub">${{sub}}</span>
                     </div>
                 </div>
@@ -344,23 +361,21 @@ def create_dashboard():
 
         title.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${{colorHex}};margin-right:6px"></span><b>Zona ${{currentClusterFilter + 1}}</b> — ${{munis.size}} municipios`;
         
-        // Mostrar tarjeta de perfil
+        const impactText = prof.impact_text || '';
         list.innerHTML = `
-            <div style="background:rgba(0,0,0,0.04); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.8rem">
-                <div style="font-weight:700; margin-bottom:6px">${{prof.risk_icon || ''}} Perfil de la Zona ${{currentClusterFilter + 1}}</div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px">
+            <div style="background:rgba(0,0,0,0.04); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.82rem">
+                <div style="font-weight:700; font-size:0.9rem; margin-bottom:8px">${{prof.citizen_name || 'Zona ' + (currentClusterFilter+1)}}</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px">
                     <div>📊 <b>${{prof.count || 0}}</b> sismos</div>
                     <div>📍 <b>${{prof.top_depto || '—'}}</b></div>
-                    <div>📉 Prof. media: <b>${{prof.avg_depth || 0}} km</b></div>
-                    <div>💥 Mag. media: <b>${{prof.avg_mag || 0}} ML</b></div>
-                    <div>⚡ Mag. máx: <b>${{prof.max_mag || 0}} ML</b></div>
-                    <div>${{prof.depth_icon || ''}} <b>${{prof.seis_type || ''}}</b></div>
+                    <div>📉 <b>${{prof.avg_depth || 0}} km</b> prof. media</div>
+                    <div>💥 hasta <b>${{prof.max_mag || 0}} ML</b></div>
                 </div>
-                <div style="margin-top:8px; padding:6px; background:rgba(0,0,0,0.06); border-radius:6px; font-size:0.72rem; line-height:1.4">
-                    Esta zona se caracteriza por sismicidad <b>${{prof.seis_type}}</b> centrada en <b>${{prof.top_depto}}</b>. Su profundidad media de <b>${{prof.avg_depth}} km</b> la clasifica como actividad <b>${{prof.seis_type}}</b>. Su nivel de riesgo es <b>${{prof.risk_icon}} ${{prof.risk}}</b> basado en magnitud y frecuencia.
+                <div style="background:rgba(0,0,0,0.06); border-radius:6px; padding:8px; font-size:0.76rem; line-height:1.6; color:#2f3640">
+                    💬 ${{impactText}}
                 </div>
             </div>
-            <div style="font-size:0.72rem; font-weight:700; margin-bottom:5px; opacity:0.6">MUNICIPIOS INCLUIDOS:</div>
+            <div style="font-size:0.7rem; font-weight:700; margin-bottom:5px; opacity:0.5; letter-spacing:0.5px">MUNICIPIOS AFECTADOS:</div>
             ${{[...munis].sort().map(m => `<span class="muni-tag">${{m}}</span>`).join('')}}
         `;
         panel.style.borderColor = colorHex;
