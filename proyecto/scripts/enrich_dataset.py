@@ -5,7 +5,7 @@ import seaborn as sns
 import os
 
 # Configuración
-input_path = 'data/earthquakes_raw.csv'
+input_path = 'data/earthquakes_cleaned.csv'
 output_path = 'data/earthquakes_enriched.csv'
 viz_dir = 'documentacion/visualizaciones'
 os.makedirs(viz_dir, exist_ok=True)
@@ -32,24 +32,70 @@ def get_municipality(place):
     if pd.isna(place): return "Desconocido"
     parts = place.split(', ')
     if len(parts) > 1:
-        # Intenta obtener el municipio que suele estar antes de la coma final (región/país)
         sub_parts = parts[0].split(' of ')
         return sub_parts[-1]
     return place
+
+import unicodedata
+
+def normalize_text(text):
+    if not isinstance(text, str): return ""
+    # Eliminar acentos y convertir a minúsculas
+    text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode('utf-8')
+    return text.strip().lower()
+
+# Cargar tablas de referencia oficiales
+print("Cargando base de datos oficial de municipios y departamentos...")
+try:
+    df_deptos_ref = pd.read_csv('data/TBL_DEPARTAMENTOS.csv', header=None, names=['id_depto', 'departamento'], encoding='latin1')
+    df_mun_ref = pd.read_csv('data/TBL_MUNICIPIOS.csv', header=None, names=['id_mun', 'municipio', 'id_depto'], encoding='latin1')
+    
+    # Limpiar espacios
+    df_deptos_ref['departamento'] = df_deptos_ref['departamento'].str.strip()
+    df_mun_ref['municipio'] = df_mun_ref['municipio'].str.strip()
+    
+    # Crear un diccionario de búsqueda: municipio_normalizado -> departamento
+    df_ref = df_mun_ref.merge(df_deptos_ref, on='id_depto')
+    df_ref['municipio_norm'] = df_ref['municipio'].apply(normalize_text)
+    
+    LOOKUP_GEOGRAFICO = dict(zip(df_ref['municipio_norm'], df_ref['departamento']))
+except Exception as e:
+    print(f"Advertencia: No se pudo cargar la base de datos oficial ({e}). Usando fallback.")
+    LOOKUP_GEOGRAFICO = {}
+
+def get_department(municipality):
+    m_norm = normalize_text(municipality)
+    
+    # 1. Intentar match exacto en la base oficial
+    if m_norm in LOOKUP_GEOGRAFICO:
+        return LOOKUP_GEOGRAFICO[m_norm].title()
+    
+    # 2. Fallback inteligente para etiquetas genéricas
+    if "northern colombia" in m_norm: return "Norte de Colombia"
+    if "off the coast" in m_norm or "offshore" in m_norm: return "Océano Pacífico"
+    if "boundary" in m_norm: return "Zona Fronteriza"
+    if "mountain" in m_norm: return "Zona Montañosa"
+    if "near the" in m_norm: return municipality.replace("near the ", "").capitalize()
+    if "near" in m_norm: return municipality.replace("near ", "").capitalize()
+    
+    return municipality # Si no hay match, dejar el nombre original del lugar
 
 def enrich_data():
     print("Cargando datos...")
     df = pd.read_csv(input_path)
     
-    # 1. Extraer Municipio/Región
-    print("Extrayendo municipios...")
+    # 1. Extraer Municipio/Región y Departamento
+    print("Extrayendo municipios y departamentos...")
     df['municipio_region'] = df['place'].apply(get_municipality)
+    df['departamento'] = df['municipio_region'].apply(get_department)
     
     # 2. Magnitud vs Profundidad (Interacción)
     # Una métrica que combine ambos. Por ejemplo: mag / log1p(depth) 
     # Sismos superficiales con alta magnitud suelen tener mayor impacto.
     print("Calculando interacción Magnitud vs Profundidad...")
-    df['mag_depth_ratio'] = df['mag'] / np.log1p(df['depth'])
+    # Aseguramos profundidad mínima para evitar división por cero (log1p(0)=0)
+    safe_depth = np.maximum(df['depth'], 0.1)
+    df['mag_depth_ratio'] = df['mag'] / np.log1p(safe_depth)
     
     # 3. Sismos por Zona (Frecuencia en un radio de 0.5 grados ~55km)
     print("Calculando densidad de sismos por zona...")

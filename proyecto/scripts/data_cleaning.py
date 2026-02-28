@@ -30,15 +30,34 @@ def clean_data():
     existing_drops = [col for col in columns_to_drop if col in df.columns]
     df_cleaned = df.drop(columns=existing_drops)
     
-    final_shape = df_cleaned.shape
+    # --- FILTRADO GEOGRÁFICO (SOLO COLOMBIA) ---
+    print("Filtrando sismos fuera del territorio colombiano...")
     
-    print(f"Registros procesados: {initial_shape[0]}")
+    # Límites aproximados de Colombia
+    lat_min, lat_max = -4.5, 13.5
+    lon_min, lon_max = -82.0, -66.5
+    
+    # Filtro por coordenadas
+    df_colombia = df_cleaned[
+        (df_cleaned['latitude'] >= lat_min) & (df_cleaned['latitude'] <= lat_max) &
+        (df_cleaned['longitude'] >= lon_min) & (df_cleaned['longitude'] <= lon_max)
+    ].copy()
+    
+    # Filtro adicional por etiqueta de lugar (asegurar que mencione Colombia)
+    df_colombia = df_colombia[df_colombia['place'].str.contains('Colombia', case=False, na=False)]
+    
+    final_shape = df_colombia.shape
+    deleted_count = initial_shape[0] - final_shape[0]
+    deleted_percent = (deleted_count / initial_shape[0]) * 100
+    
+    print(f"Registros iniciales: {initial_shape[0]}")
+    print(f"Registros eliminados (fuera de Colombia): {deleted_count} ({deleted_percent:.2f}%)")
+    print(f"Registros finales: {final_shape[0]}")
     print(f"Columnas eliminadas: {len(existing_drops)}")
-    print(f"Columnas restantes: {final_shape[1]}")
     
     # Guardar dataset limpio
-    df_cleaned.to_csv(CLEAN_DATA_PATH, index=False)
-    print(f"Dataset limpio guardado en: {CLEAN_DATA_PATH}")
+    df_colombia.to_csv(CLEAN_DATA_PATH, index=False)
+    print(f"Dataset filtrado y limpio guardado en: {CLEAN_DATA_PATH}")
 
 if __name__ == "__main__":
     clean_data()

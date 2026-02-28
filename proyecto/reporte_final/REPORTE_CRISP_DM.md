@@ -99,8 +99,23 @@ En esta fase se deciden qué variables (features) usar y cómo transformarlas.
 *   **Naturaleza:** `mag`.
 *   **Exclusión por Nulos:** Se descartan `nst`, `horizontalError` y `magError` (60% nulos) para preservar el 100% de los registros útiles.
 
-### 3.2 Manejo de datos faltantes:
-Se optó por **seleccionar solo features completas** y eliminar las columnas técnicas. Esto permite conservar los **2,792 registros íntegros**, evitando la pérdida de datos y sesgos en el clustering.
+### 3.2 Manejo de datos faltantes y Filtrado Geográfico:
+Se optó por **seleccionar solo features completas** y eliminar las columnas técnicas (`nst`, `horizontalError`, etc.). Además, se realizó un filtrado estricto por territorio.
+
+#### Filtrado Territorial (Solo Colombia)
+Para garantizar la relevancia del análisis, se eliminaron todos los sismos ocurridos fuera del territorio colombiano (Lat: [-4.5, 13.5], Lon: [-82.0, -66.5]).
+
+*   **Registros Iniciales:** 2,792
+*   **Registros Eliminados:** 1,380 (**49.43%** del dataset)
+#### Impacto Visual del Filtrado
+![Comparativa de Limpieza Geográfica](../documentacion/visualizaciones/comparativa_limpieza_geografica.png)
+
+**¿Por qué fue necesaria esta eliminación?**
+1.  **Enfoque en Riesgo Local:** El objetivo del proyecto es asesorar a entidades colombianas (SGC, UNGRD). Los sismos en regiones distantes no afectan la infraestructura ni la planeación urbana del país.
+2.  **Reducción de Ruido:** Los sismos en dorsales oceánicas o fronteras tectónicas lejanas introducen "ruido" estadístico que dificulta al algoritmo K-Means identificar las firmas sísmicas únicas de las fallas activas en Colombia.
+3.  **Interpretabilidad del Modelo:** Al restringir el área, los clusters resultantes tienen un significado geográfico real y accionable, evitando que el modelo agrupe eventos por proximidad a gran escala en lugar de por comportamiento tectónico local.
+
+Esto permite conservar los **1,412 registros de alta relevancia**, asegurando que cada cluster represente una zona de interés nacional.
 
 ### 3.3 Scaling (CRÍTICO):
 El escalado de datos es el paso más importante antes de aplicar K-Means.
