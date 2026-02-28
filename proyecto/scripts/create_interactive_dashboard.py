@@ -98,22 +98,28 @@ def create_dashboard():
                     risk = "Bajo"
                     risk_icon = "🟢"
 
-                # Texto accesible para el ciudadano
+                # Criterios de Agrupación y Nombres de Grupo
                 if avg_depth < 70:
+                    group_name = "Grupo Superficial (Más Percibidos)"
+                    criteria = "Sismos cercanos a la superficie. Se agrupan aquí porque su impacto se siente con fuerza y ruido."
                     citizen_name = f"🔴 Zona de Riesgo {risk} (Superficial)"
-                    impact_text = (f"Sismos a {avg_depth:.0f} km de profundidad se sienten con fuerza en superficie. "
-                                   f"Con magnitudes de hasta {max_mag} ML, son capaces de dañar edificaciones "
-                                   f"sin refuerzo sísmico, cortar agua y gas, y activar deslizamientos.")
+                    impact_text = (f"Estos sismos ocurren a solo {avg_depth:.0f} km de profundidad. "
+                                   f"Se agrupan en esta zona porque son los que más 'sacuden' las casas. "
+                                   f"Con magnitudes de hasta {max_mag} ML, pueden dañar paredes y techos sin refuerzo.")
                 elif avg_depth < 150:
-                    citizen_name = f"🟡 Zona Intermedia (Profundidad Moderada)"
-                    impact_text = (f"A {avg_depth:.0f} km de profundidad, la energía se amortigua parcialmente. "
-                                   f"Aun así, con magnitudes promedio de {avg_mag} ML pueden sentirse en "
-                                   f"grandes áreas y afectar estructuras antiguas o en mal estado.")
+                    group_name = "Grupo Intermedio (Moderados)"
+                    criteria = "Sismos a profundidad media. Se agrupan aquí porque su energía se dispersa antes de llegar arriba."
+                    citizen_name = f"🟡 Zona de Profundidad Moderada"
+                    impact_text = (f"Ocurren a unos {avg_depth:.0f} km de profundidad. "
+                                   f"Se agrupan aquí porque se sienten más como un balanceo que como un golpe seco. "
+                                   f"Tienen un impacto moderado en las estructuras.")
                 else:
-                    citizen_name = f"🟢 Zona Profunda (Bajo Impacto Superficial)"
-                    impact_text = (f"Con focos a {avg_depth:.0f} km, la energía se disipa antes de llegar a "
-                                   f"la superficie. Aunque se registran magnitudes de hasta {max_mag} ML, "
-                                   f"el impacto estructural es menor. Se perciben como vibraciones largas y suaves.")
+                    group_name = "Grupo Profundo (Nidos Sísmicos)"
+                    criteria = "Sismos a gran profundidad. Se agrupan aquí por su origen profundo, usualmente en nidos sísmicos."
+                    citizen_name = f"🟢 Zona Profunda (Menor Riesgo)"
+                    impact_text = (f"Son sismos muy profundos (a más de {avg_depth:.0f} km). "
+                                   f"Se agrupan aquí porque rara vez causan daños, aunque se registren magnitudes de {max_mag} ML. "
+                                   f"Se sienten como vibraciones largas y suaves.")
 
                 profiles[cid] = {
                     "count": int(count),
@@ -127,7 +133,9 @@ def create_dashboard():
                     "risk_icon": risk_icon,
                     "name": f"{risk_icon} {seis_type} — {risk} Riesgo",
                     "citizen_name": citizen_name,
-                    "impact_text": impact_text
+                    "impact_text": impact_text,
+                    "group_name": group_name,
+                    "grouping_criteria": criteria
                 }
             all_profiles[k] = profiles
 
@@ -320,7 +328,7 @@ def create_dashboard():
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
             const border = isSelected ? `border: 2px solid ${{colors[i]}}; background: #f4f4ff;` : 'border: 1px solid #eee;';
             const prof = profiles[i] || {{}};
-            const cname = prof.citizen_name || `Zona ${{i+1}}`;
+            const gname = prof.group_name || `Zona ${{i+1}}`;
             const sub   = prof.top_depto ? `📍 ${{prof.top_depto}} · hasta ${{prof.max_mag}} ML` : '';
             
             grid.innerHTML += `
@@ -328,7 +336,7 @@ def create_dashboard():
                      style="cursor:pointer; transition:0.2s; ${{opacity}} ${{border}}">
                     <span class="dot" style="background-color:${{colors[i]}}"></span>
                     <div class="meta">
-                        <span class="name">Zona ${{i+1}} · ${{cname}}</span>
+                        <span class="name">Zona ${{i+1}} · ${{gname}}</span>
                         <span class="sub">${{sub}}</span>
                     </div>
                 </div>
@@ -361,20 +369,23 @@ def create_dashboard():
         title.innerHTML = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${{colorHex}};margin-right:6px"></span><b>Zona ${{currentClusterFilter + 1}}</b> — ${{munis.size}} municipios`;
         
         const impactText = prof.impact_text || '';
+        const groupCriteria = prof.grouping_criteria || '';
         list.innerHTML = `
             <div style="background:rgba(0,0,0,0.04); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.82rem">
-                <div style="font-weight:700; font-size:0.9rem; margin-bottom:8px">${{prof.citizen_name || 'Zona ' + (currentClusterFilter+1)}}</div>
+                <div style="font-weight:700; font-size:0.92rem; margin-bottom:4px">${{prof.group_name || 'Zona ' + (currentClusterFilter+1)}}</div>
+                <div style="font-size:0.7rem; opacity:0.7; margin-bottom:10px; font-style:italic">Criterio: ${{groupCriteria}}</div>
+                
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px">
                     <div>📊 <b>${{prof.count || 0}}</b> sismos</div>
                     <div>📍 <b>${{prof.top_depto || '—'}}</b></div>
                     <div>📉 <b>${{prof.avg_depth || 0}} km</b> prof. media</div>
                     <div>💥 hasta <b>${{prof.max_mag || 0}} ML</b></div>
                 </div>
-                <div style="background:rgba(0,0,0,0.06); border-radius:6px; padding:8px; font-size:0.76rem; line-height:1.6; color:#2f3640">
-                    💬 ${{impactText}}
+                <div style="background:rgba(0,0,0,0.06); border-radius:6px; padding:10px; font-size:0.78rem; line-height:1.6; color:#2f3640; border-left: 3px solid ${{colorHex}}">
+                    💡 ${{impactText}}
                 </div>
             </div>
-            <div style="font-size:0.7rem; font-weight:700; margin-bottom:5px; opacity:0.5; letter-spacing:0.5px">MUNICIPIOS AFECTADOS:</div>
+            <div style="font-size:0.7rem; font-weight:700; margin-bottom:5px; opacity:0.5; letter-spacing:0.5px">MUNICIPIOS EN ESTA CLASIFICACIÓN:</div>
             ${{[...munis].sort().map(m => `<span class="muni-tag">${{m}}</span>`).join('')}}
         `;
         panel.style.borderColor = colorHex;
@@ -396,7 +407,7 @@ def create_dashboard():
         else if (p.depth < 150) depthDesc = `Fue un sismo de **profundidad moderada** (${{p.depth}} km). La sacudida se dispersa un poco más antes de llegar arriba.`;
         else depthDesc = `Ocurrió a **gran profundidad** (${{p.depth}} km), por lo que se siente como un balanceo suave pero largo en áreas muy extensas.`;
 
-        const groupReason = `Se agrupa en esta zona porque su comportamiento y ubicación coinciden con el patrón histórico de **${{prof.top_depto}}**.`;
+        const groupReason = `Este sismo se agrupa con el **${{prof.group_name}}** porque su profundidad (${{p.depth}} km) y zona de origen coinciden con el patrón de riesgo histórico administrado para esta región.`;
         
         content.innerHTML = `
             <b style="font-size:1.1rem; display:block; margin-bottom:5px">${{p.municipio_region}}</b>
