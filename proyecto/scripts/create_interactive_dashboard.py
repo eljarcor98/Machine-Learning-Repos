@@ -486,17 +486,13 @@ def create_dashboard():
     }}
 
     function updateCharts(yearData, deptoData) {{
-        // Actualizar Gráfico de Años
-        const sortedYears = Object.keys(yearData).sort();
-        yearChart.data.labels = sortedYears;
-        yearChart.data.datasets[0].data = sortedYears.map(y => yearData[y]);
-        yearChart.update('none');
-
-        // Actualizar Gráfico de Departamentos (Top 7 dinámico)
-        const sortedDeptos = Object.keys(deptoData).sort((a,b) => deptoData[b] - deptoData[a]).slice(0, 7);
-        deptoChart.data.labels = sortedDeptos;
-        deptoChart.data.datasets[0].data = sortedDeptos.map(d => deptoData[d]);
-        deptoChart.update('none');
+        // Actualizar Gráfico de Años (Línea de Tiempo)
+        try {{
+            const sortedYears = Object.keys(yearData).sort();
+            yearChart.data.labels = sortedYears;
+            yearChart.data.datasets[0].data = sortedYears.map(y => yearData[y]);
+            yearChart.update('none');
+        }} catch(e) {{ console.error("Error al actualizar gráfico anual:", e); }}
     }}
 
     // Inicialización de Gráficos
