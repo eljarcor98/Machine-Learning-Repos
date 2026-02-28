@@ -195,12 +195,14 @@ def create_dashboard():
         attribution: '&copy; OpenStreetMap &copy; CARTO'
     }}).addTo(map);
 
+    // Capa de Fallas (Más visibles)
     L.geoJSON(faultsGeoJSON, {{
-        style: {{ color: "#ff7675", weight: 1, opacity: 0.15 }},
-        onEachFeature: (f, l) => {{ if(f.properties.NombreFall) l.bindPopup(`<b>FALLA:</b> ${{f.properties.NombreFall}}`); }}
+        style: {{ color: "#d63031", weight: 1.5, opacity: 0.45 }},
+        onEachFeature: (f, l) => {{ if(f.properties.NombreFall) l.bindPopup(`<b>FALLA GEOLÓGICA:</b> ${{f.properties.NombreFall}}`); }}
     }}).addTo(map);
 
     let markerLayer = L.layerGroup().addTo(map);
+    let yearChart, deptoChart;
 
     function updateK(val) {{
         currentK = parseInt(val);
@@ -228,7 +230,7 @@ def create_dashboard():
         for(let i=0; i < currentK; i++) {{
             const isSelected = (currentClusterFilter === i);
             const opacity = (currentClusterFilter !== null && !isSelected) ? 'opacity: 0.3;' : 'opacity: 1;';
-            const border = isSelected ? 'border: 2.5px solid var(--primary);' : 'border: 1px solid #eee;';
+            const border = isSelected ? 'border: 2.5px solid var(--primary); background: #eee;' : 'border: 1px solid #eee;';
             
             grid.innerHTML += `
                 <div class="legend-item" onclick="toggleClusterFilter(${{i}})" 
@@ -266,6 +268,8 @@ def create_dashboard():
         markerLayer.clearLayers();
         const clusterKey = `cluster_k${{currentK}}`;
         let count = 0;
+        let statsDepto = {{}};
+        let statsYear = {{}};
         
         seismicPoints.forEach(p => {{
             const clusterIdx = p[clusterKey];
@@ -273,6 +277,10 @@ def create_dashboard():
             const clusterMatch = (currentClusterFilter === null) || (clusterIdx === currentClusterFilter);
 
             if (yearMatch && clusterMatch) {{
+                // Acumular estadísticas dinámicas
+                statsDepto[p.departamento] = (statsDepto[p.departamento] || 0) + 1;
+                statsYear[p.year] = (statsYear[p.year] || 0) + 1;
+
                 const marker = L.circleMarker([p.latitude, p.longitude], {{
                     radius: p.mag * 1.4,
                     fillColor: colors[clusterIdx],
@@ -287,19 +295,41 @@ def create_dashboard():
                 count++;
             }}
         }});
+
+        updateCharts(statsYear, statsDepto);
         document.getElementById('total-count').innerText = count;
     }}
 
-    // Gráficos Estáticos (Contexto)
+    function updateCharts(yearData, deptoData) {{
+        // Actualizar Gráfico de Años
+        const sortedYears = Object.keys(yearData).sort();
+        yearChart.data.labels = sortedYears;
+        yearChart.data.datasets[0].data = sortedYears.map(y => yearData[y]);
+        yearChart.update('none');
+
+        // Actualizar Gráfico de Departamentos (Top 7 dinámico)
+        const sortedDeptos = Object.keys(deptoData).sort((a,b) => deptoData[b] - deptoData[a]).slice(0, 7);
+        deptoChart.data.labels = sortedDeptos;
+        deptoChart.data.datasets[0].data = sortedDeptos.map(d => deptoData[d]);
+        deptoChart.update('none');
+    }}
+
+    // Inicialización de Gráficos
     const chartOpts = {{ responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ display: false }} }}, scales: {{ y: {{ display: false }}, x: {{ display: false }} }} }};
-    new Chart(document.getElementById('yearChart'), {{
-        type: 'line', data: {{ labels: {json.dumps(years)}, datasets: [{{ data: {json.dumps(years_counts)}, borderColor: '#6c5ce7', tension: 0.4 }}] }}, options: chartOpts
-    }});
-    new Chart(document.getElementById('deptoChart'), {{
-        type: 'bar', data: {{ labels: {json.dumps(deptos)}, datasets: [{{ data: {json.dumps(deptos_counts)}, backgroundColor: '#a29bfe' }}] }}, options: {{ ...chartOpts, indexAxis: 'y' }}
+    
+    yearChart = new Chart(document.getElementById('yearChart'), {{
+        type: 'line', 
+        data: {{ labels: [], datasets: [{{ data: [], borderColor: '#6c5ce7', tension: 0.4, fill: true, backgroundColor: 'rgba(108, 92, 231, 0.05)' }}] }}, 
+        options: chartOpts
     }});
 
-    // Inicialización
+    deptoChart = new Chart(document.getElementById('deptoChart'), {{
+        type: 'bar', 
+        data: {{ labels: [], datasets: [{{ data: [], backgroundColor: '#a29bfe' }}] }}, 
+        options: {{ ...chartOpts, indexAxis: 'y' }}
+    }});
+
+    // Inicio
     updateK(7);
 </script>
 </body>
