@@ -1,15 +1,15 @@
 # Taller 1: Clustering de Actividad Sísmica en Colombia
 **Autor:** Torres Anzola Arnold Santiago
 
-## 📂 Estructura del Entregable
-Este directorio contiene todos los componentes necesarios para la evaluación del Taller 1:
+## 📦 Estructura del Entregable (100% Autónomo)
+Este directorio ha sido diseñado para ser **completamente portátil**. Puede abrirse y ejecutarse en cualquier ordenador sin depender de rutas locales externas:
 
-- `dashboard.html`: Explorador dinámico e interactivo de sismos (Ejecutar en cualquier navegador).
-- `reporte.md`: Reporte ejecutivo con metodología CRISP-DM, hallazgos y visualizaciones embebidas.
-- `taller1.ipynb`: Notebook de Jupyter con el flujo completo de limpieza, escalado y modelado K-Means.
-- `data/`: Directorio con los datos oficiales (USGS) y fallas geológicas (SGC).
-- `assets/`: Galería de imágenes y scatter plots que sustentan el análisis.
-- `scripts/`: Código fuente original en Python para la automatización de procesos.
+- `dashboard.html`: Explorador dinámico e interactivo (Datos embebidos, funciona offline/online).
+- `reporte.md`: Reporte ejecutivo con rutas relativas a `./assets/`.
+- `taller1.ipynb`: **Notebook Maestro**. Incluye el ciclo completo: Carga de CSV Crudo -> Limpieza -> Enriquecimiento -> Modelado.
+- `data/`: Contiene `earthquakes_raw.csv` (Datos vírgenes) y `earthquakes.csv` (Datos procesados).
+- `assets/`: Galería de imágenes local para el reporte y el notebook.
+- `scripts/`: Código fuente modular para entusiastas y desarrolladores.
 
 ## 🚀 Instrucciones de Ejecución
 1. **Dashboard**: Abrir `dashboard.html` directamente. Permite filtrar por año, profundidad y número de zonas (K).
