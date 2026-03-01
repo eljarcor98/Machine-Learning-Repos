@@ -9,26 +9,48 @@ A través de un análisis dinámico, se logró clasificar la actividad sísmica 
 El proyecto se ejecutó bajo el estándar industrial CRISP-DM:
 1.  **Comprensión del Negocio**: Definición del riesgo sísmico y necesidad de alertas no técnicas.
 2.  **Comprensión de los Datos**: Auditoría de sismos históricos de la USGS y el Atlas de Fallas del SGC.
-3.  **Preparación de Datos**: Georreferenciación de 1,412 registros para asignar municipios y departamentos. Aplicación de **StandardScaler** para nivelar la influencia de la profundidad frente a la magnitud.
-4.  **Modelado**: Implementación de **K-Means (random_state=42)** con un rango dinámico de K=2 a 10 para evaluar la evolución de las zonas.
-5.  **Evaluación**: Validación mediante el **Método del Codo (Elbow)** y el **Coeficiente de Silhouette**, confirmando K=7 como el punto de mayor cohesión.
-6.  **Despliegue**: Creación de un Dashboard Interactivo Dinámico (v3.13) con narrativa educativa.
+3.  **Preparación de Datos**: Georreferenciación de 1,412 registros. Aplicación de **StandardScaler**.
+
+### Limpieza Geográfica (Antes vs Después)
+Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no pertinentes, reduciendo el ruido espacial para el clustering.
+
+![Limpieza Geográfica](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/comparativa_limpieza_geografica.png)
+*Figura 1: Filtrado de sismos para asegurar la exclusividad del territorio colombiano.*
+
+4.  **Modelado**: Implementación de **K-Means (random_state=42)**.
+5.  **Evaluación**: Confirmación de K=7 mediante métricas de rendimiento.
+
+![Análisis de Codo y Silueta](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/elbow_silhouette_analysis.png)
+*Figura 2: El punto de inflexión en K=7 maximiza la cohesión de los grupos.*
 
 ## Resultados
-### Perfil de Clusters y Hallazgos Clave
-Se identificaron tres grandes tipologías de zonas sísmicas:
-*   **Zonas de Foco Profundo (Nidos)**: Principalmente en la Mesa de los Santos (Santander). Estos clusters (Verdes) agrupan sismos a >150km de profundidad, con alta frecuencia pero bajo impacto estructural directo.
-*   **Zonas de Falla Cortical (Peligro Alto)**: Sismos superficiales (<30km) en el eje andino y Cauca. Estos clusters (Rojos) representan el mayor riesgo para la infraestructura civil debido a su cercanía a centros poblados.
-*   **Zonas de Subducción Pacífica**: Eventos intermedios originados por la placa de Nazca, con magnitudes significativas que generan impacto regional en el sur y occidente del país.
+### Tabla Resumen de Provincias Sismotectónicas (K=7)
 
-![Evolución de Clusters](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
+| Cluster | Tipo de Foco | Riesgo Estructural | Ubicación Principal | Impacto Típico |
+| :--- | :--- | :--- | :--- | :--- |
+| **Rojo** | Superficial (<30km) | **Muy Alto** | Eje Andino / Cauca | Daños en mampostería, sacudida brusca. |
+| **Amarillo** | Intermedio (70-120km) | **Moderado** | Valle del Magdalena | Balanceo prolongado, bajo daño estructural. |
+| **Verde** | Profundo (>150km) | **Bajo** | Mesa de los Santos | Alta frecuencia, vibración casi imperceptible. |
+
+### Relación Magnitud vs Profundidad
+El scatter plot revela la concentración de eventos en el "Nido Sísmico de Bucaramanga" (zonas profundas) frente a la dispersión de eventos de mayor magnitud en zonas superficiales.
+
+![Relación Mag-Depth](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/scatter_mag_depth_refined.png)
+*Figura 3: Dispersión de sismos por profundidad y magnitud.*
+
+![Mapa de Evolución](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
+*Figura 4: Evolución de la segmentación desde 2 hasta 10 zonas.*
 
 ## Impacto del Scaling
-Uno de los aprendizajes técnicos más críticos fue la influencia de la escala de las variables. 
-*   **Sin Scaling**: El algoritmo priorizaba la **profundidad** (valores de 0 a >200km) sobre la **magnitud** (valores de 2 a 7), creando grupos basados casi exclusivamente en la profundidad.
-*   **Con Scaling (StandardScaler)**: Al normalizar ambas variables a una escala estándar, el modelo empezó a identificar "regiones de riesgo" donde sismos de distinta profundidad pero similar localización y magnitud se agrupan coherentemente. 
+La estandarización fue el paso técnico más importante para evitar que la profundidad dominara el modelo.
 
-![Comparativa de Escalas](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/comparativa_estandarizacion.png)
+| Variable | Sin Scaling (Rango) | Con Scaling (Z-Score) |
+| :--- | :--- | :--- |
+| **Profundidad** | 0 a 250 km | -1.5 a 3.2 |
+| **Magnitud** | 2.5 a 7.2 ML | -2.1 a 3.5 |
+
+![Efecto de la Estandarización](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/comparativa_estandarizacion.png)
+*Figura 5: Distribución balanceada de variables tras el escalado.*
 
 ## Recomendaciones para el Servicio Geológico Colombiano (SGC)
 1.  **Priorización de Monitoreo**: Se recomienda focalizar la densificación de estaciones acelerográficas en los clusters identificados como "Superficiales de Alto Riesgo" en los departamentos de Meta, Huila y Cauca, donde la energía se libera con mayor violencia.
