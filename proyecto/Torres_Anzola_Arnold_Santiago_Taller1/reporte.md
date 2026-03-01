@@ -9,7 +9,10 @@ A través de un análisis dinámico, se logró clasificar la actividad sísmica 
 El proyecto se ejecutó bajo el estándar industrial CRISP-DM:
 1.  **Comprensión del Negocio**: Definición del riesgo sísmico y necesidad de alertas no técnicas.
 2.  **Comprensión de los Datos**: Auditoría de sismos históricos de la USGS y el Atlas de Fallas del SGC.
-3.  **Preparación de Datos**: Georreferenciación de 1,412 registros. Aplicación de **StandardScaler**.
+3.  **Preparación de Datos**: Georreferenciación de 1,412 registros. Esta fase fue crítica para la precisión del modelo, donde se realizaron las siguientes acciones:
+    *   **Integración de Fallas Geológicas (SGC)**: Se incorporó la base de datos del **Atlas Geológico de Colombia 2020 (AGC)**, específicamente la capa de Fallas Geológicas del Servicio Geológico Colombiano. Este recurso permitió validar que los clusters identificados coinciden con estructuras tectónicas reales, como los sistemas de fallas de Romeral y del Piedemonte Llanero. La actualización del AGC (3ra edición) incluyó mapas a escala 1:100,000 y datos científicos indexados hasta 2019, ajustados mediante imágenes de relieve sombreado.
+    *   **Completado de Tablas de Referencia**: Se completaron manualmente tablas de municipios y departamentos para asegurar que cada sismo tuviera un contexto administrativo claro. Este proceso de "curaduría de datos" permitió una mejor comprensión del problema al vincular la geología técnica con la realidad demográfica de Colombia.
+    *   **Normalización**: Aplicación de **StandardScaler** para equilibrar las escalas de magnitud y profundidad.
 
 ### Limpieza Geográfica (Antes vs Después)
 Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no pertinentes, reduciendo el ruido espacial para el clustering.
@@ -64,6 +67,6 @@ El uso de K-Means permitió transformar datos latentes en una narrativa geográf
 
 ## Referencias
 *   **USGS Earthquakes Catalog**: Datos base de sismicidad histórica.
-*   **SGC (2020)**: Atlas Geológico de Colombia - Fallas Cuaternarias.
+*   **Servicio Geológico Colombiano (SGC, 2020)**: [Atlas Geológico de Colombia 2020: Fallas Geológicas](https://datos.sgc.gov.co/datasets/e03339c845d24e7baceb6d67397a23b3_0/explore?location=5.539788%2C-74.391657%2C5). Esta edición actualiza la tectónica nacional con mapas a escala 1:100,000 y relieve sombreado.
 *   **UNGRD (2021)**: Boletín "El Sismo es Real" - Guía de prevención.
 *   **Metodología**: Pedregosa et al., Scikit-learn: Machine Learning in Python.
