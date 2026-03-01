@@ -1,5 +1,7 @@
 # Proyecto de Análisis de Riesgo Sísmico (Colombia - USGS)
 
+**[📂 DIRECTORIO DE ENTREGA TALLER 1](./Torres_Anzola_Arnold_Santiago_Taller1/)** (Haz clic para ver el entregable final consolidado).
+
 Este proyecto implementa un flujo de trabajo basado en la metodología **CRISP-DM** para analizar datos sísmicos obtenidos de la United States Geological Survey (USGS). El sistema identifica zonas de riesgo sismotectónico mediante clustering dinámico, proporcionando una interfaz intuitiva para ciudadanos y expertos.
 
 ## 🚀 Descripción General
