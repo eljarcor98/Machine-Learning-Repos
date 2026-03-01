@@ -206,6 +206,9 @@ def create_dashboard():
         
         .references {{ font-size: 0.65rem; opacity: 0.5; margin-top: 15px; padding: 10px; border-top: 1px solid #eee; line-height: 1.4; }}
         .references a {{ color: var(--primary); text-decoration: none; font-weight: 700; }}
+        
+        .fact-box {{ background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; margin-top: 10px; font-size: 0.72rem; border: 1px dashed rgba(255,255,255,0.3); }}
+        .fact-title {{ font-weight: 700; text-transform: uppercase; font-size: 0.65rem; margin-bottom: 5px; color: #ffeaa7; display: block; }}
     </style>
 </head>
 <body>
@@ -287,22 +290,27 @@ def create_dashboard():
             <div style="height: 160px;"><canvas id="yearChart"></canvas></div>
         </div>
 
-        <!-- Nueva Sección de Narrativa -->
+        <!-- Nueva Sección de Narrativa Expandida -->
         <div class="story-card">
             <h3>📖 Historia de Nuestra Tierra</h3>
             <div class="story-text">
-                Colombia está en la intersección de las placas de <b>Nazca y Suramérica</b>. 
-                Los sismos <b>superficiales (rojos)</b> suelen ocurrir en las fallas que rompen la corteza terrestre, 
-                mientras que los <b>profundos (verdes)</b> son el eco de la placa que se hunde bajo nosotros. 
-                Cada color en este mapa cuenta el viaje de milenios de nuestra geografía dinámica.
+                Colombia es un territorio geológicamente activo donde convergen <b>cuatro placas tectónicas</b>: Nazca, Caribe, Cocos y Suramérica. 
+                Esta interacción constante sitúa al país en el <b>Cinturón de Fuego del Pacífico</b>, concentrando gran parte de la sismicidad mundial.
+                <br><br>
+                Los sismos <b>superficiales (rojos)</b> rompen fallas en la corteza, mientras que los <b>profundos (verdes)</b> son el eco de la subducción. 
+            </div>
+            
+            <div class="fact-box">
+                <span class="fact-title">💡 ¿Sabías que?</span>
+                Los sismos <b>no se pueden predecir</b>. No hay más sismos que antes, solo tenemos mejores instrumentos (más de 175 estaciones en Colombia) para detectarlos.
             </div>
         </div>
 
         <div class="references">
             <b>Fuentes Oficiales:</b><br>
-            • <a href="https://www.sgc.gov.co/" target="_blank">Servicio Geológico Colombiano (SGC)</a>: Atlas de Fallas Cuaternarias 2020.<br>
-            • <a href="https://earthquake.usgs.gov/" target="_blank">USGS (United States Geological Survey)</a>: Catálogo de Sismicidad Global.<br>
-            • Metodología: Clustering Dinámico K-Means para Riesgo Sísmico.
+            • <a href="https://www.sgc.gov.co/" target="_blank">Servicio Geológico Colombiano (SGC)</a>.<br>
+            • <a href="https://portal.gestiondelriesgo.gov.co/" target="_blank">UNGRD</a>: Boletín "El Sismo es Real" (2021).<br>
+            • <a href="https://earthquake.usgs.gov/" target="_blank">USGS</a>: Catálogo Global de Sismicidad.
         </div>
     </div>
 </div>
