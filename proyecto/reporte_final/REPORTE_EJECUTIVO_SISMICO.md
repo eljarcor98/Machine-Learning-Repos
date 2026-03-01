@@ -14,13 +14,13 @@ El proyecto se ejecutó bajo el estándar industrial CRISP-DM:
 ### Limpieza Geográfica (Antes vs Después)
 Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no pertinentes, reduciendo el ruido espacial para el clustering.
 
-![Limpieza Geográfica](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/comparativa_limpieza_geografica.png)
+![Limpieza Geográfica](../documentacion/visualizaciones/comparativa_limpieza_geografica.png)
 *Figura 1: Filtrado de sismos para asegurar la exclusividad del territorio colombiano.*
 
 4.  **Modelado**: Implementación de **K-Means (random_state=42)**.
 5.  **Evaluación**: Confirmación de K=7 mediante métricas de rendimiento.
 
-![Análisis de Codo y Silueta](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/elbow_silhouette_analysis.png)
+![Análisis de Codo y Silueta](../documentacion/visualizaciones/elbow_silhouette_analysis.png)
 *Figura 2: El punto de inflexión en K=7 maximiza la cohesión de los grupos.*
 
 ## Resultados
@@ -35,10 +35,10 @@ Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no p
 ### Relación Magnitud vs Profundidad
 El scatter plot revela la concentración de eventos en el "Nido Sísmico de Bucaramanga" (zonas profundas) frente a la dispersión de eventos de mayor magnitud en zonas superficiales.
 
-![Relación Mag-Depth](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/scatter_mag_depth_refined.png)
+![Relación Mag-Depth](../documentacion/visualizaciones/scatter_mag_depth_refined.png)
 *Figura 3: Dispersión de sismos por profundidad y magnitud.*
 
-![Mapa de Evolución](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
+![Mapa de Evolución](../documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
 *Figura 4: Evolución de la segmentación desde 2 hasta 10 zonas.*
 
 ## Impacto del Scaling
@@ -49,7 +49,7 @@ La estandarización fue el paso técnico más importante para evitar que la prof
 | **Profundidad** | 0 a 250 km | -1.5 a 3.2 |
 | **Magnitud** | 2.5 a 7.2 ML | -2.1 a 3.5 |
 
-![Efecto de la Estandarización](file:///C:/Users/Arnold's/Documents/Repositorios%20Machine%20Learning/proyecto/documentacion/visualizaciones/comparativa_estandarizacion.png)
+![Efecto de la Estandarización](../documentacion/visualizaciones/comparativa_estandarizacion.png)
 *Figura 5: Distribución balanceada de variables tras el escalado.*
 
 ## Recomendaciones para el Servicio Geológico Colombiano (SGC)
