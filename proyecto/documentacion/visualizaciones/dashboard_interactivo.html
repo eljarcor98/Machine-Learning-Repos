@@ -34,10 +34,26 @@
         
         .k-selector { background: var(--primary); color: white; padding: 1rem; border-radius: 12px; }
         .dark-panel { background: var(--text); color: white; padding: 1rem; border-radius: 12px; }
+        
+        /* Double Range Slider Styles */
+        .range-slider-container { position: relative; width: 100%; height: 35px; margin-top: 10px; }
+        .range-slider-container input[type=range] { 
+            position: absolute; width: 100%; pointer-events: none; -webkit-appearance: none; z-index: 2; height: 6px; background: none; outline: none; margin: 0;
+        }
+        .range-slider-container input[type=range]::-webkit-slider-thumb { 
+            pointer-events: auto; -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .slider-track { 
+            position: absolute; width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; z-index: 1; top: 50%; transform: translateY(-50%);
+        }
+        .slider-active-track { 
+            position: absolute; height: 6px; background: var(--primary); border-radius: 3px; z-index: 1; top: 50%; transform: translateY(-50%);
+        }
+        
         input[type=range] { width: 100%; cursor: pointer; accent-color: var(--primary); margin: 4px 0; }
         .k-value { font-size: 1.3rem; font-weight: 800; float: right; }
         .range-row { display: flex; justify-content: space-between; font-size: 0.75rem; opacity: 0.9; margin-bottom: 4px; }
-        .year-labels { display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 2px; opacity: 0.7; }
+        .year-labels { display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 8px; opacity: 0.7; }
 
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; text-align: center; }
@@ -91,15 +107,36 @@
     </div>
 
     <div class="sidebar">
-        <!-- Rango de Tiempo -->
-        <div class="dark-panel">
-            <div style="font-weight:700; margin-bottom:8px">📅 Rango de Tiempo</div>
-            <div class="range-row">
-                <span>Desde: <b id="year-from-label">2010</b></span>
-                <span>Hasta: <b id="year-to-label">2026</b></span>
+        <!-- Nueva Sección de Narrativa - MOVIDA AL INICIO -->
+        <div class="story-card">
+            <h3>📖 Historia de Nuestra Tierra</h3>
+            <div class="story-text">
+                Colombia es un territorio dinámico donde convergen <b>cuatro placas tectónicas</b>: Nazca, Caribe, Cocos y Suramérica. 
+                Esta interacción no solo crea montañas, sino fallas profundas que concentran la energía.
+                <br><br>
+                <b>¿Por qué más sismos en unos lugares?</b> Lugares como el <b>Nido de Bucaramanga</b> (Mesa de los Santos) concentran sismicidad por la fricción de placas a gran profundidad, mientras que las fallas corticales dispersan sismos superficiales en el eje andino.
             </div>
-            <input type="range" id="year-from" min="2010" max="2026" value="2010" oninput="updateRange()">
-            <input type="range" id="year-to" min="2010" max="2026" value="2026" oninput="updateRange()">
+            
+            <div class="fact-box">
+                <span class="fact-title">💡 Dato Técnico (UNGRD)</span>
+                El <b>87% de los colombianos</b> vive en zonas de amenaza alta o intermedia. No podemos predecirlos, pero sí entender sus patrones históricos.
+            </div>
+        </div>
+
+        <!-- Rango de Tiempo con Slider Bilateral -->
+        <div class="dark-panel">
+            <div style="font-weight:700; margin-bottom:8px">📅 Rango de Tiempo (Bilateral)</div>
+            <div class="range-row">
+                <span>Periodo: <b id="year-range-label">2010 - 2026</b></span>
+            </div>
+            
+            <div class="range-slider-container">
+                <div class="slider-track"></div>
+                <div id="slider-active-track" class="slider-active-track"></div>
+                <input type="range" id="year-from" min="2010" max="2026" value="2010" oninput="updateRange()">
+                <input type="range" id="year-to" min="2010" max="2026" value="2026" oninput="updateRange()">
+            </div>
+            
             <div class="year-labels"><span>2010</span><span>2026</span></div>
         </div>
 
@@ -146,22 +183,6 @@
         <div class="card" style="flex-grow:1">
             <h2>Tendencia Anual</h2>
             <div style="height: 160px;"><canvas id="yearChart"></canvas></div>
-        </div>
-
-        <!-- Nueva Sección de Narrativa Expandida -->
-        <div class="story-card">
-            <h3>📖 Historia de Nuestra Tierra</h3>
-            <div class="story-text">
-                Colombia es un territorio geológicamente activo donde convergen <b>cuatro placas tectónicas</b>: Nazca, Caribe, Cocos y Suramérica. 
-                Esta interacción constante sitúa al país en el <b>Cinturón de Fuego del Pacífico</b>, concentrando gran parte de la sismicidad mundial.
-                <br><br>
-                Los sismos <b>superficiales (rojos)</b> rompen fallas en la corteza, mientras que los <b>profundos (verdes)</b> son el eco de la subducción. 
-            </div>
-            
-            <div class="fact-box">
-                <span class="fact-title">💡 ¿Sabías que?</span>
-                Los sismos <b>no se pueden predecir</b>. No hay más sismos que antes, solo tenemos mejores instrumentos (más de 175 estaciones en Colombia) para detectarlos.
-            </div>
         </div>
 
         <div class="references">
@@ -220,8 +241,7 @@
         
         document.getElementById('year-from').value = yearFrom;
         document.getElementById('year-to').value = yearTo;
-        document.getElementById('year-from-label').innerText = yearFrom;
-        document.getElementById('year-to-label').innerText = yearTo;
+        updateRange(); // Actualiza el label y track bilateral
 
         renderMarkers();
         updateLegend();
@@ -230,12 +250,29 @@
     }
 
     function updateRange() {
-        let from = parseInt(document.getElementById('year-from').value);
-        let to = parseInt(document.getElementById('year-to').value);
-        if (from > to) { let tmp = from; from = to; to = tmp; }
+        let fromInput = document.getElementById('year-from');
+        let toInput = document.getElementById('year-to');
+        let from = parseInt(fromInput.value);
+        let to = parseInt(toInput.value);
+        
+        if (from > to) {
+            // Intercambio dinámico para slider bilateral
+            let tmp = from; from = to; to = tmp;
+        }
+        
         yearFrom = from; yearTo = to;
-        document.getElementById('year-from-label').innerText = from;
-        document.getElementById('year-to-label').innerText = to;
+        document.getElementById('year-range-label').innerText = `${from} - ${to}`;
+        
+        // Actualizar track visual
+        const min = parseInt(fromInput.min);
+        const max = parseInt(fromInput.max);
+        const left = ((from - min) / (max - min)) * 100;
+        const right = 100 - (((to - min) / (max - min)) * 100);
+        
+        const track = document.getElementById('slider-active-track');
+        track.style.left = left + "%";
+        track.style.right = right + "%";
+
         renderMarkers();
     }
 
@@ -429,6 +466,7 @@
 
     // Inicio
     updateK(7);
+    updateRange(); 
 </script>
 </body>
 </html>
