@@ -4,13 +4,11 @@ Este proyecto implementa un flujo de trabajo basado en la metodología **CRISP-D
 
 ## 🚀 Descripción General
 El sistema permite explorar la sismicidad en Colombia mediante un **Dashboard Interactivo Pro (v3.4)**. A diferencia de modelos estáticos, este sistema permite:
-- **Clustering Dinámico**: Variar el número de zonas (K) de 2 a 10 en tiempo real.
-- **Justificación de Agrupación (v3.6+)**: Perfiles dicientes que explican *por qué* un sismo pertenece a un grupo (ej. superficial, intermedio, profundo).
-- **Panel Lateral Unificado (v3.7+)**: Toda la información de zonas, municipios y detalles de sismos se concentra en un solo lugar permanente.
-- **Botón de Reinicio Maestro (v3.10)**: Restauración instantánea de todos los filtros, zoom y segmentación K.
-- **Narrativa Sismológica (v3.11)**: Sección "La Historia de nuestra Tierra" que explica la interacción de las placas de Nazca y Suramérica.
-- **Referencias Oficiales**: Citas integradas al Servicio Geológico Colombiano (SGC) y al USGS.
-- **Layout Optimizada**: Interfaz adaptable que evita solapamientos y maximiza la legibilidad del texto de impacto.
+- **Dashboard Interactivo Profesional (v3.13)**: Explorador dinámico para ciudadanos y expertos.
+- **Narrativa Sismológica Geológica (SGC/UNGRD)**: Sección "La Historia de nuestra Tierra" situada en la cima para educar sobre la convergencia de las placas y nidos sísmicos.
+- **Slider Bilateral de Años**: Control de rango de doble mando para filtrar periodos históricos de forma intuitiva.
+- **Clustering Dinámico**: Variar zonas (K) de 2 a 10 con perfiles dicientes automáticos.
+- **Botón de Reinicio Maestro**: Restauración instantánea de todos los filtros y vistas.
 - **Perfiles Ciudadanos**: Clasificación automática de clusters en lenguaje sencillo (Riesgo Alto/Medio/Bajo e impacto esperado).
 - **Control Temporal**: Rango de años seleccionable (Desde/Hasta) para observar la evolución sísmica.
 - **Contexto Geológico**: Visualización de fallas geológicas oficiales (Atlas 2020) sobre un mapa minimalista.
