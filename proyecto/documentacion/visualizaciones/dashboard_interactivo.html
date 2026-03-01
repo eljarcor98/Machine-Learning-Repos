@@ -95,8 +95,8 @@
     <div style="display: flex; align-items: center; gap: 20px;">
         <button class="btn-reset" onclick="resetFilters()">🔄 Reiniciar Todo</button>
         <div style="text-align:right">
-            <span style="font-size:0.8rem; opacity: 0.8; display: block;">Versión 3.10</span>
-            <span style="font-size:0.65rem; opacity: 0.6;">Feb 2026</span>
+            <span style="font-size:0.8rem; opacity: 0.8; display: block;">Versión 3.14</span>
+            <span style="font-size:0.65rem; opacity: 0.6;">Mar 2026</span>
         </div>
     </div>
 </header>
@@ -138,6 +138,7 @@
             </div>
             
             <div class="year-labels"><span style="color: var(--text);">2010</span><span style="color: var(--text);">2026</span></div>
+            <p style="font-size:0.7rem; margin-top:10px; opacity:0.6; line-height:1.3">Filtra sismos por periodo histórico. Permite observar cómo ha evolucionado la actividad sísmica en el tiempo.</p>
         </div>
 
         <!-- Detail Panel -->
@@ -150,7 +151,7 @@
             <h2>Zonas Geográficas (K)</h2>
             <span class="k-value" id="k-val-display" style="color: var(--primary); font-size: 1.2rem; font-weight:800">7</span>
             <input type="range" id="k-slider" min="2" max="10" value="7" oninput="updateK(this.value)">
-            <p style="font-size:0.7rem; margin-top:5px; opacity:0.6">Variación de segmentación sismotectónica</p>
+            <p style="font-size:0.7rem; margin-top:5px; opacity:0.6; line-height:1.3">Ajusta la cantidad de zonas (clústeres). Un K alto revela detalles locales específicos; un K bajo muestra tendencias regionales generales.</p>
         </div>
 
         <div class="card">
