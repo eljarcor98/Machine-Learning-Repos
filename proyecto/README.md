@@ -8,6 +8,8 @@ El sistema permite explorar la sismicidad en Colombia mediante un **Dashboard In
 - **Justificación de Agrupación (v3.6+)**: Perfiles dicientes que explican *por qué* un sismo pertenece a un grupo (ej. superficial, intermedio, profundo).
 - **Panel Lateral Unificado (v3.7+)**: Toda la información de zonas, municipios y detalles de sismos se concentra en un solo lugar permanente.
 - **Botón de Reinicio Maestro (v3.10)**: Restauración instantánea de todos los filtros, zoom y segmentación K.
+- **Narrativa Sismológica (v3.11)**: Sección "La Historia de nuestra Tierra" que explica la interacción de las placas de Nazca y Suramérica.
+- **Referencias Oficiales**: Citas integradas al Servicio Geológico Colombiano (SGC) y al USGS.
 - **Layout Optimizada**: Interfaz adaptable que evita solapamientos y maximiza la legibilidad del texto de impacto.
 - **Perfiles Ciudadanos**: Clasificación automática de clusters en lenguaje sencillo (Riesgo Alto/Medio/Bajo e impacto esperado).
 - **Control Temporal**: Rango de años seleccionable (Desde/Hasta) para observar la evolución sísmica.

@@ -199,6 +199,13 @@ def create_dashboard():
         .instruction-box {{ text-align: center; padding: 30px 15px; opacity: 0.6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }}
         .muni-list {{ max-height: 180px; overflow-y: auto; font-size: 0.78rem; padding: 6px; }}
         .muni-tag {{ display: inline-block; background: #edf2f7; color: #4a5568; padding: 3px 10px; border-radius: 15px; margin: 3px; font-weight: 500; border: 1px solid #e2e8f0; font-size: 0.72rem; }}
+        
+        .story-card {{ background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; padding: 1.2rem; border-radius: 12px; margin-top: 5px; }}
+        .story-card h3 {{ margin: 0 0 8px 0; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }}
+        .story-text {{ font-size: 0.78rem; line-height: 1.5; opacity: 0.95; }}
+        
+        .references {{ font-size: 0.65rem; opacity: 0.5; margin-top: 15px; padding: 10px; border-top: 1px solid #eee; line-height: 1.4; }}
+        .references a {{ color: var(--primary); text-decoration: none; font-weight: 700; }}
     </style>
 </head>
 <body>
@@ -278,6 +285,24 @@ def create_dashboard():
         <div class="card" style="flex-grow:1">
             <h2>Tendencia Anual</h2>
             <div style="height: 160px;"><canvas id="yearChart"></canvas></div>
+        </div>
+
+        <!-- Nueva Sección de Narrativa -->
+        <div class="story-card">
+            <h3>📖 Historia de Nuestra Tierra</h3>
+            <div class="story-text">
+                Colombia está en la intersección de las placas de <b>Nazca y Suramérica</b>. 
+                Los sismos <b>superficiales (rojos)</b> suelen ocurrir en las fallas que rompen la corteza terrestre, 
+                mientras que los <b>profundos (verdes)</b> son el eco de la placa que se hunde bajo nosotros. 
+                Cada color en este mapa cuenta el viaje de milenios de nuestra geografía dinámica.
+            </div>
+        </div>
+
+        <div class="references">
+            <b>Fuentes Oficiales:</b><br>
+            • <a href="https://www.sgc.gov.co/" target="_blank">Servicio Geológico Colombiano (SGC)</a>: Atlas de Fallas Cuaternarias 2020.<br>
+            • <a href="https://earthquake.usgs.gov/" target="_blank">USGS (United States Geological Survey)</a>: Catálogo de Sismicidad Global.<br>
+            • Metodología: Clustering Dinámico K-Means para Riesgo Sísmico.
         </div>
     </div>
 </div>
