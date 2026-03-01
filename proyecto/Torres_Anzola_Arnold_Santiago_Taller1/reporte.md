@@ -24,7 +24,11 @@ Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no p
 5.  **Evaluación**: Confirmación de K=7 mediante métricas de rendimiento.
 
 ![Análisis de Codo y Silueta](./assets/elbow_silhouette_analysis.png)
-*Figura 2: El punto de inflexión en K=7 maximiza la cohesión de los grupos.*
+*Figura 2: Validación estadística para la selección del número óptimo de clústeres.*
+
+Para garantizar la rigidez científica del modelo, se utilizaron dos métricas complementarias:
+*   **Método del Codo (Elbow Method)**: Esta gráfica mide la **Inercia** (suma de los cuadrados de las distancias internas de los clusters). A medida que aumentamos K, la inercia disminuye. El "punto de codo" es aquel donde la ganancia de información deja de ser significativa por cada cluster adicional. Para la sismicidad en Colombia, el codo se identifica claramente en **K=7**, logrando un equilibrio entre precisión y simplicidad.
+*   **Coeficiente de Silueta (Silhouette Score)**: Mide qué tan similar es un punto a su propio grupo en comparación con otros grupos. Un valor cercano a 1 indica que los clusters están bien separados y definidos. Al analizar K=7, observamos una consistencia espacial y de atributos que valida la robustez de las provincias sismotectónicas identificadas.
 
 ## Resultados
 ### Tabla Resumen de Provincias Sismotectónicas (K=7)
