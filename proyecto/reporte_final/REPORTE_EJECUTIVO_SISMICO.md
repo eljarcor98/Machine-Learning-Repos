@@ -38,8 +38,8 @@ El mapa de dispersión permite visualizar la concentración de eventos en el ter
 ![Mapa de Dispersión con Silueta](../documentacion/visualizaciones/scatter_map_depth_red.png)
 *Figura 3: Distribución espacial de sismos con la silueta de Colombia.*
 
-![Mapa de Evolución](../documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
-*Figura 4: Evolución de la segmentación desde 2 hasta 10 zonas.*
+![Mapa de Evolución con Silueta](../documentacion/visualizaciones/evolucion_clusters_geo.png)
+*Figura 4: Evolución geográfica de la segmentación desde 2 hasta 10 zonas.*
 
 ## Impacto del Scaling
 La estandarización fue el paso técnico más importante para evitar que la profundidad dominara el modelo.
