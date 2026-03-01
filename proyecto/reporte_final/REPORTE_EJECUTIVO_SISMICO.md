@@ -32,11 +32,11 @@ Se eliminaron registros fuera del territorio nacional o en zonas oceánicas no p
 | **Amarillo** | Intermedio (70-120km) | **Moderado** | Valle del Magdalena | Balanceo prolongado, bajo daño estructural. |
 | **Verde** | Profundo (>150km) | **Bajo** | Mesa de los Santos | Alta frecuencia, vibración casi imperceptible. |
 
-### Relación Magnitud vs Profundidad
-El scatter plot revela la concentración de eventos en el "Nido Sísmico de Bucaramanga" (zonas profundas) frente a la dispersión de eventos de mayor magnitud en zonas superficiales.
+### Relación Magnitud vs Profundidad (Distribución Espacial)
+El mapa de dispersión permite visualizar la concentración de eventos en el territorio nacional, destacando la silueta de las placas y fallas principales.
 
-![Relación Mag-Depth](../documentacion/visualizaciones/scatter_mag_depth_refined.png)
-*Figura 3: Dispersión de sismos por profundidad y magnitud.*
+![Mapa de Dispersión con Silueta](../documentacion/visualizaciones/scatter_map_depth_red.png)
+*Figura 3: Distribución espacial de sismos con la silueta de Colombia.*
 
 ![Mapa de Evolución](../documentacion/visualizaciones/evolucion_clusters_k2_k10.png)
 *Figura 4: Evolución de la segmentación desde 2 hasta 10 zonas.*
