@@ -186,7 +186,7 @@ def create_dashboard():
             pointer-events: auto; -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }}
         .slider-track {{ 
-            position: absolute; width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; z-index: 1; top: 50%; transform: translateY(-50%);
+            position: absolute; width: 100%; height: 6px; background: #dfe6e9; border-radius: 3px; z-index: 1; top: 50%; transform: translateY(-50%);
         }}
         .slider-active-track {{ 
             position: absolute; height: 6px; background: var(--primary); border-radius: 3px; z-index: 1; top: 50%; transform: translateY(-50%);
@@ -265,11 +265,11 @@ def create_dashboard():
             </div>
         </div>
 
-        <!-- Rango de Tiempo con Slider Bilateral -->
-        <div class="dark-panel">
-            <div style="font-weight:700; margin-bottom:8px">📅 Rango de Tiempo (Bilateral)</div>
+        <!-- Rango de Tiempo con Slider Bilateral (Ahora en Blanco) -->
+        <div class="card">
+            <div style="font-weight:700; margin-bottom:8px; color: var(--primary);">📅 Rango de Tiempo (Bilateral)</div>
             <div class="range-row">
-                <span>Periodo: <b id="year-range-label">{min(years)} - {max(years)}</b></span>
+                <span style="color: var(--text);">Periodo: <b id="year-range-label">{min(years)} - {max(years)}</b></span>
             </div>
             
             <div class="range-slider-container">
@@ -279,7 +279,7 @@ def create_dashboard():
                 <input type="range" id="year-to" min="{min(years)}" max="{max(years)}" value="{max(years)}" oninput="updateRange()">
             </div>
             
-            <div class="year-labels"><span>{min(years)}</span><span>{max(years)}</span></div>
+            <div class="year-labels"><span style="color: var(--text);">{min(years)}</span><span style="color: var(--text);">{max(years)}</span></div>
         </div>
 
         <!-- Detail Panel -->
