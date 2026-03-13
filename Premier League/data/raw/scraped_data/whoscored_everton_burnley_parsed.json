@@ -1,0 +1,132 @@
+{
+    "match": "Everton vs Burnley",
+    "competition": "Premier League 2025/2026",
+    "date": "Tue, 03-Mar-26",
+    "kickoff": "19:30",
+    "venue": "Hill Dickinson Stadium",
+    "attendance": "51,959",
+    "referee": "T. Robinson",
+    "result": {
+        "full_time": "2-0",
+        "half_time": "1-0"
+    },
+    "teams": {
+        "home": {
+            "name": "Everton",
+            "manager": "David Moyes",
+            "formation": "4-2-3-1",
+            "avg_rating": 7.04,
+            "goalscorers": [
+                {
+                    "player": "James Garner (assist: James Tarkowski)",
+                    "minute": "32'"
+                },
+                {
+                    "player": "Iliman Ndiaye (assist: Kiernan Dewsbury-Hall)",
+                    "minute": "60'"
+                }
+            ],
+            "substitutions": [
+                {
+                    "off": "Jarrad Branthwaite",
+                    "on": "Michael Keane",
+                    "minute": "83'"
+                },
+                {
+                    "off": "Beto",
+                    "on": "Thierno Barry",
+                    "minute": "83'"
+                },
+                {
+                    "off": "Dwight McNeil",
+                    "on": "Tyrique George",
+                    "minute": "87'"
+                },
+                {
+                    "off": "Idrissa Gueye",
+                    "on": "Tim Iroegbunam",
+                    "minute": "87'"
+                },
+                {
+                    "off": "Iliman Ndiaye",
+                    "on": "Tyler Dibling",
+                    "minute": "90+2'"
+                }
+            ]
+        },
+        "away": {
+            "name": "Burnley",
+            "manager": "Scott Parker",
+            "formation": "3-4-2-1",
+            "avg_rating": 6.27,
+            "goalscorers": [],
+            "substitutions": [
+                {
+                    "off": "Joe Worrall",
+                    "on": "Loum Tchaouna",
+                    "minute": "57'"
+                },
+                {
+                    "off": "Florentino",
+                    "on": "James Ward-Prowse",
+                    "minute": "57'"
+                },
+                {
+                    "off": "Bashir Humphreys",
+                    "on": "...",
+                    "minute": "64'"
+                },
+                {
+                    "off": "Hannibal Mejbri",
+                    "on": "Josh Laurent",
+                    "minute": "72'"
+                },
+                {
+                    "off": "Lesley Ugochukwu",
+                    "on": "Ashley Barnes",
+                    "minute": "83'"
+                }
+            ]
+        }
+    },
+    "timeline": [
+        {
+            "minute": "32'",
+            "event": "GOAL",
+            "team": "Everton",
+            "player": "James Garner"
+        },
+        {
+            "minute": "57'",
+            "event": "SUB",
+            "team": "Burnley"
+        },
+        {
+            "minute": "60'",
+            "event": "GOAL",
+            "team": "Everton",
+            "player": "Iliman Ndiaye"
+        },
+        {
+            "minute": "64'",
+            "event": "YELLOW",
+            "team": "Burnley",
+            "player": "Bashir Humphreys"
+        },
+        {
+            "minute": "83'",
+            "event": "SUBx2",
+            "team": "Both"
+        },
+        {
+            "minute": "87'",
+            "event": "SUBx2",
+            "team": "Everton"
+        },
+        {
+            "minute": "90+2'",
+            "event": "SUB",
+            "team": "Everton"
+        }
+    ]
+}

@@ -16,7 +16,7 @@ __pycache__/
 .vscode/
 
 # Datos (opcional, habilitar si los archivos son muy grandes)
-# *.csv
+*.csv
 # *.json
 
 # Archivos de sistema
