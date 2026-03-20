@@ -9,6 +9,10 @@ Este repositorio contiene una colección de proyectos y estudios realizados sobr
 | Proyecto | Descripción | Algoritmos / Herramientas |
 | :--- | :--- | :--- |
 | **[proyecto/](./proyecto/)** | **Análisis Sísmico USGS** (Proyecto Principal). Análisis de sismos en Colombia y alrededores con mapas interactivos. | K-Means, Plotly, Pandas, API USGS |
+| **[taller 2/](./taller%202/)** | **Análisis Premier League**. Estudio avanzado con EDA, K-Means y predicción de goles usando API. | Pandas, Scikit-learn, Plotly |
+| **[Credit Card Fraud/](./Credit%20Card%20Fraud/)** | **Detección de Fraude**. Modelos de clasificación para identificar transacciones sospechosas. | Random Forest, XGBoost, Scikit-learn |
+| **[proyecto healtech/](./proyecto%20healtech/)** | **Evaluación Diagnóstica**. Análisis de métricas en Salud (ROC, AUC, Matriz de Confusión). | Scikit-learn, Matplotlib, Pandas |
+| **[simulacion/](./simulacion/)** | **Intervalos de Confianza**. Simulación interactiva de estadística clínica (95% confianza). | Streamlit, Plotly, Numpy |
 | **[Naive Bayes/](./Naive%20Bayes/)** | Clasificación de SPAM y análisis de probabilidad. | Naive Bayes, Scikit-learn, Seaborn |
 | **[K-Means/](./K-Means/)** | Estudios de agrupamiento y segmentación de datos. | K-Means, Matplotlib |
 | **[KNN/](./KNN/)** | Implementación de K-Nearest Neighbors para clasificación. | KNN, Iris Dataset |
