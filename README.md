@@ -9,6 +9,7 @@ Este repositorio contiene una colección de proyectos y estudios realizados sobr
 | Proyecto | Descripción | Algoritmos / Herramientas |
 | :--- | :--- | :--- |
 | **[proyecto/](./proyecto/)** | **Análisis Sísmico USGS** (Proyecto Principal). Análisis de sismos en Colombia y alrededores con mapas interactivos. | K-Means, Plotly, Pandas, API USGS |
+| **[Proyecto 2 Machine Learning/](./Proyecto%202%20Machine%20Learning/)** | **Predictivo Premier League**. Segundo taller enfocado en modelos predictivos y análisis profundo. | Scikit-learn, Pandas, Matplotlib |
 | **[taller 2/](./taller%202/)** | **Análisis Premier League**. Estudio avanzado con EDA, K-Means y predicción de goles usando API. | Pandas, Scikit-learn, Plotly |
 | **[Credit Card Fraud/](./Credit%20Card%20Fraud/)** | **Detección de Fraude**. Modelos de clasificación para identificar transacciones sospechosas. | Random Forest, XGBoost, Scikit-learn |
 | **[proyecto healtech/](./proyecto%20healtech/)** | **Evaluación Diagnóstica**. Análisis de métricas en Salud (ROC, AUC, Matriz de Confusión). | Scikit-learn, Matplotlib, Pandas |
