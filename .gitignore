@@ -23,3 +23,6 @@ __pycache__/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Proyectos independientes (aislados en sus propios repos)
+Proyecto 2 Machine Learning/
