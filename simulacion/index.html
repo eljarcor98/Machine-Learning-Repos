@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación de Intervalos de Confianza</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Intervalos de Confianza al 95%</h1>
+            <p class="subtitle">Visualiza cómo cambia la precisión con diferentes tamaños de muestra (n)</p>
+        </header>
+
+        <div class="layout">
+            <aside class="panel">
+                <div class="control-group">
+                    <label>Tamaño de Muestra (n) <span id="n-val">30</span></label>
+                    <input type="range" id="n-input" min="5" max="500" value="30">
+                </div>
+                <div class="control-group">
+                    <label>Desv. Estándar (σ) <span id="sigma-val">10</span></label>
+                    <input type="range" id="sigma-input" min="1" max="50" value="10">
+                </div>
+                <div class="control-group">
+                    <label>Cant. de Intervalos <span id="count-val">50</span></label>
+                    <input type="range" id="count-input" min="10" max="100" value="50">
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="capture-rate">0%</span>
+                        <span class="stat-label">Captura</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="avg-error">0.0</span>
+                        <span class="stat-label">ME</span>
+                    </div>
+                </div>
+                <p class="subtitle" style="font-size: 0.8rem; margin-top: 1.5rem;">
+                    *ME = Margen de Error. La línea roja representa la media real de la población (μ = 100).
+                </p>
+            </aside>
+
+            <main class="simulation-area">
+                <div class="canvas-container">
+                    <canvas id="ciChart"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

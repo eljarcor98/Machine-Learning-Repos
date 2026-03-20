@@ -1,0 +1,143 @@
+Taller  en Python  
+Evaluación  de un modelo  diagnóstico  
+Asignatura:  HealthTech  1 / Ciencia  de Datos  en Salud  
+Modalidad:  Individual  o en parejas  
+Formato  de entrega:  Notebook  en Google  Colab  o Jupyter  Notebook  
+ 
+1. Objetivo  del taller  
+Evaluar  el desempeño  de un modelo  diagnóstico  utilizando:  
+• Matriz  de confusión  
+• Métricas  diagnósticas  clásicas  
+• Curva  ROC 
+• Análisis  del efecto  del umbral  de clasificación  
+El objetivo  es que el estudiante  comprenda  cómo  se calculan  estas métricas  a partir  de 
+datos y código en Python . 
+ 
+2. Herramientas  permitidas 
+Librerías  permitidas  
+Los estudiantes  pueden  usar las siguientes  librerías:  
+• numpy  
+• pandas  
+• matplotlib  o seaborn  
+• sklearn.metrics.roc_curve  
+• sklearn.metrics.roc_auc_score  (solo para AUC) 
+No se permite  usar 
+Funciones  automáticas  para calcular  directamente:  
+• matriz  de confusión  
+• sensibilidad  
+• especificidad  
+• VPP 
+• VPN Estas  métricas  deben  calcularse  usando  sus fórmulas  en Python . 
+ 
+3. Parte  1 — Matriz  de confusión  
+Se tiene el siguiente  conjunto  de datos:  
+ 
+Paciente  Real Predicción  
+1 1 1 
+2 1 0 
+3 0 0 
+4 1 1 
+5 0 1 
+6 0 0 
+7 1 1 
+8 0 0 
+9 1 1 
+10 0 1 
+ 
+Donde:  
+• Real = estado  real del paciente  
+• Predicción  = clasificación  realizada  por el modelo  
+0 = sano 
+1 = enfermo  
+ 
+Tareas  
+1. Crear  en Python  los vectores: 
+y_true  
+y_pred  
+2. Calcular  manualmente  en Python:  • Verdaderos  positivos  (VP) 
+• Falsos  positivos  (FP) 
+• Verdaderos  negativos  (VN) 
+• Falsos  negativos  (FN) 
+3. Construir  la matriz  de confusión  usando  los valores  obtenidos.  
+ 
+4. Parte  2 — Métricas  diagnósticas  
+Utilizando  los valores  de la matriz  de confusión  calcular  en Python:  
+• Sensibilidad  
+ 
+ 
+ 
+• Especificidad  
+ 
+ 
+ 
+• Valor  predictivo  positivo  (VPP)  
+ 
+ 
+ 
+• Valor  predictivo  negativo  (VPN)  
+ 
+ 
+ 
+• Accuracy  
+ 
+ 
+Las métricas  deben  calcularse  programando  las fórmulas , no usando  funciones 
+automáticas.  
+ 
+5. Parte  3 — Curva  ROC 
+Suponga  que el modelo  produce  las siguientes  probabilidades  de enfermedad: 
+y_score  = [0.9,0.4,0.2,0.8,0.7,0.1,0.85,0.3,0.9,0.6]  
+ 
+Tareas  
+1. Usar sklearn.metrics.roc_curve  para calcular:  • FPR (False  Positive  Rate)  
+• TPR (True  Positive  Rate)  
+• Thresholds  
+2. Graficar  la curva  ROC 
+El gráfico  debe incluir:  
+• Eje X: FPR 
+• Eje Y: TPR 
+• La línea diagonal  de un modelo  al azar 
+3. Calcular  el AUC (Área  bajo la curva) . 
+ 
+Interpretación  
+Responder  brevemente:  
+• ¿El modelo  discrimina  bien entre  enfermos  y sanos?  
+• ¿El valor de AUC obtenido  es bajo,  moderado  o alto? 
+ 
+6. Parte  4 — Análisis  del umbral  
+Probar  tres valores  de umbral  de clasificación:  
+• 0.3 
+• 0.5 
+• 0.7 
+Para cada umbral:  
+1. Generar  nuevas  predicciones  y_pred.  
+2. Calcular  nuevamente:  
+• Sensibilidad  
+• Especificidad  
+3. Construir  una tabla  de resultados  con: 
+ 
+Umbral  Sensibilidad  Especificidad  
+ Preguntas  de interpretación  
+Responder  brevemente:  
+• ¿Qué ocurre  con la sensibilidad  cuando  el umbral  disminuye?  
+• ¿Qué ocurre  con la especificidad  cuando  el umbral  disminuye?  
+ 
+7. Entregables  
+Los estudiantes  deben  entregar:  
+   ¹Notebook  en Google  Colab  o Jupyter  Notebook  con el código  organizado  por secciones.  
+Gráfica  de la curva  ROC 
+Tabla con las métricas cal culadas  
+4Interpretación  breve  (5–8 líneas)  sobre:  
+• desempeño  del modelo  
+• valor del AUC 
+• efecto  del cambio  de umbral  
+ 
+ 
+8. Rúbrica  de evaluación  
+Criterio  Descripción  Peso 
+ 
+Código  correcto  Cálculo  correcto  de VP, FP, VN, FN y métricas  diagnósticas  40% 
+Curva  ROC Implementación y gráfica correcta de la curva ROC  20% 
+Organización del notebook Código claro, ordenado y comentado  20% 
+Interpretación  Explicación  adecuada  del AUC y del efecto  del umbral    20% 
+ 
