@@ -19,6 +19,18 @@ El proyecto busca representar una red como un grafo a partir de flujos etiquetad
 - **Simulación**: Se implementarán modelos `SIR/SEIR` para simular la propagación de amenazas (ej. Botnets, Infiltración) sobre la topología del grafo.
 - **Estrategias de Contención**: Evaluación de impacto de medidas preventivas sobre la red modelada.
 
+## Avances Recientes (Simulación WannaCry)
+
+Se ha implementado una simulación interactiva de la propagación del ransomware **WannaCry** (2017) utilizando un modelo epidemiológico **SIR** sobre una red libre de escala (Barabási-Albert) en el notebook `05_sir_simulations_wannacry.ipynb`.
+
+### Características de la Simulación:
+- **Modelo SIR**: Nodos Susceptibles (vulnerables), Infectados (cifrados) y Recuperados (aislados/parcheados).
+- **Escenario 1 (Sin contención)**: Alta tasa de transmisión (beta = 0.90) y baja recuperación, resultando en una red comprometida muy rápidamente.
+- **Escenario 2 (Kill-Switch)**: Simulación de la medida de contención (descubierta por Marcus Hutchins), donde la transmisión cae drásticamente y aumenta la tasa de parcheo en un punto específico.
+- **Visualización Interactiva**: Gráficos animados lado a lado utilizando `ipywidgets` y `matplotlib`.
+  - **Red Dinámica**: Representación visual de los nodos y su estado de infección cambiando en el tiempo con un control de `Play`.
+  - **Curva Epidémica**: Gráfico de líneas que muestra la evolución S-I-R, identificando automáticamente el **pico de infección** (el punto más crítico) y el progreso temporal mapeado a "horas simuladas" para dar contexto de un ataque real.
+
 ## Estructura
 
 ```text
