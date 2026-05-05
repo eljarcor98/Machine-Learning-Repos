@@ -1,0 +1,593 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d8" for="edge" attr.name="hosts" attr.type="long" />
+  <key id="d7" for="edge" attr.name="weight" attr.type="long" />
+  <key id="d6" for="edge" attr.name="relationship" attr.type="string" />
+  <key id="d5" for="node" attr.name="hosts" attr.type="long" />
+  <key id="d4" for="node" attr.name="country" attr.type="string" />
+  <key id="d3" for="node" attr.name="longitude" attr.type="double" />
+  <key id="d2" for="node" attr.name="latitude" attr.type="double" />
+  <key id="d1" for="node" attr.name="label" attr.type="string" />
+  <key id="d0" for="node" attr.name="node_type" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="Sandbox_WannaCry_mssecsvc.exe">
+      <data key="d0">malware_process</data>
+      <data key="d1">mssecsvc.exe</data>
+      <data key="d2">0.0</data>
+      <data key="d3">0.0</data>
+      <data key="d4">Sandbox</data>
+    </node>
+    <node id="Country::United States">
+      <data key="d0">country</data>
+      <data key="d1">United States</data>
+      <data key="d4">United States</data>
+      <data key="d2">37.0902</data>
+      <data key="d3">-95.7129</data>
+      <data key="d5">142</data>
+    </node>
+    <node id="Country::China">
+      <data key="d0">country</data>
+      <data key="d1">China</data>
+      <data key="d4">China</data>
+      <data key="d2">35.8617</data>
+      <data key="d3">104.1954</data>
+      <data key="d5">29</data>
+    </node>
+    <node id="Country::Japan">
+      <data key="d0">country</data>
+      <data key="d1">Japan</data>
+      <data key="d4">Japan</data>
+      <data key="d2">36.2048</data>
+      <data key="d3">138.2529</data>
+      <data key="d5">18</data>
+    </node>
+    <node id="Country::Germany">
+      <data key="d0">country</data>
+      <data key="d1">Germany</data>
+      <data key="d4">Germany</data>
+      <data key="d2">51.1657</data>
+      <data key="d3">10.4515</data>
+      <data key="d5">9</data>
+    </node>
+    <node id="Country::United Kingdom">
+      <data key="d0">country</data>
+      <data key="d1">United Kingdom</data>
+      <data key="d4">United Kingdom</data>
+      <data key="d2">55.3781</data>
+      <data key="d3">-3.436</data>
+      <data key="d5">8</data>
+    </node>
+    <node id="Country::France">
+      <data key="d0">country</data>
+      <data key="d1">France</data>
+      <data key="d4">France</data>
+      <data key="d2">46.2276</data>
+      <data key="d3">2.2137</data>
+      <data key="d5">8</data>
+    </node>
+    <node id="Country::Canada">
+      <data key="d0">country</data>
+      <data key="d1">Canada</data>
+      <data key="d4">Canada</data>
+      <data key="d2">56.1304</data>
+      <data key="d3">-106.3468</data>
+      <data key="d5">7</data>
+    </node>
+    <node id="Country::Indonesia">
+      <data key="d0">country</data>
+      <data key="d1">Indonesia</data>
+      <data key="d4">Indonesia</data>
+      <data key="d2">-0.7893</data>
+      <data key="d3">113.9213</data>
+      <data key="d5">6</data>
+    </node>
+    <node id="Country::Italy">
+      <data key="d0">country</data>
+      <data key="d1">Italy</data>
+      <data key="d4">Italy</data>
+      <data key="d2">41.8719</data>
+      <data key="d3">12.5674</data>
+      <data key="d5">6</data>
+    </node>
+    <node id="Country::Australia">
+      <data key="d0">country</data>
+      <data key="d1">Australia</data>
+      <data key="d4">Australia</data>
+      <data key="d2">-25.2744</data>
+      <data key="d3">133.7751</data>
+      <data key="d5">6</data>
+    </node>
+    <node id="Country::Russian Federation">
+      <data key="d0">country</data>
+      <data key="d1">Russian Federation</data>
+      <data key="d4">Russian Federation</data>
+      <data key="d2">61.524</data>
+      <data key="d3">105.3188</data>
+      <data key="d5">5</data>
+    </node>
+    <node id="Country::Taiwan; Republic of China (ROC)">
+      <data key="d0">country</data>
+      <data key="d1">Taiwan; Republic of China (ROC)</data>
+      <data key="d4">Taiwan; Republic of China (ROC)</data>
+      <data key="d2">23.6978</data>
+      <data key="d3">120.9605</data>
+      <data key="d5">5</data>
+    </node>
+    <node id="Country::Belgium">
+      <data key="d0">country</data>
+      <data key="d1">Belgium</data>
+      <data key="d4">Belgium</data>
+      <data key="d2">50.5039</data>
+      <data key="d3">4.4699</data>
+      <data key="d5">5</data>
+    </node>
+    <node id="Country::Spain">
+      <data key="d0">country</data>
+      <data key="d1">Spain</data>
+      <data key="d4">Spain</data>
+      <data key="d2">40.4637</data>
+      <data key="d3">-3.7492</data>
+      <data key="d5">5</data>
+    </node>
+    <node id="Country::Korea Republic of">
+      <data key="d0">country</data>
+      <data key="d1">Korea Republic of</data>
+      <data key="d4">Korea Republic of</data>
+      <data key="d2">35.9078</data>
+      <data key="d3">127.7669</data>
+      <data key="d5">5</data>
+    </node>
+    <node id="Country::India">
+      <data key="d0">country</data>
+      <data key="d1">India</data>
+      <data key="d4">India</data>
+      <data key="d2">20.5937</data>
+      <data key="d3">78.9629</data>
+      <data key="d5">4</data>
+    </node>
+    <node id="Country::South Africa">
+      <data key="d0">country</data>
+      <data key="d1">South Africa</data>
+      <data key="d4">South Africa</data>
+      <data key="d2">-30.5595</data>
+      <data key="d3">22.9375</data>
+      <data key="d5">4</data>
+    </node>
+    <node id="Country::Netherlands">
+      <data key="d0">country</data>
+      <data key="d1">Netherlands</data>
+      <data key="d4">Netherlands</data>
+      <data key="d2">52.1326</data>
+      <data key="d3">5.2913</data>
+      <data key="d5">4</data>
+    </node>
+    <node id="Country::Venezuela">
+      <data key="d0">country</data>
+      <data key="d1">Venezuela</data>
+      <data key="d4">Venezuela</data>
+      <data key="d2">6.4238</data>
+      <data key="d3">-66.5897</data>
+      <data key="d5">3</data>
+    </node>
+    <node id="Country::Egypt">
+      <data key="d0">country</data>
+      <data key="d1">Egypt</data>
+      <data key="d4">Egypt</data>
+      <data key="d2">26.8206</data>
+      <data key="d3">30.8025</data>
+      <data key="d5">3</data>
+    </node>
+    <node id="Country::Viet Nam">
+      <data key="d0">country</data>
+      <data key="d1">Viet Nam</data>
+      <data key="d4">Viet Nam</data>
+      <data key="d2">14.0583</data>
+      <data key="d3">108.2772</data>
+      <data key="d5">3</data>
+    </node>
+    <node id="Country::Sweden">
+      <data key="d0">country</data>
+      <data key="d1">Sweden</data>
+      <data key="d4">Sweden</data>
+      <data key="d2">60.1282</data>
+      <data key="d3">18.6435</data>
+      <data key="d5">3</data>
+    </node>
+    <node id="Country::Brazil">
+      <data key="d0">country</data>
+      <data key="d1">Brazil</data>
+      <data key="d4">Brazil</data>
+      <data key="d2">-14.235</data>
+      <data key="d3">-51.9253</data>
+      <data key="d5">3</data>
+    </node>
+    <node id="Country::Latvia">
+      <data key="d0">country</data>
+      <data key="d1">Latvia</data>
+      <data key="d4">Latvia</data>
+      <data key="d2">56.8796</data>
+      <data key="d3">24.6032</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Thailand">
+      <data key="d0">country</data>
+      <data key="d1">Thailand</data>
+      <data key="d4">Thailand</data>
+      <data key="d2">15.87</data>
+      <data key="d3">100.9925</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::New Zealand">
+      <data key="d0">country</data>
+      <data key="d1">New Zealand</data>
+      <data key="d4">New Zealand</data>
+      <data key="d2">-40.9006</data>
+      <data key="d3">174.886</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Austria">
+      <data key="d0">country</data>
+      <data key="d1">Austria</data>
+      <data key="d4">Austria</data>
+      <data key="d2">47.5162</data>
+      <data key="d3">14.5501</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Mexico">
+      <data key="d0">country</data>
+      <data key="d1">Mexico</data>
+      <data key="d4">Mexico</data>
+      <data key="d2">23.6345</data>
+      <data key="d3">-102.5528</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Colombia">
+      <data key="d0">country</data>
+      <data key="d1">Colombia</data>
+      <data key="d4">Colombia</data>
+      <data key="d2">4.5709</data>
+      <data key="d3">-74.2973</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Turkey">
+      <data key="d0">country</data>
+      <data key="d1">Turkey</data>
+      <data key="d4">Turkey</data>
+      <data key="d2">38.9637</data>
+      <data key="d3">35.2433</data>
+      <data key="d5">2</data>
+    </node>
+    <node id="Country::Norway">
+      <data key="d0">country</data>
+      <data key="d1">Norway</data>
+      <data key="d4">Norway</data>
+      <data key="d2">60.472</data>
+      <data key="d3">8.4689</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Saudi Arabia">
+      <data key="d0">country</data>
+      <data key="d1">Saudi Arabia</data>
+      <data key="d4">Saudi Arabia</data>
+      <data key="d2">23.8859</data>
+      <data key="d3">45.0792</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Hong Kong">
+      <data key="d0">country</data>
+      <data key="d1">Hong Kong</data>
+      <data key="d4">Hong Kong</data>
+      <data key="d2">22.3193</data>
+      <data key="d3">114.1694</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Iran (ISLAMIC Republic Of)">
+      <data key="d0">country</data>
+      <data key="d1">Iran (ISLAMIC Republic Of)</data>
+      <data key="d4">Iran (ISLAMIC Republic Of)</data>
+      <data key="d2">32.4279</data>
+      <data key="d3">53.688</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Kazakhstan">
+      <data key="d0">country</data>
+      <data key="d1">Kazakhstan</data>
+      <data key="d4">Kazakhstan</data>
+      <data key="d2">48.0196</data>
+      <data key="d3">66.9237</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Serbia">
+      <data key="d0">country</data>
+      <data key="d1">Serbia</data>
+      <data key="d4">Serbia</data>
+      <data key="d2">44.0165</data>
+      <data key="d3">21.0059</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Israel">
+      <data key="d0">country</data>
+      <data key="d1">Israel</data>
+      <data key="d4">Israel</data>
+      <data key="d2">31.0461</data>
+      <data key="d3">34.8516</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Denmark">
+      <data key="d0">country</data>
+      <data key="d1">Denmark</data>
+      <data key="d4">Denmark</data>
+      <data key="d2">56.2639</data>
+      <data key="d3">9.5018</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Moldova Republic of">
+      <data key="d0">country</data>
+      <data key="d1">Moldova Republic of</data>
+      <data key="d4">Moldova Republic of</data>
+      <data key="d2">47.4116</data>
+      <data key="d3">28.3699</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Greece">
+      <data key="d0">country</data>
+      <data key="d1">Greece</data>
+      <data key="d4">Greece</data>
+      <data key="d2">39.0742</data>
+      <data key="d3">21.8243</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Dominican Republic">
+      <data key="d0">country</data>
+      <data key="d1">Dominican Republic</data>
+      <data key="d4">Dominican Republic</data>
+      <data key="d2">18.7357</data>
+      <data key="d3">-70.1627</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Lithuania">
+      <data key="d0">country</data>
+      <data key="d1">Lithuania</data>
+      <data key="d4">Lithuania</data>
+      <data key="d2">55.1694</data>
+      <data key="d3">23.8813</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Ireland">
+      <data key="d0">country</data>
+      <data key="d1">Ireland</data>
+      <data key="d4">Ireland</data>
+      <data key="d2">53.1424</data>
+      <data key="d3">-7.6921</data>
+      <data key="d5">1</data>
+    </node>
+    <node id="Country::Chile">
+      <data key="d0">country</data>
+      <data key="d1">Chile</data>
+      <data key="d4">Chile</data>
+      <data key="d2">-35.6751</data>
+      <data key="d3">-71.543</data>
+      <data key="d5">1</data>
+    </node>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::United States">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">142</data>
+      <data key="d8">142</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::China">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">29</data>
+      <data key="d8">29</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Japan">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">18</data>
+      <data key="d8">18</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Germany">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">9</data>
+      <data key="d8">9</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::United Kingdom">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">8</data>
+      <data key="d8">8</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::France">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">8</data>
+      <data key="d8">8</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Canada">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">7</data>
+      <data key="d8">7</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Indonesia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">6</data>
+      <data key="d8">6</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Italy">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">6</data>
+      <data key="d8">6</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Australia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">6</data>
+      <data key="d8">6</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Russian Federation">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">5</data>
+      <data key="d8">5</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Taiwan; Republic of China (ROC)">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">5</data>
+      <data key="d8">5</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Belgium">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">5</data>
+      <data key="d8">5</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Spain">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">5</data>
+      <data key="d8">5</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Korea Republic of">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">5</data>
+      <data key="d8">5</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::India">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">4</data>
+      <data key="d8">4</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::South Africa">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">4</data>
+      <data key="d8">4</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Netherlands">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">4</data>
+      <data key="d8">4</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Venezuela">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">3</data>
+      <data key="d8">3</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Egypt">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">3</data>
+      <data key="d8">3</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Viet Nam">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">3</data>
+      <data key="d8">3</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Sweden">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">3</data>
+      <data key="d8">3</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Brazil">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">3</data>
+      <data key="d8">3</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Latvia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Thailand">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::New Zealand">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Austria">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Mexico">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Colombia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Turkey">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">2</data>
+      <data key="d8">2</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Norway">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Saudi Arabia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Hong Kong">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Iran (ISLAMIC Republic Of)">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Kazakhstan">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Serbia">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Israel">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Denmark">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Moldova Republic of">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Greece">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Dominican Republic">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Lithuania">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Ireland">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+    <edge source="Sandbox_WannaCry_mssecsvc.exe" target="Country::Chile">
+      <data key="d6">country_contact_count</data>
+      <data key="d7">1</data>
+      <data key="d8">1</data>
+    </edge>
+  </graph>
+</graphml>

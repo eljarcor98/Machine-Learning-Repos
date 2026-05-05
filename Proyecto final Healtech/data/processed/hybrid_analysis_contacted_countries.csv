@@ -1,0 +1,46 @@
+country,hosts,latitude,longitude,has_coordinates
+United States,142,37.0902,-95.7129,True
+China,29,35.8617,104.1954,True
+Japan,18,36.2048,138.2529,True
+Germany,9,51.1657,10.4515,True
+United Kingdom,8,55.3781,-3.436,True
+France,8,46.2276,2.2137,True
+Canada,7,56.1304,-106.3468,True
+Indonesia,6,-0.7893,113.9213,True
+Italy,6,41.8719,12.5674,True
+Australia,6,-25.2744,133.7751,True
+Russian Federation,5,61.524,105.3188,True
+Taiwan; Republic of China (ROC),5,23.6978,120.9605,True
+Reserved,5,,,False
+Belgium,5,50.5039,4.4699,True
+Spain,5,40.4637,-3.7492,True
+Korea Republic of,5,35.9078,127.7669,True
+India,4,20.5937,78.9629,True
+South Africa,4,-30.5595,22.9375,True
+Netherlands,4,52.1326,5.2913,True
+Venezuela,3,6.4238,-66.5897,True
+Egypt,3,26.8206,30.8025,True
+Viet Nam,3,14.0583,108.2772,True
+Sweden,3,60.1282,18.6435,True
+Brazil,3,-14.235,-51.9253,True
+Latvia,2,56.8796,24.6032,True
+Thailand,2,15.87,100.9925,True
+New Zealand,2,-40.9006,174.886,True
+Austria,2,47.5162,14.5501,True
+Mexico,2,23.6345,-102.5528,True
+Colombia,2,4.5709,-74.2973,True
+Turkey,2,38.9637,35.2433,True
+Norway,1,60.472,8.4689,True
+Saudi Arabia,1,23.8859,45.0792,True
+Hong Kong,1,22.3193,114.1694,True
+Iran (ISLAMIC Republic Of),1,32.4279,53.688,True
+Kazakhstan,1,48.0196,66.9237,True
+Serbia,1,44.0165,21.0059,True
+Israel,1,31.0461,34.8516,True
+Denmark,1,56.2639,9.5018,True
+Moldova Republic of,1,47.4116,28.3699,True
+Greece,1,39.0742,21.8243,True
+Dominican Republic,1,18.7357,-70.1627,True
+Lithuania,1,55.1694,23.8813,True
+Ireland,1,53.1424,-7.6921,True
+Chile,1,-35.6751,-71.543,True

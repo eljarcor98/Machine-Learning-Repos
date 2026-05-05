@@ -1,0 +1,78 @@
+{
+  "flows": 58,
+  "smb_flows": 4,
+  "smb_flow_share": 0.068966,
+  "packets": 836056,
+  "smb_packets": 835831,
+  "smb_packet_share": 0.999731,
+  "unique_ips": 9,
+  "unique_src_ips": 5,
+  "unique_dst_ips": 9,
+  "duration_seconds": 372.403055,
+  "observed_packet_rate_per_second": 2245.029918,
+  "observed_smb_packet_rate_per_second": 2244.425734,
+  "top_dst_ports": {
+    "445": 420051,
+    "49163": 415773,
+    "137": 32,
+    "5357": 29,
+    "1900": 28,
+    "5355": 19,
+    "3702": 18,
+    "80": 13,
+    "139": 13,
+    "49380": 11,
+    "49379": 7,
+    "138": 6,
+    "49378": 5,
+    "49377": 5,
+    "49176": 5
+  },
+  "graph": {
+    "nodes": 9,
+    "edges": 14,
+    "density": 0.19444444444444445,
+    "top_degree_nodes": [
+      [
+        "10.0.2.4",
+        12
+      ],
+      [
+        "10.0.2.5",
+        4
+      ],
+      [
+        "10.0.2.255",
+        2
+      ],
+      [
+        "239.255.255.250",
+        2
+      ],
+      [
+        "216.58.211.206",
+        2
+      ],
+      [
+        "216.58.214.174",
+        2
+      ],
+      [
+        "10.0.2.1",
+        2
+      ],
+      [
+        "224.0.0.22",
+        1
+      ],
+      [
+        "224.0.0.252",
+        1
+      ]
+    ]
+  },
+  "figures": {
+    "top_ports": "reports\\figures\\wannacry_pcap_top_ports.png",
+    "observed_graph": "reports\\figures\\wannacry_pcap_observed_graph.png"
+  }
+}

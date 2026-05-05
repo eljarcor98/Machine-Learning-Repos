@@ -1,0 +1,12 @@
+# Local environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# Temporary notebook/script generation helpers
+scratch/
+
+# External artifacts are kept locally and documented through processed outputs.
+data/external/*.pcap
+data/external/*.pcap.gz
+data/external/*.html

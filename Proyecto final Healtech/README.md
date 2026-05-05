@@ -31,6 +31,20 @@ Se ha implementado una simulación interactiva de la propagación del ransomware
   - **Red Dinámica**: Representación visual de los nodos y su estado de infección cambiando en el tiempo con un control de `Play`.
   - **Curva Epidémica**: Gráfico de líneas que muestra la evolución S-I-R, identificando automáticamente el **pico de infección** (el punto más crítico) y el progreso temporal mapeado a "horas simuladas" para dar contexto de un ataque real.
 
+## Análisis PCAP de WannaCry
+
+Se agregó soporte para procesar un fragmento local de tráfico de WannaCry ubicado en `data/external/wannaCry_15052017.pcap.gz`. El flujo reproducible es:
+
+```powershell
+.\.venv\Scripts\python.exe src\data\parse_wannacry_pcap.py
+.\.venv\Scripts\python.exe src\wannacry_pcap_analysis.py
+.\.venv\Scripts\python.exe src\wannacry_pcap_sir_simulation.py
+.\.venv\Scripts\python.exe src\data\parse_hybrid_analysis_hosts.py
+.\.venv\Scripts\python.exe src\graph\build_wannacry_geo_graph.py
+```
+
+Este proceso genera flujos agregados, resumen del PCAP, grafo observado, distribución de puertos, una simulación SIR informada por la intensidad del tráfico SMB/445 observado y un grafo geográfico basado en la tabla `Contacted Hosts` de Hybrid Analysis.
+
 ## Estructura
 
 ```text

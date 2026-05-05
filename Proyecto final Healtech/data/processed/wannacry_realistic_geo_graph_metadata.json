@@ -1,0 +1,90 @@
+{
+  "inputs": {
+    "hosts": "data\\processed\\hybrid_analysis_contacted_hosts_geo.csv",
+    "countries": "data\\processed\\hybrid_analysis_contacted_countries.csv"
+  },
+  "host_graph": {
+    "nodes": 320,
+    "edges": 319,
+    "graphml": "data\\processed\\wannacry_realistic_geo_host_graph.graphml"
+  },
+  "country_graph": {
+    "nodes": 45,
+    "edges": 44,
+    "graphml": "data\\processed\\wannacry_realistic_geo_country_graph.graphml"
+  },
+  "figure": "reports\\figures\\wannacry_realistic_geo_graph.png",
+  "coordinate_method": "country centroid with deterministic visual jitter for host-level nodes",
+  "top_countries": [
+    {
+      "country": "United States",
+      "hosts": 142,
+      "latitude": 37.0902,
+      "longitude": -95.7129,
+      "has_coordinates": true
+    },
+    {
+      "country": "China",
+      "hosts": 29,
+      "latitude": 35.8617,
+      "longitude": 104.1954,
+      "has_coordinates": true
+    },
+    {
+      "country": "Japan",
+      "hosts": 18,
+      "latitude": 36.2048,
+      "longitude": 138.2529,
+      "has_coordinates": true
+    },
+    {
+      "country": "Germany",
+      "hosts": 9,
+      "latitude": 51.1657,
+      "longitude": 10.4515,
+      "has_coordinates": true
+    },
+    {
+      "country": "United Kingdom",
+      "hosts": 8,
+      "latitude": 55.3781,
+      "longitude": -3.436,
+      "has_coordinates": true
+    },
+    {
+      "country": "France",
+      "hosts": 8,
+      "latitude": 46.2276,
+      "longitude": 2.2137,
+      "has_coordinates": true
+    },
+    {
+      "country": "Canada",
+      "hosts": 7,
+      "latitude": 56.1304,
+      "longitude": -106.3468,
+      "has_coordinates": true
+    },
+    {
+      "country": "Indonesia",
+      "hosts": 6,
+      "latitude": -0.7893,
+      "longitude": 113.9213,
+      "has_coordinates": true
+    },
+    {
+      "country": "Italy",
+      "hosts": 6,
+      "latitude": 41.8719,
+      "longitude": 12.5674,
+      "has_coordinates": true
+    },
+    {
+      "country": "Australia",
+      "hosts": 6,
+      "latitude": -25.2744,
+      "longitude": 133.7751,
+      "has_coordinates": true
+    }
+  ]
+}

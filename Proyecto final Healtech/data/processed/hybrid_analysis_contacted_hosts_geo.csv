@@ -1,0 +1,325 @@
+ip,port,protocol,process,pid,country,asn,organization,latitude,longitude,has_coordinates
+202.205.99.58,52289,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+144.164.229.119,52302,TCP,mssecsvc.exe,3192,Norway,,,60.472,8.4689,True
+182.35.47.171,52316,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+176.224.108.136,52318,TCP,mssecsvc.exe,3192,Saudi Arabia,,,23.8859,45.0792,True
+205.236.19.149,52328,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+25.178.43.53,52330,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+102.229.120.205,52336,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+21.179.145.18,52338,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+88.147.146.188,52342,TCP,mssecsvc.exe,3192,Russian Federation,,,61.524,105.3188,True
+101.208.25.1,52348,TCP,mssecsvc.exe,3192,India,55831,Aircel Ltd.,20.5937,78.9629,True
+107.193.178.59,52349,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+56.54.252.11,52352,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+75.122.73.254,52359,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+46.192.71.116,52360,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+163.227.70.213,52361,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+110.27.193.250,52364,TCP,mssecsvc.exe,3192,Taiwan; Republic of China (ROC),,,23.6978,120.9605,True
+207.47.161.203,52369,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+55.177.207.140,52371,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+22.141.227.209,52375,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+214.222.65.37,52378,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+96.84.87.170,52381,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+158.93.156.167,52383,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+10.122.4.84,52384,TCP,mssecsvc.exe,3192,Reserved,,,,,False
+162.28.242.148,52385,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+18.151.16.81,52390,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+129.253.239.150,52394,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+36.29.206.78,52395,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+210.35.248.130,52397,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+50.20.29.90,52400,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+151.22.37.94,52403,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+132.106.5.32,52405,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+30.0.40.87,52407,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+4.101.18.158,52408,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+168.103.36.90,52409,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+216.78.159.126,52421,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+137.176.178.129,52431,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+37.91.98.102,52437,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+6.118.20.203,52455,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+200.109.165.99,52456,TCP,mssecsvc.exe,3192,Venezuela,,,6.4238,-66.5897,True
+166.54.62.180,52463,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+149.50.190.185,52466,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+57.196.23.186,52471,TCP,mssecsvc.exe,3192,Belgium,,,50.5039,4.4699,True
+152.107.95.61,52480,TCP,mssecsvc.exe,3192,South Africa,,,-30.5595,22.9375,True
+131.224.163.18,52487,TCP,mssecsvc.exe,3192,Netherlands,,,52.1326,5.2913,True
+184.195.16.223,52494,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+185.19.196.74,52495,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+68.235.43.207,52496,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+116.9.28.237,52499,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+211.156.37.154,52502,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+102.210.143.50,52504,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+193.200.201.160,52505,TCP,mssecsvc.exe,3192,Latvia,,,56.8796,24.6032,True
+175.167.45.24,52508,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+172.238.16.116,52509,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+168.70.38.3,52511,TCP,mssecsvc.exe,3192,Hong Kong,,,22.3193,114.1694,True
+44.212.112.159,52513,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+58.11.107.200,52514,TCP,mssecsvc.exe,3192,Thailand,,,15.87,100.9925,True
+205.227.105.170,52516,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+162.155.130.2,52520,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+19.35.172.97,52521,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+131.87.77.5,52524,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+116.168.27.85,52526,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+171.69.83.182,52528,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+201.242.119.19,52529,TCP,mssecsvc.exe,3192,Venezuela,,,6.4238,-66.5897,True
+139.208.16.216,52530,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+5.225.123.187,52532,TCP,mssecsvc.exe,3192,Spain,,,40.4637,-3.7492,True
+136.87.154.38,52534,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+13.6.119.22,52535,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+13.240.101.202,52540,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+99.62.95.249,52541,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+183.224.202.19,52542,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+142.119.113.147,52543,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+210.198.199.47,52544,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+167.175.118.216,52545,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+61.221.0.228,52548,TCP,mssecsvc.exe,3192,Taiwan; Republic of China (ROC),,,23.6978,120.9605,True
+209.33.250.226,52549,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+136.42.250.190,52550,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+68.87.85.214,52555,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+206.5.112.241,52556,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+110.153.23.216,52557,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+116.172.113.157,52558,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+164.215.181.22,52559,TCP,mssecsvc.exe,3192,Iran (ISLAMIC Republic Of),,,32.4279,53.688,True
+33.67.210.159,52560,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+36.201.150.172,52562,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+37.150.230.131,52565,TCP,mssecsvc.exe,3192,Kazakhstan,,,48.0196,66.9237,True
+19.68.174.176,52567,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+182.143.156.248,52570,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+99.36.189.52,52571,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+122.104.98.30,52572,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+174.82.205.144,52573,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+212.102.133.217,52577,TCP,mssecsvc.exe,3192,Serbia,,,44.0165,21.0059,True
+150.14.112.63,52586,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+139.223.66.59,52591,TCP,mssecsvc.exe,3192,Taiwan; Republic of China (ROC),,,23.6978,120.9605,True
+204.5.220.102,52598,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+57.158.114.171,52601,TCP,mssecsvc.exe,3192,Belgium,,,50.5039,4.4699,True
+156.222.183.123,52603,TCP,mssecsvc.exe,3192,Egypt,,,26.8206,30.8025,True
+150.207.190.209,52606,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+198.243.125.155,52607,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+199.186.193.46,52608,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+138.134.102.124,52609,TCP,mssecsvc.exe,3192,Israel,,,31.0461,34.8516,True
+90.219.232.57,52610,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+10.125.42.97,52611,TCP,mssecsvc.exe,3192,Reserved,,,,,False
+81.54.18.174,52613,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+205.247.164.146,52617,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+121.75.147.202,52626,TCP,mssecsvc.exe,3192,New Zealand,,,-40.9006,174.886,True
+205.143.222.251,52630,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+144.173.4.98,52639,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+214.89.183.80,52643,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+60.103.182.203,52644,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+65.147.36.49,52645,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+123.17.112.106,52646,TCP,mssecsvc.exe,3192,Viet Nam,,,14.0583,108.2772,True
+126.1.232.215,52647,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+140.102.61.240,52648,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+102.226.234.186,52649,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+99.10.236.176,52650,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+74.45.18.165,52654,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+217.63.97.131,52655,TCP,mssecsvc.exe,3192,Denmark,,,56.2639,9.5018,True
+4.206.60.133,52659,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+43.149.104.145,52660,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+18.135.4.223,52661,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+184.117.30.107,52662,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+176.86.155.226,52663,TCP,mssecsvc.exe,3192,Spain,,,40.4637,-3.7492,True
+134.38.23.98,52664,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+143.196.106.137,52665,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+221.57.241.133,52666,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+223.233.88.120,52668,TCP,mssecsvc.exe,3192,India,,,20.5937,78.9629,True
+88.116.154.210,52672,TCP,mssecsvc.exe,3192,Austria,,,47.5162,14.5501,True
+120.63.98.224,52674,TCP,mssecsvc.exe,3192,India,,,20.5937,78.9629,True
+143.206.202.17,52673,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+79.51.239.24,52677,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+77.51.87.34,52678,TCP,mssecsvc.exe,3192,Russian Federation,,,61.524,105.3188,True
+37.59.164.0,52679,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+170.87.84.34,52680,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+18.145.99.199,52681,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+31.32.225.221,52682,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+99.32.34.161,52683,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+80.187.153.5,52684,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+53.107.176.73,52686,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+43.6.83.123,52689,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+105.33.233.124,52690,TCP,mssecsvc.exe,3192,Egypt,,,26.8206,30.8025,True
+152.10.114.52,52691,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+65.16.27.70,52695,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+100.108.81.136,52696,TCP,mssecsvc.exe,3192,Reserved,,,,,False
+215.44.123.3,52697,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+33.139.54.44,52698,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+54.127.0.213,52699,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+135.80.218.165,52700,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+185.93.145.194,52701,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+157.155.117.251,52703,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+4.167.199.122,52704,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+22.173.221.154,52709,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+134.138.43.156,52710,TCP,mssecsvc.exe,3192,Sweden,,,60.1282,18.6435,True
+95.99.29.42,52711,TCP,mssecsvc.exe,3192,Netherlands,,,52.1326,5.2913,True
+122.17.252.20,52714,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+14.187.50.89,52715,TCP,mssecsvc.exe,3192,Viet Nam,,,14.0583,108.2772,True
+93.63.105.96,52716,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+215.10.227.16,52717,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+192.120.114.154,52718,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+38.29.234.148,52719,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+121.178.76.79,52720,TCP,mssecsvc.exe,3192,Korea Republic of,,,35.9078,127.7669,True
+64.130.249.253,52722,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+138.232.177.206,52723,TCP,mssecsvc.exe,3192,Austria,,,47.5162,14.5501,True
+22.103.120.210,52724,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+3.212.84.247,52728,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+49.172.59.200,52729,TCP,mssecsvc.exe,3192,Korea Republic of,,,35.9078,127.7669,True
+41.195.65.233,52730,TCP,mssecsvc.exe,3192,South Africa,,,-30.5595,22.9375,True
+105.95.167.232,52733,TCP,mssecsvc.exe,3192,Egypt,,,26.8206,30.8025,True
+139.203.35.170,52734,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+15.68.6.12,52735,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+135.202.47.91,52736,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+145.173.9.183,52737,TCP,mssecsvc.exe,3192,Netherlands,,,52.1326,5.2913,True
+157.139.120.173,52738,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+172.118.10.190,52740,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+139.182.47.170,52741,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+170.80.158.150,52742,TCP,mssecsvc.exe,3192,Brazil,,,-14.235,-51.9253,True
+43.240.97.13,52744,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+188.208.205.169,52748,TCP,mssecsvc.exe,3192,Moldova Republic of,,,47.4116,28.3699,True
+196.6.12.0,52749,TCP,mssecsvc.exe,3192,South Africa,,,-30.5595,22.9375,True
+210.219.217.78,52750,TCP,mssecsvc.exe,3192,Korea Republic of,,,35.9078,127.7669,True
+198.215.171.33,52753,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+88.9.223.110,52754,TCP,mssecsvc.exe,3192,Spain,,,40.4637,-3.7492,True
+7.90.97.153,52755,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+215.82.175.151,52756,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+13.54.209.118,52757,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+34.49.188.124,52758,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+100.105.53.124,52760,TCP,mssecsvc.exe,3192,Reserved,,,,,False
+209.100.238.214,52761,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+195.167.30.17,52763,TCP,mssecsvc.exe,3192,Greece,,,39.0742,21.8243,True
+107.73.92.30,52765,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+156.20.77.9,52766,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+68.67.67.150,52768,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+187.136.34.218,52769,TCP,mssecsvc.exe,3192,Mexico,,,23.6345,-102.5528,True
+26.140.154.130,52770,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+130.254.220.183,52773,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+47.243.238.154,52774,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+115.83.25.253,52775,TCP,mssecsvc.exe,3192,Taiwan; Republic of China (ROC),,,23.6978,120.9605,True
+182.84.195.95,52776,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+108.162.169.247,52777,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+216.121.18.91,52778,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+91.86.43.76,52780,TCP,mssecsvc.exe,3192,Belgium,,,50.5039,4.4699,True
+28.206.185.250,52781,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+99.207.121.14,52782,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+195.5.252.121,52785,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+106.94.72.63,52786,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+85.45.27.241,52787,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+128.211.17.18,52790,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+215.159.208.41,52792,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+210.135.66.138,52793,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+1.53.154.149,52794,TCP,mssecsvc.exe,3192,Viet Nam,,,14.0583,108.2772,True
+34.38.80.97,52795,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+144.232.91.176,52796,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+203.130.167.189,52797,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+187.218.76.180,52799,TCP,mssecsvc.exe,3192,Mexico,,,23.6345,-102.5528,True
+152.166.53.219,52800,TCP,mssecsvc.exe,3192,Dominican Republic,,,18.7357,-70.1627,True
+208.91.90.188,52801,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+195.177.37.93,52802,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+111.194.23.4,52803,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+114.96.80.85,52805,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+141.25.94.113,52808,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+129.215.80.68,52809,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+15.171.52.149,52812,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+194.91.36.75,52813,TCP,mssecsvc.exe,3192,Italy,,,41.8719,12.5674,True
+173.97.50.48,52814,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+13.164.179.15,52815,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+217.76.232.171,52816,TCP,mssecsvc.exe,3192,Belgium,,,50.5039,4.4699,True
+15.140.173.8,52817,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+200.74.132.81,52818,TCP,mssecsvc.exe,3192,Colombia,,,4.5709,-74.2973,True
+133.24.91.126,52820,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+85.206.8.136,52821,TCP,mssecsvc.exe,3192,Lithuania,,,55.1694,23.8813,True
+174.203.168.61,52822,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+86.23.31.200,52823,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+217.194.40.14,52824,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+80.58.176.167,52826,TCP,mssecsvc.exe,3192,Spain,,,40.4637,-3.7492,True
+190.77.78.136,52828,TCP,mssecsvc.exe,3192,Venezuela,,,6.4238,-66.5897,True
+92.69.40.236,52830,TCP,mssecsvc.exe,3192,Netherlands,,,52.1326,5.2913,True
+83.195.175.197,52831,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+48.46.65.100,52833,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+207.75.174.248,52834,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+102.54.236.82,52835,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+132.180.230.113,52837,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+69.167.62.145,52838,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+188.86.42.18,52840,TCP,mssecsvc.exe,3192,Spain,,,40.4637,-3.7492,True
+121.51.226.197,52841,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+160.122.115.240,52842,TCP,mssecsvc.exe,3192,South Africa,,,-30.5595,22.9375,True
+155.211.199.237,52843,TCP,mssecsvc.exe,3192,Brazil,,,-14.235,-51.9253,True
+149.7.183.63,52844,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+122.155.29.248,52846,TCP,mssecsvc.exe,3192,Thailand,,,15.87,100.9925,True
+48.163.14.145,52847,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+135.238.140.4,52849,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+39.241.147.141,52850,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+59.195.43.115,52851,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+155.132.47.120,52852,TCP,mssecsvc.exe,3192,France,,,46.2276,2.2137,True
+180.181.119.127,52855,TCP,mssecsvc.exe,3192,Australia,,,-25.2744,133.7751,True
+11.197.176.247,52856,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+75.222.136.56,52858,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+34.208.117.164,52859,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+26.177.225.76,52860,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+192.17.185.139,52862,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+2.63.191.229,52863,TCP,mssecsvc.exe,3192,Russian Federation,,,61.524,105.3188,True
+132.145.3.104,52864,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+112.242.5.228,52866,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+110.136.47.126,52867,TCP,mssecsvc.exe,3192,Indonesia,,,-0.7893,113.9213,True
+77.223.157.231,52868,TCP,mssecsvc.exe,3192,Turkey,,,38.9637,35.2433,True
+73.225.217.61,52869,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+6.51.134.228,52871,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+25.243.131.249,52873,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+88.82.36.169,52874,TCP,mssecsvc.exe,3192,Belgium,,,50.5039,4.4699,True
+135.23.1.16,52875,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+137.43.2.177,52876,TCP,mssecsvc.exe,3192,Ireland,,,53.1424,-7.6921,True
+8.219.139.78,52877,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+122.12.121.76,52878,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+68.232.17.234,52881,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+49.174.116.154,52882,TCP,mssecsvc.exe,3192,Korea Republic of,,,35.9078,127.7669,True
+129.152.174.230,52883,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+206.13.122.86,52885,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+5.25.169.63,52886,TCP,mssecsvc.exe,3192,Turkey,,,38.9637,35.2433,True
+150.1.120.62,52887,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+113.96.229.154,52889,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+71.190.57.170,52890,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+209.42.120.239,52891,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+85.205.88.18,52893,TCP,mssecsvc.exe,3192,Germany,,,51.1657,10.4515,True
+119.185.34.10,52895,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+42.180.31.148,52896,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+153.25.242.224,52897,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+110.44.23.246,52898,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+135.251.223.83,52899,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+207.87.38.170,52901,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+214.32.219.150,52902,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+217.43.119.19,52904,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+20.32.100.159,52905,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+186.81.208.61,52906,TCP,mssecsvc.exe,3192,Colombia,,,4.5709,-74.2973,True
+100.181.96.39,52908,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+14.219.85.66,52909,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+223.12.254.137,52910,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+21.1.83.27,52911,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+190.91.134.112,52914,TCP,mssecsvc.exe,3192,Chile,,,-35.6751,-71.543,True
+210.79.8.35,52915,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+16.154.253.245,52916,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+126.77.209.114,52918,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+107.190.54.149,52919,TCP,mssecsvc.exe,3192,Canada,,,56.1304,-106.3468,True
+212.214.162.170,52920,TCP,mssecsvc.exe,3192,Sweden,,,60.1282,18.6435,True
+12.105.6.217,52921,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+28.199.248.163,52922,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+6.22.176.56,52923,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+114.236.156.252,52926,TCP,mssecsvc.exe,3192,China,,,35.8617,104.1954,True
+180.147.161.163,52927,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+149.195.190.210,52929,TCP,mssecsvc.exe,3192,United Kingdom,,,55.3781,-3.436,True
+156.59.160.235,52930,TCP,mssecsvc.exe,3192,New Zealand,,,-40.9006,174.886,True
+5.243.252.5,52931,TCP,mssecsvc.exe,3192,Sweden,,,60.1282,18.6435,True
+201.70.158.152,52932,TCP,mssecsvc.exe,3192,Brazil,,,-14.235,-51.9253,True
+64.74.139.102,52933,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+87.110.183.152,52936,TCP,mssecsvc.exe,3192,Latvia,,,56.8796,24.6032,True
+210.70.38.42,52938,TCP,mssecsvc.exe,3192,Taiwan; Republic of China (ROC),,,23.6978,120.9605,True
+19.133.209.146,52941,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+67.163.71.96,52943,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+6.25.1.129,52944,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+95.213.143.216,52945,TCP,mssecsvc.exe,3192,Russian Federation,,,61.524,105.3188,True
+178.234.84.3,52946,TCP,mssecsvc.exe,3192,Russian Federation,,,61.524,105.3188,True
+65.132.74.166,52947,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+42.108.24.101,52948,TCP,mssecsvc.exe,3192,India,,,20.5937,78.9629,True
+63.92.234.205,52949,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+164.106.11.243,52950,TCP,mssecsvc.exe,3192,United States,,,37.0902,-95.7129,True
+180.1.226.146,52953,TCP,mssecsvc.exe,3192,Japan,,,36.2048,138.2529,True
+211.211.208.54,52954,TCP,mssecsvc.exe,3192,Korea Republic of,,,35.9078,127.7669,True
+10.233.252.83,52956,TCP,mssecsvc.exe,3192,Reserved,,,,,False
