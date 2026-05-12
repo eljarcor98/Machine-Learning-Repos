@@ -48,7 +48,7 @@ html = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏥 HealTech — Ciberseguridad Epidemiológica</title>
+<title>🛡️ Análisis de Propagación de Malware — Modelos SEIR</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -259,24 +259,29 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
 
 <!-- HOME LANDING PAGE -->
 <section id="tab-home" class="tab-content active">
-  <h1 class="hero-title">🏥 HealTech</h1>
-  <p class="hero-subtitle">Plataforma de Ciberseguridad Epidemiológica.<br>Simulando amenazas reales como epidemias biológicas para predecir y contener brotes de malware.</p>
+  <h1 class="hero-title" style="font-size:3.5rem;">🛡️ Propagación de Malware</h1>
+  <p class="hero-subtitle">Análisis de Propagación de Malware a partir de modelos SEIR.</p>
   
   <div class="menu-grid">
     <div class="menu-card" onclick="openSection('tab-context', 'Contexto y Teoría')">
       <span class="icon">📖</span>
       <h3>1. Contexto</h3>
-      <p>Aprende la teoría detrás de la analogía médica, los estados Susceptible e Infectado en redes, y los datasets.</p>
+      <p>Aprende la teoría detrás de la analogía médica y los estados SIR/SEIR en redes.</p>
     </div>
-    <div class="menu-card" onclick="openSection('tab-metrics', 'Análisis de Machine Learning')">
+    <div class="menu-card" onclick="openSection('tab-eda', 'Dataset & EDA')">
       <span class="icon">📊</span>
-      <h3>2. Análisis ML</h3>
-      <p>Explora cómo el desempeño clínico de los modelos impacta directamente en el contagio del malware.</p>
+      <h3>2. Dataset & EDA</h3>
+      <p>Origen de los datos, descripción de variables y análisis exploratorio de la red.</p>
     </div>
-    <div class="menu-card" onclick="openSection('tab-sim', 'Simulación de Brote Epidemiológico')">
+    <div class="menu-card" onclick="openSection('tab-metrics', 'Análisis Matemático')">
+      <span class="icon">📈</span>
+      <h3>3. Mitigación</h3>
+      <p>Explora el impacto de R₀ y las estrategias de parcheo dinámico (Random vs Degree).</p>
+    </div>
+    <div class="menu-card" onclick="openSection('tab-sim', 'Simulación Interactiva')">
       <span class="icon">🦠</span>
-      <h3>3. Simulación</h3>
-      <p>Visualiza el brote en tiempo real sobre el mapa de la red. Modifica parámetros e interactúa con el tiempo.</p>
+      <h3>4. Simulación</h3>
+      <p>Visualiza el brote en tiempo real sobre el mapa de la red IoT.</p>
     </div>
   </div>
 </section>
@@ -285,86 +290,192 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
 <section id="tab-context" class="tab-content has-header">
   <div class="layout-scroll prose">
     <h2>1. Objetivo del Proyecto</h2>
-    <p>El proyecto <b>HealTech</b> explora la intersección entre la ciberseguridad y la epidemiología. Tratamos las redes informáticas como poblaciones de pacientes y las amenazas (ransomware, gusanos, botnets) como virus patógenos.</p>
-    <p>Al igual que en la medicina, detectar un paciente infectado a tiempo y aislarlo (cuarentena) previene una pandemia. En redes, usar modelos de <i>Machine Learning</i> para detectar anomalías en los flujos de datos nos permite aislar equipos comprometidos antes de que propaguen la amenaza.</p>
+    <p>Este proyecto explora la intersección entre la ciberseguridad y la epidemiología mediante un <b>Análisis de Propagación de Malware a partir de modelos SEIR</b>. Tratamos las redes informáticas como poblaciones de pacientes y las amenazas (ransomware, gusanos, botnets) como virus patógenos.</p>
     
-    <h2>2. Datasets Utilizados</h2>
+    <h2>2. La Analogía Médica</h2>
     <div class="card-grid">
       <div class="info-card">
-        <h4>UNSW-NB15 / CIC-IDS2017</h4>
-        <p>Datasets masivos de tráfico de red utilizados para entrenar nuestros modelos predictivos. Contienen flujos benignos y cientos de miles de ataques reales etiquetados. Estos datos permiten calcular las tasas de detección reales.</p>
+        <h4>Paciente Sano (Susceptible - S)</h4>
+        <p>Equipo vulnerable en la red con puertos críticos abiertos (ej. SMB 445).</p>
       </div>
       <div class="info-card">
-        <h4>WannaCry (PCAP Real - 15/05/2017)</h4>
-        <p>Captura de paquetes histórica del ataque masivo de Ransomware WannaCry. De aquí hemos extraído las IPs reales contactadas y calculado empíricamente la agresiva <b>tasa de transmisión (β)</b> del gusano autónomo EternalBlue.</p>
+        <h4>Enfermedad Latente (Expuesto - E)</h4>
+        <p>Equipo vulnerado donde el payload está en fase de descarga o preparación. No es contagioso aún.</p>
+      </div>
+      <div class="info-card">
+        <h4>Paciente Contagioso (Infectado - I)</h4>
+        <p>Malware activo ejecutando escaneos agresivos para infectar nuevos hosts.</p>
+      </div>
+      <div class="info-card">
+        <h4>Cuarentena / Curado (Recuperado - R)</h4>
+        <p>Equipo parcheado (MS17-010) o aislado por firewall. Inmune a la reinfección.</p>
       </div>
     </div>
-    
-    <h2>3. La Analogía Médica</h2>
-    <ul>
-      <li><b>Paciente Sano (Susceptible - S):</b> Equipo vulnerable en la red.</li>
-      <li><b>Enfermedad Latente (Expuesto - E):</b> Equipo que ha recibido el malware (ej. SMB explotado) pero el payload aún no se ejecuta. Fase de incubación.</li>
-      <li><b>Paciente Contagioso (Infectado - I):</b> El malware está activo. Cifra archivos y escanea la red velozmente.</li>
-      <li><b>Cuarentena / Curado (Recuperado - R):</b> Equipo parcheado (MS17-010) o aislado por el firewall. Inmune.</li>
-    </ul>
 
-    <h2>4. Parámetros del Modelo SEIR</h2>
+    <h2>3. Parámetros del Modelo (Métricas Epidémicas)</h2>
+    <p>La dinámica de propagación se rige por tasas fundamentales extraídas empíricamente. En una red IoT, estas variables definen el destino del brote:</p>
+    
     <div class="card-grid">
       <div class="info-card">
-        <h4>Tasa de Transmisión (β - Beta)</h4>
-        <p>Mide qué tan contagioso es el malware. Es la probabilidad de que un equipo infectado logre vulnerar a un equipo susceptible al contactarlo. En WannaCry, su naturaleza autónoma hace que este valor sea extremadamente alto.</p>
+        <h4>β (Tasa de Transmisión)</h4>
+        <p>Representa la <b>probabilidad de éxito de un exploit</b>. Es la frecuencia con la que un nodo infectado logra vulnerar a un vecino susceptible (ej. vía EternalBlue). Depende de la criticidad de la vulnerabilidad y la falta de parches.</p>
       </div>
       <div class="info-card">
-        <h4>Tasa de Recuperación (γ - Gamma)</h4>
-        <p>Representa la velocidad a la que los equipos infectados son aislados (firewall) o curados (parcheados). A mayor Gamma, más rápido se contiene la amenaza. Está directamente ligada a la velocidad de respuesta del equipo de SOC.</p>
+        <h4>γ (Tasa de Recuperación)</h4>
+        <p>Mide la <b>velocidad de respuesta del SOC/Firewall</b>. Es la tasa a la que los equipos infectados son aislados de la red o parcheados. Un valor alto de γ indica una respuesta defensiva eficiente que corta la cadena de contagio.</p>
       </div>
       <div class="info-card">
-        <h4>Tasa de Incubación (σ - Sigma / Alfa)</h4>
-        <p>Mide el tiempo que pasa desde que un equipo es vulnerado hasta que empieza a escanear a otros (pasa de Expuesto a Infectado). En el caso del malware, puede ser el tiempo de descarga del payload y ejecución de rutinas criptográficas.</p>
+        <h4>σ (Tasa de Incubación)</h4>
+        <p>Define el <b>tiempo de ejecución del malware</b>. Es el periodo que pasa desde que un nodo recibe el código malicioso (Expuesto) hasta que empieza a escanear activamente a otros (Infectado). Modela el "payload delivery" y la ejecución criptográfica.</p>
+      </div>
+      <div class="info-card">
+        <h4>R₀ (Número Reproductivo Básico)</h4>
+        <p>Es el <b>potencial pandémico</b>. Indica cuántas nuevas infecciones generará, en promedio, un solo equipo comprometido. Si R₀ > 1, el malware se expandirá sin control; si R₀ < 1, la seguridad de la red es suficiente para contener el brote.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PESTAÑA METRICAS -->
+<!-- PESTAÑA DATASET & EDA -->
+<section id="tab-eda" class="tab-content has-header">
+  <div class="layout-scroll prose">
+    <h2>Origen de los Datos</h2>
+    <p>Para fundamentar la simulación, se integraron tres fuentes de datos de ciberseguridad de alto prestigio:</p>
+    
+    <div class="card-grid">
+      <div class="info-card">
+        <h4>UNSW-NB15</h4>
+        <p>Creado en el <b>Cyber Range Lab de UNSW Canberra</b> para reemplazar al obsoleto KDD99. Refleja tráfico moderno y ataques contemporáneos.</p>
+        <p style="margin-top:10px; font-size:0.8rem;"><a href="https://research.unsw.edu.au/projects/unsw-nb15-dataset" target="_blank" style="color:var(--accent);">🔗 Fuente Oficial: UNSW Research</a></p>
+      </div>
+      <div class="info-card">
+        <h4>WannaCry PCAP</h4>
+        <p>Captura real del 15/05/2017. De aquí se extrajo la tasa β mediante el análisis de intentos de conexión al puerto 445 (SMB) usando el exploit EternalBlue.</p>
+        <p style="margin-top:10px; font-size:0.8rem;"><a href="https://hybrid-analysis.com/sample/24d004a104d4d54034dbcffc2a4b19a11f39008a575aa614ea04703480b1022c/5915accbaac2eda8675a17d2" target="_blank" style="color:var(--accent);">🔗 Análisis de Malware: Hybrid Analysis</a></p>
+      </div>
+    </div>
+
+    <h2>Especificaciones Técnicas (UNSW-NB15)</h2>
+    <div class="card-grid">
+      <div class="info-card">
+        <h4>Metodología de Creación</h4>
+        <p>Generado mediante la herramienta <b>IXIA PerfectStorm</b>, capturando 100 GB de tráfico crudo procesado con Argus y Bro-IDS.</p>
+        <ul style="font-size:0.95rem; margin-top:10px;">
+          <li><b>Total de Registros:</b> ~2.54 Millones</li>
+          <li><b>Características:</b> 49 variables técnicas</li>
+          <li><b>Tráfico:</b> Mezcla de actividad real y ataques sintéticos</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Categorías de Ataque (9)</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px; font-size:0.85rem; color:var(--text);">
+          <span>• Fuzzers</span><span>• Analysis</span>
+          <span>• Backdoors</span><span>• DoS</span>
+          <span>• Exploits</span><span>• Generic</span>
+          <span>• Reconnaissance</span><span>• Shellcode</span>
+          <span>• Worms (Viral)</span>
+        </div>
+        <p style="font-size:0.8rem; margin-top:10px; color:var(--muted);"><i>Worms</i> y <i>Backdoors</i> son el foco de este análisis SEIR debido a su naturaleza autoreplicante.</p>
+      </div>
+    </div>
+
+    <h2>Análisis de Variables (EDA)</h2>
+    <p>Variables clave analizadas para determinar la agresividad del malware:</p>
+    <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:0.9rem; margin-bottom:30px;">
+      <tr style="border-bottom:1px solid var(--border); background:rgba(255,255,255,0.05); text-align:left;">
+        <th style="padding:10px;">Variable</th><th style="padding:10px;">Descripción</th><th style="padding:10px;">Uso en Modelo</th>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px; color:var(--text);">dur</td><td style="padding:10px;">Duración del flujo</td><td style="padding:10px;">Tasa de contacto</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px; color:var(--text);">sbytes / dbytes</td><td style="padding:10px;">Bytes origen/destino</td><td style="padding:10px;">Peso de la arista</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px; color:var(--text);">Spkts / Dpkts</td><td style="padding:10px;">Paquetes origen/destino</td><td style="padding:10px;">Intensidad de escaneo</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px; color:var(--text);">attack_cat</td><td style="padding:10px;">Categoría de ataque</td><td style="padding:10px;">Filtro (Worms/Backdoor)</td>
+      </tr>
+    </table>
+
+    <h2>Topología de la Red</h2>
+    <p>El grafo de red extraído muestra una estructura de tipo <i>Scale-Free</i>, donde unos pocos nodos (Hubs) concentran la mayoría de las comunicaciones.</p>
+    <div class="card-grid">
+      <div class="info-card">
+         <h4 style="color:var(--accent);">Métricas de Grafo</h4>
+         <p>Nodos (IPs): <b>320</b></p>
+         <p>Densidad: <b>0.131</b></p>
+         <p>Grado Promedio: <b>12.3</b></p>
+      </div>
+      <div class="info-card">
+         <h4 style="color:var(--r);">Análisis de Puertos</h4>
+         <img src="figures/wannacry_pcap_top_ports.png" style="width:100%; border-radius:8px; margin-top:10px;" onerror="this.parentElement.innerHTML='<p>Gráfico de Puertos (SMB 445 predominante)</p>'">
+      </div>
+    </div>
+
+    <h2>Distribución de Amenazas</h2>
+    <img src="figures/wannacry_pcap_observed_graph.png" class="image-card" alt="Grafo Observado">
+    <p style="text-align:center; font-size:0.85rem; color:var(--muted);">Grafo de comunicaciones observado en el PCAP de WannaCry, mapeando la propagación inicial.</p>
+  </div>
+</section>
+
+<!-- PESTAÑA METRICAS (AHORA MITIGACIÓN) -->
 <section id="tab-metrics" class="tab-content has-header">
   <div class="layout-scroll prose">
-    <h2>Análisis Clínico de Detección de Amenazas</h2>
-    <p>Evaluar un modelo de ciberseguridad como si fuera una prueba de detección de enfermedades nos da una visión cruda del impacto de sus errores. Un falso negativo en un gusano no es solo un error, es un paciente cero en potencia.</p>
+    <h2>Análisis de Propagación y Mitigación</h2>
+    <p>Basado en el enfoque de <i>Epidemiología Matemática</i> (MDPI 2024), la propagación de malware en redes IoT no depende solo de la vulnerabilidad individual, sino de la dinámica colectiva y la topología de la red.</p>
 
-    <div id="metrics-container"></div>
-    
-    <div class="card-grid" style="margin-top: 10px;">
-      <div class="info-card">
-        <h4>Sensibilidad (Tasa de Verdaderos Positivos)</h4>
-        <p>Porcentaje de ataques reales que el modelo logró detectar. En epidemiología, si tu sensibilidad es baja, estás dejando caminar a personas infectadas (falsos negativos) libres por el hospital. En redes, es el parámetro más crítico para evitar pandemias digitales.</p>
-      </div>
-      <div class="info-card">
-        <h4>Especificidad (Tasa de Verdaderos Negativos)</h4>
-        <p>Porcentaje de tráfico benigno correctamente identificado. Si es baja, generas muchas Falsas Alarmas (falsos positivos), lo que en nuestra analogía significa poner en cuarentena a equipos sanos y detener las operaciones del negocio innecesariamente.</p>
-      </div>
+    <div id="metrics-analysis-summary"></div>
+
+    <div class="card-grid">
       <div class="info-card">
         <h4>Número Reproductivo Básico (R₀)</h4>
-        <p>Promedio de equipos que un solo equipo infectado logrará contagiar en una red virgen. Si <b>R₀ > 1</b>, el brote crecerá exponencialmente. Si logramos reducirlo a <b>R₀ < 1</b> (mejorando la detección o aislando rápido), la epidemia morirá sola.</p>
+        <p>Es la métrica reina de la epidemiología. Define cuántos nodos nuevos infectará un solo nodo comprometido en una población sana.</p>
+        <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:8px; font-family:serif; font-size:1.4rem; text-align:center; margin:15px 0;">
+          R₀ = β / γ
+        </div>
+        <ul>
+          <li><b>R₀ > 1:</b> Epidemia persistente (Crecimiento exponencial).</li>
+          <li><b>R₀ < 1:</b> El brote se extingue naturalmente.</li>
+        </ul>
+      </div>
+      
+      <div class="info-card">
+        <h4>Estrategias de Mitigación Dinámica</h4>
+        <p>El estudio demuestra que no todos los nodos son igual de importantes para la red. Se comparan dos enfoques de parcheo (vacunación):</p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+           <div style="padding:10px; border-left:3px solid var(--muted); background:rgba(255,255,255,0.03);">
+             <b>1. Random Patching:</b> Selección aleatoria de equipos para aplicar seguridad. Menos eficiente.
+           </div>
+           <div style="padding:10px; border-left:3px solid var(--r); background:rgba(52, 211, 153, 0.05);">
+             <b>2. Degree-based Patching:</b> Identificación de "Hubs" (nodos con muchas conexiones). Bloquear estos nodos colapsa la red de transporte del malware.
+           </div>
+        </div>
       </div>
     </div>
 
     <div class="card-grid">
       <div class="info-card">
-        <h4>El Índice de Youden (J)</h4>
-        <p>En epidemiología, el <i>Índice de Youden</i> (Sensibilidad + Especificidad - 1) busca el umbral perfecto de decisión. Maximiza la detección de enfermos reales y minimiza las cuarentenas innecesarias a sanos. Es la métrica ideal para configurar reglas de cortafuegos.</p>
-        <div class="metric-big" id="val-youden">--</div>
+        <h4>Umbral de Inmunidad Crítica (h)</h4>
+        <p>Fracción mínima de la red que debe estar parcheada para detener la propagación.</p>
+        <div class="metric-big" style="color:var(--r);">h = 1 - 1/R₀</div>
+        <p style="font-size:0.9rem;">Si R₀ es 5, necesitamos vacunar al 80% de la red para estar seguros.</p>
       </div>
       <div class="info-card">
-        <h4>Falso Negativo (Peligro Crítico)</h4>
-        <p>Un equipo infectado clasificado como benigno. En el modelo SIR, esto incrementa drásticamente la tasa efectiva de transmisión (<b>β efectiva</b>) ya que el equipo sigue activo en la red local buscando vulnerabilidades por el puerto 445.</p>
+        <h4>Impacto de la Topología</h4>
+        <p>En grafos de tipo <i>Scale-Free</i> (como las redes IoT reales), unos pocos nodos tienen muchísimas conexiones. El modelo SIR en grafos revela que proteger estos nodos reduce el R₀ efectivo mucho más rápido que el parcheo uniforme.</p>
       </div>
     </div>
 
-    <h2>Gráficos de Desempeño</h2>
-    <p>Distribución clínica e impacto en los parámetros de propagación.</p>
-    <img src="figures/07_sir_panel_clinico.png" alt="Panel clínico" class="image-card" onerror="this.style.display='none'">
-    <img src="figures/06_ml_clinical_sir_panel.png" alt="ROC" class="image-card" onerror="this.style.display='none'">
+    <h2>Fundamento Matemático (SIR/SEIR)</h2>
+    <p>Utilizamos el sistema de ecuaciones diferenciales para modelar la transición de estados:</p>
+    <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:12px; font-family:monospace; font-size:1rem; line-height:1.6; border:1px solid var(--border);">
+      dS/dt = -β · S · I / N <br>
+      dE/dt = β · S · I / N - σ · E <br>
+      dI/dt = σ · E - γ · I <br>
+      dR/dt = γ · I
+    </div>
   </div>
 </section>
 
@@ -450,6 +561,8 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
         <button class="btn-scenario" data-sc="libre" onclick="closeSidebarAfterSelect()">🔴 Sin Contención (Original)</button>
         <button class="btn-scenario" data-sc="ks" onclick="closeSidebarAfterSelect()">🟢 Kill-Switch Activado</button>
         <button class="btn-scenario active" data-sc="seir" onclick="closeSidebarAfterSelect()">🟣 SEIR (Periodo Latencia)</button>
+        <button class="btn-scenario" data-sc="mitig_random" onclick="closeSidebarAfterSelect()">🎲 Mitigación Aleatoria</button>
+        <button class="btn-scenario" data-sc="mitig_degree" onclick="closeSidebarAfterSelect()">🏆 Mitigación por Grado (MDPI)</button>
         <button class="btn-scenario" data-sc="manual" onclick="closeSidebarAfterSelect()">⚙️ Parámetros Manuales</button>
       </div>
     </div>
@@ -540,32 +653,36 @@ const PARAMS = """ + json.dumps(PARAMS) + r""";
 const REAL_GRAPH = """ + json.dumps(real_graph_data) + r""";
 const ML_METRICS = """ + json.dumps(metrics_data) + r""";
 
-if(ML_METRICS && ML_METRICS.length > 0) {
-  const m = ML_METRICS[0];
-  document.getElementById('val-youden').textContent = (m.youden_index * 100).toFixed(1) + '%';
-  document.getElementById('metrics-container').innerHTML = `
-    <div class="card-grid" style="margin-bottom:30px;">
-      <div class="info-card">
-        <h4 style="border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:15px;">Modelo: ${m.model_name}</h4>
-        <div class="cm-grid">
-          <div class="cm-box tp"><span class="val">${m.TP}</span><span class="lbl">Verd. Positivo<br>(Ataque detenido)</span></div>
-          <div class="cm-box fn"><span class="val">${m.FN}</span><span class="lbl">Falso Negativo<br>(Infectado Oculto)</span></div>
-          <div class="cm-box fp"><span class="val">${m.FP}</span><span class="lbl">Falso Positivo<br>(Falsa Alarma)</span></div>
-          <div class="cm-box tn"><span class="val">${m.TN}</span><span class="lbl">Verd. Negativo<br>(Tráfico Sano)</span></div>
+function updateAnalysisTab(res) {
+  const r0 = res.beta / res.gamma;
+  const h = 1 - (1/r0);
+  const last = res.hist[res.hist.length - 1];
+  const attackSize = (last.R / res.n * 100).toFixed(1);
+  
+  const container = document.getElementById('metrics-analysis-summary');
+  if(container) {
+    container.innerHTML = `
+      <div class="card-grid" style="margin-bottom:30px;">
+        <div class="info-card">
+          <h4>Estado Actual de la Simulación</h4>
+          <p>R₀ calculado: <b style="color:var(--i); font-size:1.2rem;">${r0.toFixed(2)}</b></p>
+          <p>Umbral Crítico (h): <b style="color:var(--r); font-size:1.2rem;">${(h*100).toFixed(1)}%</b></p>
+          <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
+          <p>Tasa de Ataque Final: <b>${attackSize}%</b></p>
+          <p>Nodos Protegidos: <b>${((last.S / res.n)*100).toFixed(1)}%</b></p>
+        </div>
+        <div class="info-card">
+          <h4>Eficacia de la Estrategia</h4>
+          <p>Escenario: <span style="color:var(--accent); text-transform:uppercase; font-weight:700;">${scenario}</span></p>
+          <p style="margin-top:10px; font-size:0.9rem; color:var(--muted);">
+            ${scenario === 'mitig_degree' ? 'Utilizando la estrategia óptima del artículo: priorizando nodos de alto grado para maximizar la fragmentación del grafo.' : 
+              scenario === 'mitig_random' ? 'Utilizando parcheo aleatorio. Menos eficiente en redes Scale-Free.' : 
+              'Simulación de propagación estándar.'}
+          </p>
         </div>
       </div>
-      <div class="info-card">
-        <h4>Efecto en los Parámetros Epidémicos</h4>
-        <p>Sensibilidad: <b style="color:var(--text);">${(m.sensitivity*100).toFixed(2)}%</b></p>
-        <p>Especificidad: <b style="color:var(--text);">${(m.specificity*100).toFixed(2)}%</b></p>
-        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:20px 0;">
-        <p style="color:var(--r); font-size:1.15rem; margin-bottom:8px;"><b>γ efectiva (Recuperación):</b> ${m.gamma_effective.toFixed(4)}</p>
-        <p style="color:var(--i); font-size:1.15rem; margin-bottom:20px;"><b>β efectiva (Transmisión):</b> ${m.beta_effective.toFixed(4)}</p>
-        <p style="color:var(--s); font-size:1.6rem; font-weight:800; font-family:var(--font-head);">R₀ efectivo: ${m.r0_effective.toFixed(2)}</p>
-        <p style="color:var(--muted); font-size:0.85rem; margin-top:8px;">(Un R0 menor a 1 previene la epidemia).</p>
-      </div>
-    </div>
-  `;
+    `;
+  }
 }
 
 function loadRealGraph(){
@@ -577,13 +694,23 @@ function loadRealGraph(){
   return adj;
 }
 
-function runSIR(adj, n, beta, gamma, steps, vax=0, initInfected=[4]){
+function runSIR(adj, n, beta, gamma, steps, vax=0, initInfected=[4], strategy='random'){
   let state = Array(n).fill('S');
   initInfected.forEach(i=>state[i]='I');
-  let cands = [];
-  for(let i=0; i<n; i++) if(state[i]==='S') cands.push(i);
-  cands.sort(()=>Math.random()-0.5);
-  for(let i=0; i<Math.floor(vax*n); i++) state[cands[i]] = 'R';
+  
+  let candidates = [];
+  for(let i=0; i<n; i++) if(state[i]==='S') candidates.push(i);
+  
+  if(strategy === 'degree') {
+    // Ordenar por grado descendente
+    candidates.sort((a,b) => adj[b].size - adj[a].size);
+  } else {
+    // Aleatorio
+    candidates.sort(()=>Math.random()-0.5);
+  }
+  
+  for(let i=0; i<Math.floor(vax*n); i++) if(candidates[i] !== undefined) state[candidates[i]] = 'R';
+  
   let history = [];
   for(let step=0;step<=steps;step++){
     let S=0,I=0,R=0;
@@ -602,13 +729,21 @@ function runSIR(adj, n, beta, gamma, steps, vax=0, initInfected=[4]){
   return {history, finalState: state};
 }
 
-function runSEIR(adj, n, beta, sigma, gamma, steps, vax=0, initInfected=[4]){
+function runSEIR(adj, n, beta, sigma, gamma, steps, vax=0, initInfected=[4], strategy='random'){
   let state = Array(n).fill('S');
   initInfected.forEach(i=>state[i]='I');
-  let cands = [];
-  for(let i=0; i<n; i++) if(state[i]==='S') cands.push(i);
-  cands.sort(()=>Math.random()-0.5);
-  for(let i=0; i<Math.floor(vax*n); i++) state[cands[i]] = 'R';
+  
+  let candidates = [];
+  for(let i=0; i<n; i++) if(state[i]==='S') candidates.push(i);
+  
+  if(strategy === 'degree') {
+    candidates.sort((a,b) => adj[b].size - adj[a].size);
+  } else {
+    candidates.sort(()=>Math.random()-0.5);
+  }
+  
+  for(let i=0; i<Math.floor(vax*n); i++) if(candidates[i] !== undefined) state[candidates[i]] = 'R';
+  
   let history = [];
   for(let step=0;step<=steps;step++){
     let S=0,I=0,R=0,E=0;
@@ -675,9 +810,12 @@ function simulate(){
   const p = getParams();
   const n = p.n;
   let beta=p.beta, gamma=p.gamma;
+  let vax = parseFloat(document.getElementById('svax').value) / 100;
+  
   if(scenario==='libre'){beta=PARAMS.beta_base; gamma=PARAMS.gamma_base;}
   else if(scenario==='ks'){beta=PARAMS.beta_ks; gamma=PARAMS.gamma_ks;}
-  if(scenario!=='manual'&&scenario!=='seir'){
+  
+  if(scenario!=='manual' && scenario!=='seir' && !scenario.startsWith('mitig')){
     document.getElementById('sb').value=beta;
     document.getElementById('sg').value=gamma;
     document.getElementById('vb').textContent=beta.toFixed(2);
@@ -685,8 +823,10 @@ function simulate(){
   }
   
   let res;
-  if(scenario==='seir') res = runSEIR(adj,n,beta,p.sigma,gamma,p.steps);
-  else res = runSIR(adj,n,beta,gamma,p.steps);
+  if(scenario==='seir') res = runSEIR(adj,n,beta,p.sigma,gamma,p.steps, vax);
+  else if(scenario==='mitig_random') res = runSIR(adj,n,beta,gamma,p.steps, vax, [4], 'random');
+  else if(scenario==='mitig_degree') res = runSIR(adj,n,beta,gamma,p.steps, vax, [4], 'degree');
+  else res = runSIR(adj,n,beta,gamma,p.steps, vax);
   
   currentHist = res.history;
   document.getElementById('timeline-slider').max = p.steps;
@@ -764,11 +904,13 @@ function render(forceRecalc=true){
   const rtCross = hist.findIndex(h=>(beta/gamma)*(h.S/n)<1);
 
   if(forceRecalc) {
-    const titles = {libre:'SIR — Sin Contención',ks:'SIR — Kill-Switch',seir:'SEIR — Con Latencia',manual:'SIR — Personalizado'};
+    const titles = {libre:'SIR — Sin Contención',ks:'SIR — Kill-Switch',seir:'SEIR — Con Latencia',mitig_random:'SIR — Parcheo Aleatorio', mitig_degree: 'SIR — Parcheo por Grado (Topología)', manual:'SIR — Personalizado'};
     document.getElementById('sir-title').textContent = titles[scenario];
     const badge = document.getElementById('r0-badge');
     badge.textContent = 'R₀ = '+r0.toFixed(2);
     badge.className = 'r0-badge '+(r0>1?'danger':'safe');
+
+    updateAnalysisTab({beta, gamma, n, hist, steps: currentHist.length});
 
     const savedPct = ((last.S/n)*100).toFixed(1);
     const finalR   = ((last.R/n)*100).toFixed(1);
