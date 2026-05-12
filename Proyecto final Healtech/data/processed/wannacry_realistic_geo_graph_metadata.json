@@ -5,7 +5,7 @@
   },
   "host_graph": {
     "nodes": 320,
-    "edges": 319,
+    "edges": 2215,
     "graphml": "data\\processed\\wannacry_realistic_geo_host_graph.graphml"
   },
   "country_graph": {

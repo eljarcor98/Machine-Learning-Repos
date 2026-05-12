@@ -1,0 +1,23 @@
+[
+  {
+    "TP": 11722,
+    "FP": 1055,
+    "TN": 67213,
+    "FN": 10,
+    "sensitivity": 0.9991,
+    "specificity": 0.9845,
+    "ppv": 0.9174,
+    "npv": 0.9999,
+    "f1": 0.9565,
+    "mcc": 0.9499,
+    "auc_roc": 0.9993,
+    "auc_pr": 0.9955,
+    "beta_effective": 0.0008,
+    "gamma_effective": 0.04,
+    "r0_effective": 0.0197,
+    "youden_index": 0.9837,
+    "containment_threshold": 0.9584,
+    "model_name": "Regresión Logística",
+    "threshold": 0.3233982798173218
+  }
+]
