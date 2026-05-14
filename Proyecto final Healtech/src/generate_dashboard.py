@@ -7,6 +7,22 @@ ROOT      = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 OUT       = ROOT / "reports" / "dashboard_wannacry.html"
 
+import base64
+def get_base64_image(image_path):
+    try:
+        with open(image_path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+            ext = image_path.suffix.lstrip('.').lower()
+            if ext == 'jpg': ext = 'jpeg'
+            return f"data:image/{ext};base64,{encoded_string}"
+    except Exception as e:
+        print(f"Warning: could not encode {image_path}: {e}")
+        return ""
+
+bg_image_base64 = get_base64_image(ROOT / "reports" / "figures" / "cyber_network_bg.png")
+port_image_base64 = get_base64_image(ROOT / "reports" / "figures" / "wannacry_pcap_top_ports.png")
+graph_image_base64 = get_base64_image(ROOT / "reports" / "figures" / "wannacry_pcap_observed_graph.png")
+
 with open(PROCESSED / "wannacry_pcap_sir_metadata.json", encoding="utf-8") as f:
     meta = json.load(f)
 
@@ -48,21 +64,21 @@ html = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🛡️ Análisis de Propagación de Malware — Modelos SEIR</title>
+<title>🛡️ Modelos SEIR: Análisis de Amenazas en Redes</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050505; --bg-grad: radial-gradient(circle at top, #111424 0%, #050505 100%);
-  --card:rgba(22, 27, 34, 0.6); --card-hover:rgba(30, 36, 46, 0.8);
-  --border:rgba(255, 255, 255, 0.1); 
+  --bg:#050505; --bg-grad: radial-gradient(circle at top, #0f121b 0%, #050505 100%);
+  --card:rgba(18, 22, 30, 0.7); --card-hover:rgba(25, 32, 45, 0.85);
+  --border:rgba(255, 255, 255, 0.08); 
   --text:#E2E8F0; --muted:#94A3B8;
   --s:#38BDF8; --i:#F87171; --r:#34D399; --e:#FBBF24; --accent:#818CF8;
-  --font-head: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'Manrope', sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg); background-image:var(--bg-grad); color:var(--text); font-family:var(--font-body); height:100vh; overflow:hidden; display:flex; flex-direction:column;}
@@ -102,30 +118,43 @@ h1, h2, h3, h4, .hero-title { font-family: var(--font-head); }
 .tab-content.has-header { padding-top: 65px; }
 
 /* LANDING PAGE (HOME) */
-#tab-home { align-items:center; justify-content:center; }
+#tab-home { align-items:center; justify-content:center; padding: 20px; }
 #tab-home::before {
-  content:""; position:absolute; width:600px; height:600px; 
-  background: radial-gradient(circle, rgba(129,140,248,0.15) 0%, rgba(0,0,0,0) 70%);
-  top:50%; left:50%; transform:translate(-50%, -50%); z-index:-1; pointer-events:none;
+  content:""; position:absolute; width:100%; height:100%; 
+  background: url('BACKGROUND_BASE_64') center/cover no-repeat;
+  opacity: 0.25; top:0; left:0; z-index:-2; pointer-events:none;
+}
+#tab-home::after {
+  content:""; position:absolute; width:800px; height:800px; 
+  background: radial-gradient(circle, rgba(129,140,248,0.2) 0%, rgba(56,189,248,0.1) 40%, rgba(0,0,0,0) 70%);
+  top:45%; left:50%; transform:translate(-50%, -50%); z-index:-1; pointer-events:none;
+  animation: pulseGlow 8s infinite alternate ease-in-out;
+}
+@keyframes pulseGlow {
+  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
 }
 .hero-title {
-  font-size:4.5rem; font-weight:800; letter-spacing:-1px;
-  background:linear-gradient(135deg,#38BDF8,#818CF8,#F87171); -webkit-background-clip:text; -webkit-text-fill-color:transparent; 
-  margin-bottom:15px; text-align:center; filter: drop-shadow(0 4px 10px rgba(129,140,248,0.3));
+  font-size:3.2rem; font-weight:700; letter-spacing:-1px; line-height:1.1;
+  background:linear-gradient(135deg, #A5B4FC 0%, #818CF8 50%, #38BDF8 100%); 
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; 
+  margin-bottom:15px; text-align:center; filter: drop-shadow(0 8px 16px rgba(129,140,248,0.4));
 }
-.hero-subtitle { color:var(--muted); font-size:1.25rem; font-weight:300; margin-bottom:60px; text-align:center; max-width:650px; line-height:1.6; }
+.hero-subtitle { color:#E2E8F0; font-size:1.15rem; font-weight:300; margin-bottom:50px; text-align:center; max-width:700px; line-height:1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-.menu-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:35px; max-width:1150px; width:90%; z-index:10; }
+
+.menu-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; max-width:1000px; width:95%; z-index:10; }
 .menu-card {
-  background:var(--card); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  border:1px solid var(--border); border-radius:16px; padding:40px 30px; 
-  cursor:pointer; transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align:center;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  background:var(--card); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
+  border:1px solid var(--border); border-left: 3px solid var(--accent); border-radius:12px; padding:25px 25px; 
+  cursor:pointer; transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align:left;
+  display:flex; flex-direction:column; justify-content:center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
-.menu-card:hover { transform:translateY(-12px) scale(1.02); border-color:var(--accent); box-shadow:0 20px 40px rgba(129,140,248,0.15); background:var(--card-hover); }
-.menu-card .icon { font-size:3.5rem; margin-bottom:25px; display:block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-.menu-card h3 { font-size:1.5rem; color:var(--text); margin-bottom:15px; font-weight:600; }
-.menu-card p { color:var(--muted); font-size:0.95rem; line-height:1.6; font-weight:300; }
+.menu-card:hover { transform:translateX(5px) translateY(-5px); border-color:var(--s); background:var(--card-hover); box-shadow:-5px 15px 40px rgba(129,140,248,0.25); border-left-color:var(--s); }
+.menu-card .icon { font-size:2rem; margin-bottom:12px; display:inline-block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+.menu-card h3 { font-size:1.2rem; color:#fff; margin-bottom:8px; font-weight:700; }
+.menu-card p { color:var(--muted); font-size:0.9rem; line-height:1.5; font-weight:400; }
 
 /* PROSE (Textos) */
 .layout-scroll{padding:50px; max-width:900px; margin:0 auto; padding-bottom:120px; overflow-y:auto; width:100%;}
@@ -259,8 +288,9 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
 
 <!-- HOME LANDING PAGE -->
 <section id="tab-home" class="tab-content active">
-  <h1 class="hero-title" style="font-size:3.5rem;">🛡️ Propagación de Malware</h1>
-  <p class="hero-subtitle">Análisis de Propagación de Malware a partir de modelos SEIR.</p>
+  <div style="text-align:center; margin-bottom:15px;"><span style="font-size:3rem; filter:drop-shadow(0 0 15px rgba(56,189,248,0.6));">🛡️</span></div>
+  <h1 class="hero-title">Modelos SEIR</h1>
+  <p class="hero-subtitle">Aplicación de modelos epidemiológicos en el análisis y mitigación de amenazas en redes.</p>
   
   <div class="menu-grid">
     <div class="menu-card" onclick="openSection('tab-context', 'Contexto y Teoría')">
@@ -273,14 +303,19 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
       <h3>2. Dataset & EDA</h3>
       <p>Origen de los datos, descripción de variables y análisis exploratorio de la red.</p>
     </div>
+    <div class="menu-card" onclick="openSection('tab-wannacry', 'WannaCry: El Virus')">
+      <span class="icon">🔓</span>
+      <h3>3. WannaCry</h3>
+      <p>Síntomas de infección, impacto global y el exploit EternalBlue.</p>
+    </div>
     <div class="menu-card" onclick="openSection('tab-metrics', 'Análisis Matemático')">
       <span class="icon">📈</span>
-      <h3>3. Mitigación</h3>
+      <h3>4. Mitigación</h3>
       <p>Explora el impacto de R₀ y las estrategias de parcheo dinámico (Random vs Degree).</p>
     </div>
     <div class="menu-card" onclick="openSection('tab-sim', 'Simulación Interactiva')">
       <span class="icon">🦠</span>
-      <h3>4. Simulación</h3>
+      <h3>5. Simulación</h3>
       <p>Visualiza el brote en tiempo real sobre el mapa de la red IoT.</p>
     </div>
   </div>
@@ -404,77 +439,124 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; h
     <div class="card-grid">
       <div class="info-card">
          <h4 style="color:var(--accent);">Métricas de Grafo</h4>
-         <p>Nodos (IPs): <b>320</b></p>
-         <p>Densidad: <b>0.131</b></p>
-         <p>Grado Promedio: <b>12.3</b></p>
+         <div style="display:flex; flex-direction:column; gap:15px; margin-top:10px;">
+           <div>
+             <p><b>Nodos (IPs): 320</b></p>
+             <p style="font-size:0.9rem; color:var(--muted);">Representan el número total de dispositivos únicos (computadoras, servidores, dispositivos IoT) identificados en la red. Es nuestra población total de estudio.</p>
+           </div>
+           <div>
+             <p><b>Densidad: 0.131</b></p>
+             <p style="font-size:0.9rem; color:var(--muted);">Mide qué tan "poblada" está la red de conexiones. Un valor de 0.131 (13.1%) indica que la red tiene una estructura clara y definida, no es una maraña aleatoria.</p>
+           </div>
+           <div>
+             <p><b>Grado Promedio: 12.3</b></p>
+             <p style="font-size:0.9rem; color:var(--muted);">Indica que, en promedio, cada equipo tiene 12.3 "vecinos" a su alcance. Es un indicador clave: a mayor grado promedio, más rápida es la velocidad de propagación inicial.</p>
+           </div>
+         </div>
       </div>
       <div class="info-card">
          <h4 style="color:var(--r);">Análisis de Puertos</h4>
-         <img src="figures/wannacry_pcap_top_ports.png" style="width:100%; border-radius:8px; margin-top:10px;" onerror="this.parentElement.innerHTML='<p>Gráfico de Puertos (SMB 445 predominante)</p>'">
+         <img src="PORT_IMAGE_BASE_64" style="width:100%; border-radius:8px; margin-top:10px;" onerror="this.parentElement.innerHTML='<p>Gráfico de Puertos (SMB 445 predominante)</p>'">
       </div>
     </div>
 
     <h2>Distribución de Amenazas</h2>
-    <img src="figures/wannacry_pcap_observed_graph.png" class="image-card" alt="Grafo Observado">
+    <img src="GRAPH_IMAGE_BASE_64" class="image-card" alt="Grafo Observado">
     <p style="text-align:center; font-size:0.85rem; color:var(--muted);">Grafo de comunicaciones observado en el PCAP de WannaCry, mapeando la propagación inicial.</p>
+  </div>
+</section>
+
+<!-- PESTAÑA WANNACRY -->
+<section id="tab-wannacry" class="tab-content has-header">
+  <div class="layout-scroll prose">
+    <h2>El Virus WannaCry: Anatomía de un Ataque Global</h2>
+    <p>WannaCry no fue solo un ransomware convencional; fue un <b>gusano híbrido</b> que cambió la percepción de la ciberseguridad mundial en mayo de 2017. Su capacidad para propagarse sin intervención humana lo convirtió en una de las amenazas más devastadoras de la década.</p>
+    
+    <div class="card-grid">
+      <div class="info-card">
+        <h4>🚨 Síntomas de Infección</h4>
+        <ul style="font-size:0.95rem; margin-top:10px;">
+          <li><b>Nota de Rescate:</b> Aparición súbita de la ventana "Wana Decrypt0r 2.0" exigiendo $300-$600 en Bitcoin.</li>
+          <li><b>Cifrado de Archivos:</b> Los documentos personales cambian su extensión a <code>.wncry</code> y quedan inaccesibles.</li>
+          <li><b>Fondo de Pantalla:</b> El escritorio se reemplaza por un mensaje de advertencia en rojo y negro.</li>
+          <li><b>Rendimiento:</b> Ralentización extrema del equipo debido al proceso de cifrado en segundo plano.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>⚙️ Mecanismo de Propagación</h4>
+        <p>WannaCry utilizó el exploit <b>EternalBlue</b> (filtrado de la NSA) para explotar la vulnerabilidad <b>MS17-010</b> en el protocolo SMBv1.</p>
+        <p style="margin-top:10px;">A diferencia de otros virus, este podía "saltar" de un ordenador a otro dentro de la misma red local de forma <b>autónoma</b>, sin que el usuario hiciera clic en ningún enlace.</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <h4>🌎 Impacto Global</h4>
+        <p>En menos de 4 días, infectó más de <b>230,000 sistemas</b> en más de <b>150 países</b>. Fue la primera "pandemia" digital de este tipo.</p>
+      </div>
+      <div class="info-card">
+         <h4>🏥 Sector Salud (NHS)</h4>
+         <p>El Reino Unido sufrió la paralización de su sistema de salud, obligando a cancelar cirugías y desviar ambulancias ante la pérdida de acceso a historiales clínicos.</p>
+      </div>
+    </div>
+
+    <h2>Detección en Red (Indicadores Técnicos)</h2>
+    <p>Desde el punto de vista de monitoreo de red, una infección activa se manifiesta mediante:</p>
+    <ul style="margin-top:10px;">
+      <li><b>Tráfico SMB Masivo:</b> Intentos constantes de conexión al puerto <b>TCP/445</b> buscando nuevas víctimas.</li>
+      <li><b>Escaneo de Red:</b> El host infectado intenta contactar con cada IP de su segmento local (ARP y SYN scans).</li>
+      <li><b>Kill-Switch DNS:</b> Intentos de consulta a un dominio "nonsense" largo (ej. <i>iuqerfsodp...com</i>).</li>
+    </ul>
   </div>
 </section>
 
 <!-- PESTAÑA METRICAS (AHORA MITIGACIÓN) -->
 <section id="tab-metrics" class="tab-content has-header">
   <div class="layout-scroll prose">
-    <h2>Análisis de Propagación y Mitigación</h2>
-    <p>Basado en el enfoque de <i>Epidemiología Matemática</i> (MDPI 2024), la propagación de malware en redes IoT no depende solo de la vulnerabilidad individual, sino de la dinámica colectiva y la topología de la red.</p>
+    <h2>Resultados de Propagación y Mitigación</h2>
+    <p>Tras analizar el tráfico real de WannaCry y aplicar modelos epidemiológicos, hemos determinado el potencial destructivo del brote y las estrategias necesarias para su contención.</p>
 
     <div id="metrics-analysis-summary"></div>
 
     <div class="card-grid">
       <div class="info-card">
         <h4>Número Reproductivo Básico (R₀)</h4>
-        <p>Es la métrica reina de la epidemiología. Define cuántos nodos nuevos infectará un solo nodo comprometido en una población sana.</p>
-        <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:8px; font-family:serif; font-size:1.4rem; text-align:center; margin:15px 0;">
-          R₀ = β / γ
+        <p>Define cuántos nodos nuevos infectará un solo nodo comprometido. En nuestro análisis de WannaCry, hemos detectado un valor crítico:</p>
+        <div style="background:rgba(248, 113, 113, 0.1); padding:20px; border-radius:8px; text-align:center; margin:15px 0; border:1px solid var(--i);">
+          <span style="font-size:2.5rem; font-weight:800; color:var(--i); display:block;">R₀ ≈ 23.1</span>
+          <p style="font-size:0.9rem; color:var(--muted); margin-top:5px;">Potencial Pandémico Extremo</p>
         </div>
-        <ul>
-          <li><b>R₀ > 1:</b> Epidemia persistente (Crecimiento exponencial).</li>
-          <li><b>R₀ < 1:</b> El brote se extingue naturalmente.</li>
-        </ul>
+        <p style="font-size:0.95rem;">Un R₀ de 23 explica por qué el virus alcanzó a 200,000 equipos en pocas horas: cada infección generaba 23 nuevas en su entorno inmediato.</p>
       </div>
       
       <div class="info-card">
-        <h4>Estrategias de Mitigación Dinámica</h4>
-        <p>El estudio demuestra que no todos los nodos son igual de importantes para la red. Se comparan dos enfoques de parcheo (vacunación):</p>
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
-           <div style="padding:10px; border-left:3px solid var(--muted); background:rgba(255,255,255,0.03);">
-             <b>1. Random Patching:</b> Selección aleatoria de equipos para aplicar seguridad. Menos eficiente.
-           </div>
-           <div style="padding:10px; border-left:3px solid var(--r); background:rgba(52, 211, 153, 0.05);">
-             <b>2. Degree-based Patching:</b> Identificación de "Hubs" (nodos con muchas conexiones). Bloquear estos nodos colapsa la red de transporte del malware.
-           </div>
+        <h4>Umbral de Inmunidad Crítica (h)</h4>
+        <p>Es la fracción mínima de la red que debe estar parcheada para que el virus deje de propagarse.</p>
+        <div style="background:rgba(52, 211, 153, 0.1); padding:20px; border-radius:8px; text-align:center; margin:15px 0; border:1px solid var(--r);">
+           <span style="font-size:2.5rem; font-weight:800; color:var(--r); display:block;">h ≈ 95.7%</span>
+           <p style="font-size:0.9rem; color:var(--muted); margin-top:5px;">( h = 1 - 1/R₀ )</p>
         </div>
+        <p style="font-size:0.95rem;">Con un R₀ tan alto, <b>necesitaríamos vacunar al 96% de la red</b> para estar a salvo. Esto demuestra que el parcheo manual es insuficiente y se requieren estrategias de red más inteligentes.</p>
       </div>
     </div>
 
     <div class="card-grid">
       <div class="info-card">
-        <h4>Umbral de Inmunidad Crítica (h)</h4>
-        <p>Fracción mínima de la red que debe estar parcheada para detener la propagación.</p>
-        <div class="metric-big" style="color:var(--r);">h = 1 - 1/R₀</div>
-        <p style="font-size:0.9rem;">Si R₀ es 5, necesitamos vacunar al 80% de la red para estar seguros.</p>
+        <h4>Estrategias de Mitigación Dinámica</h4>
+        <p>No todos los nodos tienen el mismo impacto. Comparamos dos enfoques de defensa:</p>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+           <div style="padding:12px; border-left:3px solid var(--muted); background:rgba(255,255,255,0.03);">
+             <b>1. Random Patching:</b> Aplicar parches al azar. Requiere cubrir casi toda la red (96%) para ser efectivo.
+           </div>
+           <div style="padding:12px; border-left:3px solid var(--r); background:rgba(52, 211, 153, 0.05);">
+             <b>2. Hub-Based Patching:</b> Identificar y proteger los nodos con más conexiones ("Hubs"). Bloquear estos puntos críticos colapsa la red de transporte del malware con mucho menos esfuerzo.
+           </div>
+        </div>
       </div>
       <div class="info-card">
         <h4>Impacto de la Topología</h4>
-        <p>En grafos de tipo <i>Scale-Free</i> (como las redes IoT reales), unos pocos nodos tienen muchísimas conexiones. El modelo SIR en grafos revela que proteger estos nodos reduce el R₀ efectivo mucho más rápido que el parcheo uniforme.</p>
+        <p>Las redes IoT actuales son de tipo <i>Scale-Free</i>. Esto significa que el malware se mueve velozmente a través de unos pocos nodos hiper-conectados. Nuestra simulación demuestra que proteger el 20% de los nodos con mayor grado es más efectivo que proteger el 70% de forma aleatoria.</p>
       </div>
-    </div>
-
-    <h2>Fundamento Matemático (SIR/SEIR)</h2>
-    <p>Utilizamos el sistema de ecuaciones diferenciales para modelar la transición de estados:</p>
-    <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:12px; font-family:monospace; font-size:1rem; line-height:1.6; border:1px solid var(--border);">
-      dS/dt = -β · S · I / N <br>
-      dE/dt = β · S · I / N - σ · E <br>
-      dI/dt = σ · E - γ · I <br>
-      dR/dt = γ · I
     </div>
   </div>
 </section>
@@ -1093,6 +1175,10 @@ window.addEventListener('resize', () => {
 </body>
 </html>
 """
+
+html = html.replace("BACKGROUND_BASE_64", bg_image_base64)
+html = html.replace("PORT_IMAGE_BASE_64", port_image_base64)
+html = html.replace("GRAPH_IMAGE_BASE_64", graph_image_base64)
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(html, encoding="utf-8")
