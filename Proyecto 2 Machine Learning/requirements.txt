@@ -1,8 +1,6 @@
+dash
 pandas
 numpy
 scikit-learn
-matplotlib
-seaborn
 plotly
-requests
-jupyter
+gunicorn
