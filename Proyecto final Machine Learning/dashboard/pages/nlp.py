@@ -58,43 +58,77 @@ st.markdown('<a href="/" target="_self" class="return-btn">⬅️ Volver al Inde
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.title("📊 Análisis de Narrativas (NLP)")
-st.markdown("Análisis de frecuencia de palabras y tópicos extraídos de la base de inteligencia.")
+st.markdown("### 📖 Guía de Flujo de Inteligencia")
+st.info("""
+**¿De dónde viene la información y cómo se procesa?**  
+La inteligencia de este módulo no es estática; es el resultado de un pipeline dinámico. La información proviene de la monitorización constante de medios digitales (GNews, RSS y GDELT), se almacena en una base de datos estructurada y se somete a un proceso de refinamiento lingüístico para extraer los conceptos más relevantes.
+""")
 
-st.header("🛠️ Metodología y Modelado de Datos")
+# --- "Infografía" Conceptual con Plotly ---
+st.subheader("🗺️ Mapa de Procesos (Infografía del Pipeline)")
+import plotly.graph_objects as go
+
+# Definición de nodos y aristas para el diagrama de flujo
+nodes = ["Fuentes (GNews/RSS)", "DB SQLite", "Preprocesamiento", "Modelado Estadístico", "Dashboard Final"]
+x_coords = [1, 2, 3, 4, 5]
+y_coords = [1, 1, 1, 1, 1]
+
+edge_x = []
+edge_y = []
+for i in range(len(nodes)-1):
+    edge_x.extend([x_coords[i], x_coords[i+1], None])
+    edge_y.extend([y_coords[i], y_coords[i+1], None])
+
+fig_flow = go.Figure()
+# Añadir flechas
+fig_flow.add_trace(go.Scatter(x=edge_x, y=edge_y, mode='lines+markers', 
+                               line=dict(color='#3b82f6', width=3), marker=dict(size=10), 
+                               hoverinfo='none', showlegend=False))
+# Añadir nodos
+fig_flow.add_trace(go.Scatter(x=x_coords, y=y_coords, mode='markers+text',
+                              marker=dict(size=40, color='#1e3a8a', symbol='square'),
+                              text=nodes, textposition="bottom center",
+                              textfont=dict(family="Montserrat", size=12, color="black"),
+                              hoverinfo='text', hovertext=nodes))
+
+fig_flow.update_layout(
+    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+    plot_bgcolor='rgba(0,0,0,0)',
+    height=300, margin=dict(l=20, r=20, t=20, b=20)
+)
+st.plotly_chart(fig_flow, use_container_width=True)
+
+st.markdown("---")
+
+st.header("🛠️ Metodología Detallada")
 st.markdown("""
-### 🧬 Pipeline de Inteligencia NLP
-El sistema procesa grandes volúmenes de texto no estructurado para extraer patrones significativos. El flujo de trabajo se divide en cuatro etapas principales:
+#### ⚙️ El Proceso Paso a Paso:
 
-**1. Ingesta de Datos (Data Ingestion):**
-- **Fuentes:** Se implementaron conectores automatizados para extraer información de **GNews**, **RSS feeds** especializados y el dataset **GDELT**.
-- **Persistencia:** Los datos se almacenan en una base de datos relacional (**SQLite**) mediante un ORM (**SQLAlchemy**), permitiendo el almacenamiento histórico y la recuperación eficiente de títulos y descripciones.
+1. **Captura de Datos $\rightarrow$** Utilizamos conectores automatizados que consultan APIs de noticias y feeds RSS. Esta información "bruta" (títulos y descripciones) se guarda en una base de datos **SQLite** usando **SQLAlchemy** para asegurar que no se pierda ninguna noticia relevante.
 
-**2. Preprocesamiento (Preprocessing):**
-- **Limpieza:** Normalización de texto mediante conversión a minúsculas y eliminación de caracteres no alfanuméricos.
-- **Tokenización:** Segmentación del corpus en unidades léxicas utilizando la librería `re` (expresiones regulares) para aislar palabras clave.
-- **Filtrado:** Aplicación de un diccionario de *Stop Words* (palabras sin valor semántico) y filtrado por longitud ($\ge 4$ caracteres) para eliminar ruido y mejorar el *signal-to-noise ratio*.
+2. **Refinamiento $\rightarrow$** El texto bruto es ruidoso. Aplicamos la librería `re` (expresiones regulares) para:
+    - Convertir todo a minúsculas.
+    - Eliminar signos de puntuación.
+    - Filtrar *Stop Words* (palabras como "el", "la", "de") que no aportan significado.
+    - Mantener solo palabras de 4 o más letras para evitar errores semánticos.
 
-**3. Modelado y Análisis (Modeling):**
-- **Modelo de Frecuencia:** Implementación de un análisis estadístico basado en la clase `collections.Counter` de Python. Este modelo permite identificar la distribución de términos y detectar los tópicos dominantes en el discurso.
-- **Modelo de Visualización Semántica:** Uso de la librería `WordCloud` para proyectar la importancia de los términos mediante la escala de tamaño, facilitando la detección de narrativas críticas.
-- **Escalabilidad:** La arquitectura permite la transición hacia modelos de aprendizaje no supervisado como **LDA (Latent Dirichlet Allocation)** para el descubrimiento de tópicos latentes y análisis de sentimientos mediante **VADER** o **TextBlob**.
+3. **Modelado de Análisis $\rightarrow$** Una vez limpio el texto, aplicamos dos enfoques:
+    - **Análisis de Frecuencia:** Usamos la clase `collections.Counter` para contar cuántas veces aparece cada palabra. Esto nos dice exactamente qué temas están dominando la agenda informativa.
+    - **Modelo de WordCloud:** Implementamos la librería `WordCloud` para generar una representación visual donde el tamaño de la palabra indica su importancia estadística.
 
-**4. Visualización (Dashboarding):**
-- Implementación de una interfaz interactiva con **Streamlit**, **Plotly** y **Matplotlib** para transformar datos crudos en inteligencia accionable.
+4. **Entrega de Valor $\rightarrow$** Los resultados se proyectan en este Dashboard mediante **Plotly** y **Matplotlib**, convirtiendo miles de palabras en una sola imagen comprensible para la toma de decisiones.
 """)
 
 st.markdown("---")
-st.header("📝 Resumen de Trabajo Realizado")
+st.header("📝 Resumen de Logros")
 st.markdown("""
-### 🚀 Logros y Ejecución del Proyecto
-Se ha desarrollado un módulo completo de procesamiento de lenguaje natural orientado a la inteligencia de fuentes abiertas (OSINT). Los hitos alcanzados incluyen:
-
-- **Infraestructura de Datos:** Diseño e implementación de un esquema de base de datos relacional optimizado para la ingesta masiva de noticias.
-- **Automatización de Captura:** Creación de un sistema de *scraping* y consumo de APIs que garantiza la actualización constante del corpus de datos.
-- **Refinamiento de Texto:** Desarrollo de un pipeline de limpieza robusto que garantiza la calidad de los datos antes del análisis estadístico.
-- **Análisis Estadístico:** Programación de un motor de conteo de frecuencias para la identificación de tendencias globales en tiempo real.
-- **Inteligencia Visual:** Integración de herramientas de visualización avanzada (Nubes de Palabras y Gráficos de Barras) para la interpretación rápida de narrativas.
-- **Despliegue de Dashboard:** Consolidación de todas las etapas en una interfaz de usuario profesional, responsiva y orientada a la toma de decisiones.
+### 🚀 Hitos del Desarrollo
+- **Infraestructura OSINT:** Implementación de un flujo de ingesta masiva de datos desde fuentes abiertas.
+- **Pipeline de NLP:** Desarrollo de un proceso de limpieza y tokenización robusto.
+- **Inteligencia Visual:** Creación de herramientas de análisis de tendencias basadas en frecuencia y nubes semánticas.
+- **Interfaz Profesional:** Despliegue de un panel de control interactivo y responsivo.
+""")
 """)
 
 # --- Carga de Datos ---
