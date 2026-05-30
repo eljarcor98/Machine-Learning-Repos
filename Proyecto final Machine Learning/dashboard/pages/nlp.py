@@ -60,7 +60,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.title("📊 Análisis de Narrativas (NLP)")
 st.markdown("Análisis de frecuencia de palabras y tópicos extraídos de la base de inteligencia.")
 
-with st.expander("🛠️ Metodología y Modelado de Datos", expanded=False):
+with st.expander("🛠️ Metodología y Modelado de Datos", expanded=True):
     st.markdown("""
     ### 🧬 Pipeline de Inteligencia NLP
     El sistema procesa grandes volúmenes de texto no estructurado para extraer patrones significativos. El flujo de trabajo se divide en cuatro etapas principales:
@@ -81,6 +81,20 @@ with st.expander("🛠️ Metodología y Modelado de Datos", expanded=False):
 
     **4. Visualización (Dashboarding):**
     - Implementación de una interfaz interactiva con **Streamlit**, **Plotly** y **Matplotlib** para transformar datos crudos en inteligencia accionable.
+    """)
+
+st.markdown("---")
+with st.expander("📝 Resumen de Trabajo Realizado", expanded=True):
+    st.markdown("""
+    ### 🚀 Logros y Ejecución del Proyecto
+    Se ha desarrollado un módulo completo de procesamiento de lenguaje natural orientado a la inteligencia de fuentes abiertas (OSINT). Los hitos alcanzados incluyen:
+
+    - **Infraestructura de Datos:** Creación de una base de datos relacional optimizada para el almacenamiento de artículos de noticias, permitiendo consultas rápidas y persistencia de datos.
+    - **Automatización de Captura:** Desarrollo de scripts de extracción automática mediante la integración de APIs de noticias y feeds RSS, asegurando un flujo constante de información actualizada.
+    - **Refinamiento de Texto:** Implementación de una arquitectura de limpieza de datos que elimina ruido semántico (stop-words) y normaliza el texto, incrementando la precisión de los términos extraídos.
+    - **Análisis Estadístico:** Programación de un motor de conteo de frecuencias basado en `collections.Counter` para identificar tendencias globales en tiempo real.
+    - **Inteligencia Visual:** Integración de herramientas de visualización avanzada como *WordClouds* y gráficos de barras interactivos para facilitar la interpretación rápida de narrativas complejas.
+    - **Despliegue de Dashboard:** Consolidación de todas las etapas en una interfaz de usuario profesional y responsiva utilizando Streamlit.
     """)
 
 # --- Carga de Datos ---
