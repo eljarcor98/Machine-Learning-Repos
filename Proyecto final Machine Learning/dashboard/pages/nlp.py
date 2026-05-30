@@ -60,42 +60,42 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.title("📊 Análisis de Narrativas (NLP)")
 st.markdown("Análisis de frecuencia de palabras y tópicos extraídos de la base de inteligencia.")
 
-with st.expander("🛠️ Metodología y Modelado de Datos", expanded=True):
-    st.markdown("""
-    ### 🧬 Pipeline de Inteligencia NLP
-    El sistema procesa grandes volúmenes de texto no estructurado para extraer patrones significativos. El flujo de trabajo se divide en cuatro etapas principales:
+st.header("🛠️ Metodología y Modelado de Datos")
+st.markdown("""
+### 🧬 Pipeline de Inteligencia NLP
+El sistema procesa grandes volúmenes de texto no estructurado para extraer patrones significativos. El flujo de trabajo se divide en cuatro etapas principales:
 
-    **1. Ingesta de Datos (Data Ingestion):**
-    - **Fuentes:** Se implementaron conectores automatizados para extraer información de **GNews**, **RSS feeds** especializados y el dataset **GDELT**.
-    - **Persistencia:** Los datos se almacenan en una base de datos relacional (SQLite) mediante un ORM (SQLAlchemy), permitiendo el almacenamiento histórico de títulos y descripciones.
+**1. Ingesta de Datos (Data Ingestion):**
+- **Fuentes:** Se implementaron conectores automatizados para extraer información de **GNews**, **RSS feeds** especializados y el dataset **GDELT**.
+- **Persistencia:** Los datos se almacenan en una base de datos relacional (**SQLite**) mediante un ORM (**SQLAlchemy**), permitiendo el almacenamiento histórico y la recuperación eficiente de títulos y descripciones.
 
-    **2. Preprocesamiento (Preprocessing):**
-    - **Limpieza:** Se realiza una normalización de texto (conversión a minúsculas).
-    - **Tokenización:** El corpus se divide en palabras individuales utilizando expresiones regulares para eliminar ruido y caracteres especiales.
-    - **Filtrado:** Se aplica un filtro de *Stop Words* (palabras comunes sin valor semántico como "de", "la", "the", "and") y se eliminan términos con longitud inferior a 4 caracteres para mejorar la precisión del análisis.
+**2. Preprocesamiento (Preprocessing):**
+- **Limpieza:** Normalización de texto mediante conversión a minúsculas y eliminación de caracteres no alfanuméricos.
+- **Tokenización:** Segmentación del corpus en unidades léxicas utilizando la librería `re` (expresiones regulares) para aislar palabras clave.
+- **Filtrado:** Aplicación de un diccionario de *Stop Words* (palabras sin valor semántico) y filtrado por longitud ($\ge 4$ caracteres) para eliminar ruido y mejorar el *signal-to-noise ratio*.
 
-    **3. Modelado y Análisis (Modeling):**
-    - **Análisis de Frecuencia:** Se utiliza la clase `Counter` para cuantificar la recurrencia de términos, identificando los temas dominantes en el discurso actual.
-    - **Visualización Semántica:** Se genera una **Nube de Palabras (WordCloud)** donde el tamaño de cada término es proporcional a su frecuencia, permitiendo una detección rápida de tópicos críticos.
-    - **Soporte de Datos:** El sistema está diseñado para ser escalable, permitiendo la futura integración de modelos de **LDA (Latent Dirichlet Allocation)** para detección de tópicos latentes y análisis de sentimientos.
+**3. Modelado y Análisis (Modeling):**
+- **Modelo de Frecuencia:** Implementación de un análisis estadístico basado en la clase `collections.Counter` de Python. Este modelo permite identificar la distribución de términos y detectar los tópicos dominantes en el discurso.
+- **Modelo de Visualización Semántica:** Uso de la librería `WordCloud` para proyectar la importancia de los términos mediante la escala de tamaño, facilitando la detección de narrativas críticas.
+- **Escalabilidad:** La arquitectura permite la transición hacia modelos de aprendizaje no supervisado como **LDA (Latent Dirichlet Allocation)** para el descubrimiento de tópicos latentes y análisis de sentimientos mediante **VADER** o **TextBlob**.
 
-    **4. Visualización (Dashboarding):**
-    - Implementación de una interfaz interactiva con **Streamlit**, **Plotly** y **Matplotlib** para transformar datos crudos en inteligencia accionable.
-    """)
+**4. Visualización (Dashboarding):**
+- Implementación de una interfaz interactiva con **Streamlit**, **Plotly** y **Matplotlib** para transformar datos crudos en inteligencia accionable.
+""")
 
 st.markdown("---")
-with st.expander("📝 Resumen de Trabajo Realizado", expanded=True):
-    st.markdown("""
-    ### 🚀 Logros y Ejecución del Proyecto
-    Se ha desarrollado un módulo completo de procesamiento de lenguaje natural orientado a la inteligencia de fuentes abiertas (OSINT). Los hitos alcanzados incluyen:
+st.header("📝 Resumen de Trabajo Realizado")
+st.markdown("""
+### 🚀 Logros y Ejecución del Proyecto
+Se ha desarrollado un módulo completo de procesamiento de lenguaje natural orientado a la inteligencia de fuentes abiertas (OSINT). Los hitos alcanzados incluyen:
 
-    - **Infraestructura de Datos:** Creación de una base de datos relacional optimizada para el almacenamiento de artículos de noticias, permitiendo consultas rápidas y persistencia de datos.
-    - **Automatización de Captura:** Desarrollo de scripts de extracción automática mediante la integración de APIs de noticias y feeds RSS, asegurando un flujo constante de información actualizada.
-    - **Refinamiento de Texto:** Implementación de una arquitectura de limpieza de datos que elimina ruido semántico (stop-words) y normaliza el texto, incrementando la precisión de los términos extraídos.
-    - **Análisis Estadístico:** Programación de un motor de conteo de frecuencias basado en `collections.Counter` para identificar tendencias globales en tiempo real.
-    - **Inteligencia Visual:** Integración de herramientas de visualización avanzada como *WordClouds* y gráficos de barras interactivos para facilitar la interpretación rápida de narrativas complejas.
-    - **Despliegue de Dashboard:** Consolidación de todas las etapas en una interfaz de usuario profesional y responsiva utilizando Streamlit.
-    """)
+- **Infraestructura de Datos:** Diseño e implementación de un esquema de base de datos relacional optimizado para la ingesta masiva de noticias.
+- **Automatización de Captura:** Creación de un sistema de *scraping* y consumo de APIs que garantiza la actualización constante del corpus de datos.
+- **Refinamiento de Texto:** Desarrollo de un pipeline de limpieza robusto que garantiza la calidad de los datos antes del análisis estadístico.
+- **Análisis Estadístico:** Programación de un motor de conteo de frecuencias para la identificación de tendencias globales en tiempo real.
+- **Inteligencia Visual:** Integración de herramientas de visualización avanzada (Nubes de Palabras y Gráficos de Barras) para la interpretación rápida de narrativas.
+- **Despliegue de Dashboard:** Consolidación de todas las etapas en una interfaz de usuario profesional, responsiva y orientada a la toma de decisiones.
+""")
 
 # --- Carga de Datos ---
 @st.cache_data(ttl=600)
