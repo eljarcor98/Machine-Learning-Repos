@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-# Ajustar ruta para importar desde src
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ajustar ruta para importar desde src (subir 3 niveles para llegar a la raíz)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.db import get_session, NewsArticle, init_db
 
 # Asegurar que la base de datos esté inicializada
@@ -128,7 +128,6 @@ st.markdown("""
 - **Pipeline de NLP:** Desarrollo de un proceso de limpieza y tokenización robusto.
 - **Inteligencia Visual:** Creación de herramientas de análisis de tendencias basadas en frecuencia y nubes semánticas.
 - **Interfaz Profesional:** Despliegue de un panel de control interactivo y responsivo.
-""")
 """)
 
 # --- Carga de Datos ---
